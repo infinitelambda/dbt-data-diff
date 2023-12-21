@@ -1,0 +1,103 @@
+[tool.poetry]
+name = "dbt-data-diff"
+version = "0.0.0"
+description = "Data-diff solution for dbt"
+authors = ["Infinite Lambda <contact@infinitelambda.com>"]
+readme = "README.md"
+license = "Apache-2.0"
+repository = "https://github.com/infinitelambda/dbt-data-diff"
+homepage = "https://infinitelambda.com"
+documentation = "https://data-diff.iflambda.com/latest/"
+keywords = ["packaging", "dbt", "data-quality", "data-diff", "markdown", "lint"]
+classifiers = [
+  "Topic :: dbt Package Development :: Documentation",
+  "Topic :: dbt Package Development :: Testing",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.13"
+dbt-snowflake = "^1.7.0"
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^2.17.0"
+poethepoet = "^0.16.4"
+sqlfluff = "^2.3.5"
+sqlfluff-templater-dbt = "^2.3.5"
+mkdocs = "^1.5.3"
+mkdocs-material = "^9.4.8"
+mkdocs-minify-plugin = "^0.7.1"
+mike = "^2.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.sqlfluff.core]
+templater = "dbt"
+dialect = "snowflake"
+sql_file_exts = ".sql,.sql.j2,.dml,.ddl"
+max_line_length = 120
+
+[tool.sqlfluff.templater.dbt]
+profile = "data_diff"
+# target_path = "integration_tests/target-lint"
+
+[tool.sqlfluff.rules]
+allow_scalar = true
+single_table_references = "consistent"
+unquoted_identifiers_policy = "all"
+
+[tool.sqlfluff.layout.type.comma]
+line_position = "leading"
+
+[tool.sqlfluff.indentation]
+tab_space_size = 2
+indent_unit = "space"
+
+[toolsqlfluff.rules.capitalisation.keywords]
+capitalisation_policy = "lower"
+
+[toolsqlfluff.rules.capitalisation.functions]
+capitalisation_policy = "lower"
+
+[tool.sqlfluff.templater]
+unwrap_wrapped_queries = true
+
+[tool.sqlfluff.templater.jinja]
+apply_dbt_builtins = true
+
+[tool.poe.tasks]
+git-hooks = { shell = "pre-commit install --install-hooks && pre-commit install --hook-type commit-msg" }
+format = [
+  {cmd = "dbt clean"},
+  {cmd = "sqlfluff format . --dialect snowflake"},
+]
+lint = [
+  {cmd = "dbt clean"},
+  {cmd = "sqlfluff lint . --dialect snowflake"},
+]
+data-diff-verify = [
+  {cmd = "dbt deps --project-dir integration_tests"},
+  {cmd = "dbt debug --project-dir integration_tests"},
+]
+data-diff-migration = [
+  {cmd = "dbt run -s data_diff --full-refresh --vars '{data_diff__on_migration: true, data_diff__full_refresh: true}' --project-dir integration_tests"},
+]
+data-diff-bg = [
+  {cmd = "dbt build --exclude data_diff --project-dir integration_tests -t blue"},
+  {cmd = "dbt build --exclude data_diff --project-dir integration_tests -t green"},
+]
+data-diff-run = [
+  {cmd = "dbt run-operation data_diff__run --project-dir integration_tests"},
+]
+data-diff = [
+  {cmd = "poe lint"},
+  {cmd = "poe data-diff-verify"},
+  {cmd = "poe data-diff-migration"},
+  {cmd = "poe data-diff-bg"},
+  {cmd = "poe data-diff-run"}
+]
+build-doc = [
+  {cmd = "mkdocs build"},
+  {cmd = "mkdocs serve"}
+]

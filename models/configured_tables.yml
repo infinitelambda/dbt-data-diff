@@ -1,0 +1,25 @@
+models:
+  - name: configured_tables
+    description: Configuration table that contains the list of objects need to be compared
+
+    columns:
+      - name: src_db
+        description: Database name of the source object to be compared
+      - name: src_schema
+        description: Schema name of the source object to be compared
+      - name: src_table
+        description: Source object name to be compared
+      - name: trg_db
+        description: Database name of the target object to be compared
+      - name: trg_schema
+        description: Schema name of the target object to be compared
+      - name: trg_table
+        description: Target object to be compared
+      - name: pk
+        description: Primary key of the objects to be compared
+      - name: include_columns
+        description: An array containing the list of columns to include into the comparison, default is empty, which means every mutual common will be compared
+      - name: exclude_columns
+        description: Array containing the list of columns to exclude from the comparison
+      - name: is_enabled
+        description: Using this field we can enable or disables the validation

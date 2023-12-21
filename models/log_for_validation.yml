@@ -1,0 +1,13 @@
+models:
+  - name: log_for_validation
+    description: Log entries produced by the data-diff operations
+
+    columns:
+      - name: start_time
+        description: Start time of the execution, can be used as a join key to the appropiate result table
+      - name: end_time
+        description: End time of the execution
+      - name: sql_statement
+        description: The executed sql_statement
+      - name: diff_type
+        description: Key, schema or data-diff type of entry

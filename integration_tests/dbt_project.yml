@@ -1,0 +1,36 @@
+name: 'data_diff_test'
+version: '0.0.0'
+config-version: 2
+
+profile: 'data_diff'
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+  - "logs"
+
+vars:
+  data_diff__on_migration: false # disable schema migration
+  data_diff__on_migration_data: true # enable data migration
+  data_diff__on_run_hook: false # disable data diff on hook
+  data_diff__database: data_diff
+  data_diff__schema: common
+  data_diff__configured_tables:
+    - src_db: data_diff
+      src_schema: blue_dat
+      src_table: my_first_dbt_model
+      trg_db: data_diff
+      trg_schema: green_dat
+      trg_table: my_first_dbt_model
+      pk: id
+      include_columns: []
+      exclude_columns: []
+    - src_db: data_diff
+      src_schema: blue_dat
+      src_table: my_second_dbt_model
+      trg_db: data_diff
+      trg_schema: green_dat
+      trg_table: my_second_dbt_model
+      pk: id
+      include_columns: []
+      exclude_columns: []

@@ -1,0 +1,25 @@
+data_diff:
+  outputs:
+    blue:
+      type: snowflake
+      account: xxx
+      warehouse: wh_data_diff
+      database: data_diff
+      role: role_data_diff
+      schema: blue_dat
+      threads: 10
+      user: xxx@infinitelambda.com
+      password: xxx
+      # authenticator: externalbrowser
+    green:
+      type: snowflake
+      account: xxx
+      warehouse: wh_data_diff
+      database: data_diff
+      role: role_data_diff
+      schema: green_dat
+      threads: 10
+      user: xxx@infinitelambda.com
+      password: xxx
+      # authenticator: externalbrowser
+  target: blue
