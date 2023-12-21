@@ -34,3 +34,10 @@ vars:
       pk: id
       include_columns: []
       exclude_columns: []
+  # data_diff__key_check_summary__alias: report_of_key_check
+  # data_diff__key_check__alias: result_of_key_check
+  # data_diff__schema_check_summary__alias: report_of_schema_check
+  # data_diff__schema_check__alias: result_of_schema_check
+  # data_diff__data_diff_check__alias: result_of_data_diff_check
+  # data_diff__configured_tables__alias: tables_to_validate
+  # data_diff__log_for_validation__alias: log_for_validation

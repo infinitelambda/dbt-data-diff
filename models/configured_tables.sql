@@ -4,7 +4,8 @@
     schema = var("data_diff__schema", target.schema),
     materialized = 'incremental',
     on_schema_change = 'append_new_columns',
-    full_refresh = var('data_diff__full_refresh', false)
+    full_refresh = var('data_diff__full_refresh', false),
+    alias = var("data_diff__configured_tables__alias", this.name)
   )
 }}
 

@@ -1,9 +1,9 @@
 {% macro create__check_data_diff() -%}
 
-    {% set configured_table_model -%} {{ ref("configured_tables").table }} {%- endset %}
-    {% set log_model -%} {{ ref("log_for_validation").table }} {%- endset %}
-    {% set result_schema_model -%} {{ ref("schema_check").table }} {%- endset %}
-    {% set result_model -%} {{ ref("data_diff_check").table }} {%- endset %}
+    {% set configured_table_model -%} {{ ref("configured_tables").alias }} {%- endset %}
+    {% set log_model -%} {{ ref("log_for_validation").alias }} {%- endset %}
+    {% set result_schema_model -%} {{ ref("schema_check").alias }} {%- endset %}
+    {% set result_model -%} {{ ref("data_diff_check").alias }} {%- endset %}
 
     {% set namespace -%}
         {{ var("data_diff__database", target.database) }}.{{ generate_schema_name(var("data_diff__schema", target.schema)) }}

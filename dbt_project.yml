@@ -16,6 +16,7 @@ vars:
   data_diff__on_run_hook: false # Enable to run data diff as dbt hook
   # data_diff__database: COMMON
   # data_diff__schema: DATA_DIFF
+
   # data_diff__configured_tables:
   #   - src_db: src_db
   #     src_schema: src_schema
@@ -26,6 +27,14 @@ vars:
   #     pk: key
   #     include_columns: [] # [] to include all
   #     exclude_columns: ["timestamp"] # [] to exclude nothing
+
+  # data_diff__key_check_summary__alias: report_of_key_check
+  # data_diff__key_check__alias: result_of_key_check
+  # data_diff__schema_check_summary__alias: report_of_schema_check
+  # data_diff__schema_check__alias: result_of_schema_check
+  # data_diff__data_diff_check__alias: result_of_data_diff_check
+  # data_diff__configured_tables__alias: tables_to_validate
+  # data_diff__log_for_validation__alias: log_for_validation
 
 on-run-end:
   - > # migration hook
