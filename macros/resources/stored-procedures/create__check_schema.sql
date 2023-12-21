@@ -1,11 +1,11 @@
 {% macro create__check_schema() %}
 
-    {% set configured_table_model -%} {{ ref("configured_tables").alias }} {%- endset %}
-    {% set log_model -%} {{ ref("log_for_validation").alias }} {%- endset %}
-    {% set result_model -%} {{ ref("schema_check").alias }} {%- endset %}
+    {% set configured_table_model -%} {{ ref("configured_tables").identifier }} {%- endset %}
+    {% set log_model -%} {{ ref("log_for_validation").identifier }} {%- endset %}
+    {% set result_model -%} {{ ref("schema_check").identifier }} {%- endset %}
 
     {% set namespace -%}
-        {{ var("data_diff__database", target.database) }}.{{ generate_schema_name(var("data_diff__schema", target.schema)) }}
+        {{ generate_database_name(var("data_diff__database", target.database)) }}.{{ generate_schema_name(var("data_diff__schema", target.schema)) }}
     {%- endset %}
 
     {% set query -%}

@@ -1,7 +1,7 @@
 {% macro data_diff__run(in_hook=false) -%}
 
   {% set namespace -%}
-    {{ var("data_diff__database", target.database) }}.{{ generate_schema_name(var("data_diff__schema", target.schema)) }}
+    {{ generate_database_name(var("data_diff__database", target.database)) }}.{{ generate_schema_name(var("data_diff__schema", target.schema)) }}
   {%- endset %}
 
   {% set query -%}
