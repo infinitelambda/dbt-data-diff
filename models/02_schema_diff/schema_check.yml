@@ -1,0 +1,44 @@
+models:
+  - name: schema_check
+    description: |
+      Result of the **Schema** diff
+
+    columns:
+      - name: src_db
+        description: Database name of the source object to be compared
+      - name: src_schema
+        description: Schema name of the source object to be compared
+      - name: src_table
+        description: Source object name to be compared
+      - name: trg_db
+        description: Database name of the target object to be compared
+      - name: trg_schema
+        description: Schema name of the target object to be compared
+      - name: trg_table
+        description: Target object to be compared
+      - name: column_name
+        description: Name of the compared column
+      - name: data_type
+        description: Data type of the column
+      - name: datetime_precision
+        description: Precision in case of datetime data type
+      - name: numeric_precision
+        description: Precision in case of numeric data type
+      - name: numeric_scale
+        description: Scale in case of numeric data type
+      - name: common_col
+        description: true/false, where true means the column can be found both source and target table
+      - name: common_col_text
+        description: |
+          Possible values are:
+          - common
+          - source only
+          - target only
+      - name: is_exclusive_src
+        description: true/false, where true means the column can be found only in source object
+      - name: is_exclusive_trg
+        description: true/false, where true means the column can be found only in target object
+      - name: datatype_check
+        description: true/false, where true means the data type is the same in both places
+      - name: last_data_diff_timestamp
+        description: Last data-diff run timestamp

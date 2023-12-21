@@ -1,0 +1,5 @@
+macros:
+  - name: create_resources
+    description: Produce SQL script of this package's resources
+  - name: refresh_configured_tables
+    description: Reset data of `configured_tables` model based on the `data_diff__configured_tables` variable

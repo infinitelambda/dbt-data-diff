@@ -1,4 +1,4 @@
-{% macro create__check_schema(args) %}
+{% macro create__check_schema() %}
 
     {% set configured_table_model -%} {{ ref("configured_tables").table }} {%- endset %}
     {% set log_model -%} {{ ref("log_for_validation").table }} {%- endset %}
@@ -40,7 +40,7 @@
                             is_exclusive_src,
                             is_exclusive_trg,
                             datatype_check,
-                            last_modified_timestamp
+                            last_data_diff_timestamp
                         )
 
                         with tables_to_compare as (
@@ -130,7 +130,7 @@
                                                 then 1
                                             else 0
                                         end as datatype_check
-                                        ,''' || ? || ''' last_modified_timestamp
+                                        ,''' || ? || ''' last_data_diff_timestamp
 
                             from        src_meta as src
                             full join   trg_meta as trg
@@ -158,7 +158,7 @@
                 sql_statement := record.sql;
 
                 insert into {{ log_model }} (start_time, end_time, sql_statement,diff_type )
-                values (:run_timestamp, null, :sql_statement,'key');
+                values (:run_timestamp, null, :sql_statement, 'schema');
 
                 execute immediate :sql_statement;
 

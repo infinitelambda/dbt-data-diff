@@ -1,4 +1,4 @@
-{% macro create__check_data_diff(args) -%}
+{% macro create__check_data_diff() -%}
 
     {% set configured_table_model -%} {{ ref("configured_tables").table }} {%- endset %}
     {% set log_model -%} {{ ref("log_for_validation").table }} {%- endset %}
@@ -72,7 +72,7 @@
                     and   common_col = 1 -- only available mutual columns
                     qualify row_number() over(
                         partition by src_db, src_schema, src_table, trg_db, trg_schema, trg_table, column_name
-                        order by last_modified_timestamp desc
+                        order by last_data_diff_timestamp desc
                     ) = 1
 
                 ),
@@ -126,7 +126,7 @@
                             select ''different_in_target'' as type_of_diff, * from different_in_target
                         )
                         select  *
-                                , ''' || ? || ''' as last_modified_timestamp
+                                , ''' || ? || ''' as last_data_diff_timestamp
                         from    compare_content' as sql_data_diff__for_a_table,
 
                         '
@@ -139,7 +139,7 @@
                             trg_table,
                             column_name,
                             match_percentage,
-                            last_modified_timestamp
+                            last_data_diff_timestamp
                         )
                         with compare_content as (
 
@@ -174,7 +174,7 @@
                                 ,trg_table
                                 ,column_name
                                 ,match_percentage
-                                ,''' || ? ||'''as last_modified_timestamp
+                                ,''' || ? ||'''as last_data_diff_timestamp
                         from    final
                         unpivot (
                             match_percentage

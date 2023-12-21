@@ -1,0 +1,7 @@
+macros:
+  - name: create__check_key_diff
+    description: Produce SQL script (`create or replace`) of the Key Diff's stored procedure
+  - name: create__check_schema_diff
+    description: Produce SQL script (`create or replace`) of the Schema Diff's stored procedure
+  - name: create__check_data_diff
+    description: Produce SQL script (`create or replace`) of the Data Diff's stored procedure

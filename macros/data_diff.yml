@@ -1,0 +1,10 @@
+macros:
+  - name: data_diff__run
+    description: |
+      Execute (or Produce the script of) the Data Diff's stored procedures.
+
+      NOTE: To be able to run in `on-run-end` hook, please use `data_diff__on_run_hook: true`
+  - name: data_diff__run_async
+    description: TODO
+  - name: data_diff__cleanup
+    description: TODO clean up diff tables

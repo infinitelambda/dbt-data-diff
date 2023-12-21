@@ -1,4 +1,4 @@
-{% macro create__check_key(args) %}
+{% macro create__check_key() %}
 
     {% set configured_table_model -%} {{ ref("configured_tables").table }} {%- endset %}
     {% set log_model -%} {{ ref("log_for_validation").table }} {%- endset %}
@@ -62,7 +62,7 @@
             )
 
             select  '
-                    insert into {{ result_model }} (src_db, src_schema, src_table, trg_db, trg_schema, trg_table, pk, key_value, is_exclusive_src, is_exclusive_trg, is_diff_unique_key, last_modified_timestamp)
+                    insert into {{ result_model }} (src_db, src_schema, src_table, trg_db, trg_schema, trg_table, pk, key_value, is_exclusive_src, is_exclusive_trg, is_diff_unique_key, last_data_diff_timestamp)
                     with
                     insert_part as (
                         select      '''    || t.src_db          || ''' as src_db
@@ -78,13 +78,13 @@
                                     , (trg_pk is null) as is_exclusive_src
                                     , (src_pk is null) as is_exclusive_trg
                                     , case when src_pk is distinct from trg_pk then 1 else 0 end as is_diff_unique_key
-                                    , ''' || ? || ''' as last_modified_timestamp
+                                    , ''' || ? || ''' as last_data_diff_timestamp
                         from        '|| t.src_db || '.'|| t.src_schema || '.'|| t.src_table  || ' as src
                         full join   '|| t.trg_db || '.'|| t.trg_schema || '.'|| t.trg_table  || ' as trg
                             on      src_pk = trg_pk
                         where       is_diff_unique_key = 1
                     )
-                    select  src_db, src_schema, src_table, trg_db, trg_schema, trg_table, pk, key_value, is_exclusive_src, is_exclusive_trg, is_diff_unique_key, last_modified_timestamp
+                    select  src_db, src_schema, src_table, trg_db, trg_schema, trg_table, pk, key_value, is_exclusive_src, is_exclusive_trg, is_diff_unique_key, last_data_diff_timestamp
                     from    insert_part
                     ' as sql
 

@@ -1,14 +1,9 @@
 models:
-  - name: data_diff_check
+  - name: key_check
     description: |
-      Result of the **Data Content** diff, aggregated by columns.
+      Result of the **Key** diff
 
-      It will also link to the addtional result tables,
-      formatted as `data_diff_check_detail_{source_table}_{YYYYMMDD}`,
-      which is the result of EXCEPT operator contains all the different rows,
-      the structure will be the same as the compared objects
-
-      NOTE: the additional result table(s) will be replaced if there is an existing one
+      Note: Table is empty that means there is no key diff
 
     columns:
       - name: src_db
@@ -23,9 +18,15 @@ models:
         description: Schema name of the target object to be compared
       - name: trg_table
         description: Target object to be compared
-      - name: column_name
-        description: Name of the compared column
-      - name: match_percentage
-        description: Percentage data matching of the compared columns
+      - name: pk
+        description: Primary key of the objects to be compared
+      - name: key_value
+        description: Value of the primary key
+      - name: is_exclusive_src
+        description: true/false, where true means the key can be found only in the source object
+      - name: is_exclusive_trg
+        description: true/false, where true means the key can be found only in the target object
+      - name: is_diff_unique_key
+        description: true/false, where true means the key is missing from the source or target object
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
