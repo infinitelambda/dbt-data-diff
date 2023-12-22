@@ -32,6 +32,14 @@ dbt run -s data_diff \
   --vars '{data_diff__on_migration: true, data_diff__on_migration_data: true, data_diff__full_refresh: true}'
 ```
 
+<details> <!-- markdownlint-disable no-inline-html -->
+  <summary>Click me</summary>
+In the above:
+- `--full-refresh` and `data_diff__full_refresh`: To re-create all data-diff models
+- `data_diff__on_migration: true`: To re-create the stored procedures
+- `data_diff__on_migration_data: true`: To reset the configured data
+</details>
+
 ## Quick Demo
 
 Trigger the validation:
@@ -42,11 +50,14 @@ Trigger the validation:
 dbt run-operation data_diff__run[_async]
 ```
 
-- Via dbt hook by default (it will run incremental load for all models):
+<details> <!-- markdownlint-disable no-inline-html -->
+  <summary>Or via dbt hook by default (it will run an incremental load for all models)</summary>
 
 ```bash
 dbt run -s data_diff --vars '{data_diff__on_run_hook: true}'
 ```
+
+</details>
 
 <!-- [![Watch the video](TODO.gif)](TODO) -->
 
