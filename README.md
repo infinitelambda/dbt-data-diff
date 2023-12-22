@@ -33,7 +33,7 @@ dbt run -s data_diff \
 ```
 
 <details> <!-- markdownlint-disable no-inline-html -->
-  <summary>Click me</summary>
+  <summary>💡 click me</summary>
 
 In the above:
 
@@ -45,7 +45,29 @@ In the above:
 
 ## Quick Demo
 
-Trigger the validation via dbt operation:
+### Configure the tables that need comparing in `dbt_project.yml`
+
+We're going to use the `data_diff__configured_tables` variable.
+
+For example, we want to compare `table_x` between **prod** db and **dev** one:
+
+```yaml
+vars:
+  data_diff__configured_tables:
+    - src_db: your_prod
+      src_schema: your_schema
+      src_table: table_x
+      trg_db: your_dev
+      trg_schema: your_schema
+      trg_table: table_x
+      pk: key
+      include_columns: [] # [] to include all
+      exclude_columns: ["loaded_at"] # [] to exclude loaded_at field
+```
+
+Then, use the migration command above to reset the configured data.
+
+### Trigger the validation via dbt operation
 
 ```bash
 dbt run-operation data_diff__run        # normal mode, run in sequence, wait unitl finished
