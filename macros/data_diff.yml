@@ -4,10 +4,33 @@ macros:
       Execute (or Produce the script of) the Data Diff's stored procedures.
 
       NOTE: To be able to run in `on-run-end` hook, please use `data_diff__on_run_hook: true`
+
   - name: data_diff__run_async
     description: |
       Execute (or Produce the script of) the Data Diff's stored procedures, wrapped into a DAG of Tasks.
 
       NOTE: To be able to run in `on-run-end` hook, please use `data_diff__on_run_hook: true`
+
+  - name: data_diff__run_async
+    description: |
+      Execute the status polling of the executed DAG of Tasks based on the coresponding dbt invocation id
+
+      Uasge:
+      ```bash
+      dbt run-operation \
+        data_diff__poll_status_async \
+        --args '{invocation_id:"9642e2dd-9c10-4a10-a979-7d169b5d3731", poll_times:10, poll_wait_in_s:10}
+      ```
+    arguments:
+      - name: invocation_id
+        type: string
+        description: The coresponding dbt invocation_id
+      - name: poll_times
+        type: integer
+        description: Number of times it tries to execute the polling script
+      - name: poll_wait_in_s
+        type: integer
+        description: Number of seconds need to wait in each polling
+
   - name: data_diff__cleanup
     description: TODO clean up diff tables

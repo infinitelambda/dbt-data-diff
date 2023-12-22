@@ -9,6 +9,7 @@
   {% set prefix_batch_task__check_key = "data_diff__task__check_key_batch_" ~ dbt_invocation_id ~ "_" %}
   {% set prefix_batch_task__check_schema = "data_diff__task__check_schema_batch_" ~ dbt_invocation_id ~ "_" %}
   {% set prefix_batch_task__check_data_diff = "data_diff__task__check_data_diff_batch_" ~ dbt_invocation_id ~ "_" %}
+  {% set end_task = "data_diff__task_end_" ~ dbt_invocation_id %}
 
   {% set batches = dbt_utils.get_column_values(table=ref('configured_tables'), column='pipe_name') %}
 
@@ -29,6 +30,11 @@
       warehouse = {{ target.warehouse }}
       as
       select sysdate() as end_time;
+    --end task
+    create or replace task {{ namespace }}.{{ end_task }}
+      warehouse = {{ target.warehouse }}
+      as
+      select sysdate() as run_time;
 
     {% for batch_id in batches %}
 
@@ -58,9 +64,13 @@
         call {{ namespace }}.check_data_diff('{{ batch_id }}');
       alter task {{ namespace }}.{{ prefix_batch_task__check_data_diff }}{{ batch_id }} resume;
 
+      --end task
+      alter task {{ namespace }}.{{ end_task }} add after {{ namespace }}.{{ prefix_batch_task__check_data_diff }}{{ batch_id }};
+
     {%- endfor %}
     alter task {{ namespace }}.{{ root_task__check_schema }} resume;
     alter task {{ namespace }}.{{ root_task__check_data_diff }} resume;
+    alter task {{ namespace }}.{{ end_task }} resume;
 
     --2. Execute root task
     execute task {{ namespace }}.{{ root_task__check_key }};
@@ -76,7 +86,7 @@
     {{ log(results, info=True) }}
     {{ log(
         (
-          "👉 Visit: "
+          "👉 Visit the root task at: "
           "https://SF_BASE_URL/#/data/"
           "databases/" ~ (generate_database_name(var("data_diff__database", target.database)) | upper) ~ "/"
           "schemas/" ~ (generate_schema_name(var("data_diff__schema", target.schema)) | upper) ~ "/"
@@ -87,6 +97,7 @@
         info=True
       )
     }}
+    {{ log("💡 Poll status of " ~ (end_task | upper) ~ " to know if the DAG finished", info=True) }}
 
   {% endif %}
 
