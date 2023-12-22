@@ -23,7 +23,7 @@ vars:
   #     trg_db: trg_db
   #     trg_schema: trg_schema
   #     trg_table: table1
-  #     pk: key
+  #     pk: key # multiple columns splitted by comma
   #     include_columns: [] # [] to include all
   #     exclude_columns: ["timestamp"] # [] to exclude nothing
   #     pipe_name: '' # optional, empty by default

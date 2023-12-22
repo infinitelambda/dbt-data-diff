@@ -87,7 +87,7 @@
                     from    insert_part
                     ' as sql
 
-            from    final t
+            from    final as t
             order by src_table;
 
     begin

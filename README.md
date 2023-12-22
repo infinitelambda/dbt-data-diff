@@ -60,7 +60,7 @@ vars:
       trg_db: your_dev
       trg_schema: your_schema
       trg_table: table_x
-      pk: key
+      pk: key # multiple columns splitted by comma
       include_columns: [] # [] to include all
       exclude_columns: ["loaded_at"] # [] to exclude loaded_at field
 ```
