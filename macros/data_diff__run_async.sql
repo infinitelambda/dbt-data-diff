@@ -69,24 +69,23 @@
     {{ return(query) }}
   {% else %}
     {{ log("[RUN]: data_diff__run_async", info=True) }}
-    {{ log(query, info=True) }}
     {% set results = run_query(query) %}
     {{ log(results, info=True) }}
-    {{ log(
-        (
-          "👉 Visit the root task at: "
-          "https://SF_BASE_URL/#/data/"
-          "databases/" ~ (generate_database_name(var("data_diff__database", target.database)) | upper) ~ "/"
-          "schemas/" ~ (generate_schema_name(var("data_diff__schema", target.schema)) | upper) ~ "/"
-          "task/" ~ (root_task | upper) ~ "/"
-          "graph"
-          " to monitor the DAG execution..."
-        ),
-        info=True
-      )
-    }}
-    {{ log("💡 Poll status of " ~ (end_task | upper) ~ " to know if the DAG finished", info=True) }}
-
   {% endif %}
+
+  {{ log(
+      (
+        "👉 Visit the root task at: "
+        "https://{SF_BASE_URL}/#/data/"
+        "databases/" ~ (generate_database_name(var("data_diff__database", target.database)) | upper) ~ "/"
+        "schemas/" ~ (generate_schema_name(var("data_diff__schema", target.schema)) | upper) ~ "/"
+        "task/" ~ (root_task | upper) ~ "/"
+        "graph"
+        " to monitor the DAG execution..."
+      ),
+      info=True
+    )
+  }}
+  {{ log("💡 Poll status of " ~ (end_task | upper) ~ " to know if the DAG finished", info=True) }}
 
 {%- endmacro %}
