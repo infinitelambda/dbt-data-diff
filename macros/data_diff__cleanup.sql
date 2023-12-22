@@ -1,10 +1,11 @@
-{% macro data_diff__cleanup(in_hook=false) -%}
+{% macro data_diff__cleanup(in_hook=false, invocation_id=none) -%}
 
   {% set namespace = data_diff.get_namespace() %}
 
   {% set query -%}
 
-    TODO
+    TODO: clean up log table - keep today data
+    TODO: clean up DAG tasks - keep invocation_id passed in, delete all otherwise
 
   {%- endset %}
 

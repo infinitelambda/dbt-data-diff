@@ -5,6 +5,9 @@ macros:
 
       NOTE: To be able to run in `on-run-end` hook, please use `data_diff__on_run_hook: true`
   - name: data_diff__run_async
-    description: TODO
+    description: |
+      Execute (or Produce the script of) the Data Diff's stored procedures, wrapped into a DAG of Tasks.
+
+      NOTE: To be able to run in `on-run-end` hook, please use `data_diff__on_run_hook: true`
   - name: data_diff__cleanup
     description: TODO clean up diff tables
