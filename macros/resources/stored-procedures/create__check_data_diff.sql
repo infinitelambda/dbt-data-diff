@@ -90,12 +90,12 @@
 
                     from    {{ configured_table_model }}_final  t
                     join    schema_validation  v
-                    on    t.src_schema = v.src_schema
-                    and   t.src_table = v.src_table
+                        on  t.src_schema = v.src_schema
+                        and t.src_table = v.src_table
                     where   true
-                    --excluded columns i.e always changing column, added or removed column
-                    and   (not array_contains(column_name::variant, t.exclude_columns))
-                    and   (
+                        --excluded columns i.e always changing column, added or removed column
+                        and (not array_contains(upper(column_name)::variant, t.exclude_columns))
+                        and (
                                 case
                                     when array_size(include_columns) > 0
                                         then array_contains(column_name::variant, t.include_columns)

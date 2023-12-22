@@ -24,7 +24,7 @@ vars:
       trg_table: my_first_dbt_model
       pk: id
       include_columns: []
-      exclude_columns: []
+      exclude_columns: ["loaded_at"]
     - src_db: data_diff
       src_schema: blue_dat
       src_table: my_second_dbt_model
@@ -33,7 +33,7 @@ vars:
       trg_table: my_second_dbt_model
       pk: id
       include_columns: []
-      exclude_columns: []
+      exclude_columns: ["loaded_at"]
   # data_diff__key_check_summary__alias: report_of_key_check
   # data_diff__key_check__alias: result_of_key_check
   # data_diff__schema_check_summary__alias: report_of_schema_check

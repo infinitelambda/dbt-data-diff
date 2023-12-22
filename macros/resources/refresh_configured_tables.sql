@@ -19,8 +19,8 @@
         ,'{{ item.get("trg_schema") }}' as trg_schema
         ,'{{ item.get("trg_table") }}' as trg_table
         ,'{{ item.get("pk") }}' as pk
-        ,{{ item.get("include_columns", []) }} as include_columns
-        ,{{ item.get("exclude_columns", []) }} as exclude_columns
+        ,{{ item.get("include_columns", []) | upper }} as include_columns
+        ,{{ item.get("exclude_columns", []) | upper }} as exclude_columns
         ,True as is_enabled
       {% if not loop.last -%}
         union all
