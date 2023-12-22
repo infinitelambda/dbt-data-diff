@@ -23,3 +23,5 @@ models:
         description: Array containing the list of columns to exclude from the comparison
       - name: is_enabled
         description: Using this field we can enable or disables the validation
+      - name: batch
+        description: Specify the batch name which is used in the asynchronous run fostering the parallel

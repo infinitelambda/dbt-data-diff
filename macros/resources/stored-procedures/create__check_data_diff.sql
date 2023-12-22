@@ -11,7 +11,7 @@
 
     {% set query -%}
 
-    create or replace procedure {{ namespace }}.check_data_diff()
+    create or replace procedure {{ namespace }}.check_data_diff(p_batch varchar)
     returns varchar
       language sql
       as
@@ -27,7 +27,8 @@
                     select  *
                     from    {{ configured_table_model }}
                     where   true
-                    and   is_enabled = true
+                        and is_enabled = true
+                        and coalesce(batch, '') = ?
 
                 ),
 
@@ -188,7 +189,7 @@
     begin
         run_timestamp := sysdate();
 
-        open c1 using(:run_timestamp, :run_timestamp);
+        open c1 using(:p_batch, :run_timestamp, :run_timestamp);
 
           for record in c1 do
             sql_statement := record.sql_data_diff__for_a_table;

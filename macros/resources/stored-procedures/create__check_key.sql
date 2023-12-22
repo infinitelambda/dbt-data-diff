@@ -10,7 +10,7 @@
 
     {% set query -%}
 
-    create or replace procedure {{ namespace }}.check_key()
+    create or replace procedure {{ namespace }}.check_key(p_batch varchar)
     returns varchar
     language sql
     as
@@ -27,6 +27,7 @@
                 from    {{ configured_table_model }}
                 where   true
                     and is_enabled = true
+                    and coalesce(batch, '') = ?
 
             ),
 
@@ -95,7 +96,7 @@
 
         run_timestamp := sysdate();
 
-        open c1 using(:run_timestamp);
+        open c1 using(:p_batch, :run_timestamp);
 
             for record in c1 do
 

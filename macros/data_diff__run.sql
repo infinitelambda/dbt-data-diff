@@ -6,9 +6,9 @@
 
   {% set query -%}
 
-    call {{ namespace }}.check_key();
-    call {{ namespace }}.check_schema();
-    call {{ namespace }}.check_data_diff();
+    call {{ namespace }}.check_key('');
+    call {{ namespace }}.check_schema('');
+    call {{ namespace }}.check_data_diff('');
 
   {%- endset %}
 

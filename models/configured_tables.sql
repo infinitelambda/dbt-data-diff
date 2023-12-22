@@ -22,6 +22,7 @@ select
   , cast(null as array) as include_columns
   , cast(null as array) as exclude_columns
   , cast(null as {{ dbt.type_boolean() }}) as is_enabled
+  , cast(null as {{ dbt.type_string() }}) as batch
 
 from dummy
 
