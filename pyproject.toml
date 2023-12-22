@@ -41,7 +41,6 @@ max_line_length = 120
 
 [tool.sqlfluff.templater.dbt]
 profile = "data_diff"
-# target_path = "integration_tests/target-lint"
 
 [tool.sqlfluff.rules]
 allow_scalar = true
@@ -90,6 +89,9 @@ data-diff-bg = [
 ]
 data-diff-run = [
   {cmd = "dbt run-operation data_diff__run --project-dir integration_tests"},
+]
+data-diff-run-async = [
+  {cmd = "dbt run-operation data_diff__run_async --project-dir integration_tests"},
 ]
 data-diff-test = [
   {cmd = "dbt build --exclude example --project-dir integration_tests -t blue"},

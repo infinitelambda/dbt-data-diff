@@ -45,18 +45,33 @@ In the above:
 
 ## Quick Demo
 
-Trigger the validation:
-
-- Via dbt operation:
+Trigger the validation via dbt operation:
 
 ```bash
-dbt run-operation data_diff__run[_async]
+dbt run-operation data_diff__run        # normal mode, run in sequence, wait unitl finished
+# OR
+dbt run-operation data_diff__run_async  # async mode, parallel, no waiting
 ```
+
+> **NOTE**: In async mode, we leverage the DAG of tasks, therefore the dbt's ROLE will need granting the addtional privilege:</br></br>
+> `use role accountadmin;` </br>
+> `grant execute task on account to role {{ target.role }};`</br>
 
 <details> <!-- markdownlint-disable no-inline-html -->
   <summary>Or via dbt hook by default (it will run an incremental load for all models)</summary>
 
+```yaml
+# dbt_project.yml
+on-run-end
+  - > # run data-diff hook
+    {% if var("data_diff__on_run_hook", false) %}
+      {{ data_diff.data_diff__run(in_hook=true) }}
+    {% endif %}
+
+```
+
 ```bash
+# terminal
 dbt run -s data_diff --vars '{data_diff__on_run_hook: true}'
 ```
 

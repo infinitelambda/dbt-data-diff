@@ -37,3 +37,9 @@ vars:
       include_columns: []
       exclude_columns: ["loaded_at"]
       batch: 2
+
+on-run-end:
+  - > # run async data-diff hook
+    {% if var("data_diff__on_run_hook", false) %}
+      {{ data_diff.data_diff__run(in_hook=true) }}
+    {% endif %}

@@ -48,7 +48,3 @@ on-run-end:
       {% endif %}
 
     {% endif %}
-  - > # run data-diff hook
-    {% if var("data_diff__on_run_hook", false) %}
-      {{ data_diff.data_diff__run(in_hook=true) }}
-    {% endif %}
