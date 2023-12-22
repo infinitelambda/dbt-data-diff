@@ -34,10 +34,13 @@ dbt run -s data_diff \
 
 <details> <!-- markdownlint-disable no-inline-html -->
   <summary>Click me</summary>
+
 In the above:
+
 - `--full-refresh` and `data_diff__full_refresh`: To re-create all data-diff models
 - `data_diff__on_migration: true`: To re-create the stored procedures
 - `data_diff__on_migration_data: true`: To reset the configured data
+
 </details>
 
 ## Quick Demo
