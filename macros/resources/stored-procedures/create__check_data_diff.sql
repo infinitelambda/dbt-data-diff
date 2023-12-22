@@ -205,7 +205,7 @@
 
             sql_statement := record.sql_data_diff__pivot_summary;
 
-            insert into {{ log_model }} (start_time, end_time, sql_statement,diff_type )
+            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_type)
             values (:run_timestamp, null, :sql_statement, 'data-diff');
 
             execute immediate :sql_statement;
