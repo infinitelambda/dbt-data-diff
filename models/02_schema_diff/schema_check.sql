@@ -29,7 +29,7 @@ select
   , cast(null as {{ dbt.type_boolean() }}) as is_exclusive_trg
   , cast(null as {{ dbt.type_boolean() }}) as datatype_check
   , cast(null as {{ dbt.type_timestamp() }}) as last_data_diff_timestamp
-  , cast(null as {{ dbt.type_timestamp() }}) as pipe_name
+  , cast(null as {{ dbt.type_string() }}) as pipe_name
 
 from dummy
 

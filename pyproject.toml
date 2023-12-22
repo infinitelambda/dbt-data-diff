@@ -106,6 +106,13 @@ data-diff = [
   {cmd = "poe data-diff-run"},
   {cmd = "poe data-diff-test"}
 ]
+data-diff-async = [
+  {cmd = "poe lint"},
+  {cmd = "poe data-diff-verify"},
+  {cmd = "poe data-diff-migration"},
+  {cmd = "poe data-diff-bg"},
+  {cmd = "poe data-diff-run-async"}
+]
 build-doc = [
   {cmd = "mkdocs build"},
   {cmd = "mkdocs serve"}
