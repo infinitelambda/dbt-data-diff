@@ -38,7 +38,8 @@
                             is_exclusive_src,
                             is_exclusive_trg,
                             datatype_check,
-                            last_data_diff_timestamp
+                            last_data_diff_timestamp,
+                            pipe_name
                         )
 
                         with tables_to_compare as (
@@ -128,7 +129,8 @@
                                                 then 1
                                             else 0
                                         end as datatype_check
-                                        ,''' || ? || ''' last_data_diff_timestamp
+                                        ,''' || ? || ''' as last_data_diff_timestamp
+                                        , ''' || ? || ''' as pipe_name
 
                             from        src_meta as src
                             full join   trg_meta as trg
@@ -148,14 +150,14 @@
                 from    {{ configured_table_model }} as b
                 where   true
                     and is_enabled = true
-                    and coalesce(batch, '') = ?
+                    and coalesce(pipe_name, '') = ?
                 order by src_table;
 
         begin
 
             run_timestamp := sysdate();
 
-            open c1 using(:run_timestamp, :p_batch);
+            open c1 using(:run_timestamp, :p_batch, :p_batch);
 
                 for record in c1 do
 

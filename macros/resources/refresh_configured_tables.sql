@@ -7,7 +7,7 @@
 
     truncate table {{ configured_table_model }};
     insert into {{ configured_table_model }}
-    (src_db,src_schema,src_table,trg_db,trg_schema,trg_table,pk,include_columns,exclude_columns,is_enabled,batch)
+    (src_db,src_schema,src_table,trg_db,trg_schema,trg_table,pk,include_columns,exclude_columns,is_enabled,pipe_name)
 
     {% for item in configured_tables -%}
 
@@ -22,7 +22,7 @@
         ,{{ item.get("include_columns", []) | upper }} as include_columns
         ,{{ item.get("exclude_columns", []) | upper }} as exclude_columns
         ,True as is_enabled
-        ,'{{ item.get("batch", "") }}' as batch
+        ,'{{ item.get("pipe_name", "") }}' as pipe_name
       {% if not loop.last -%}
         union all
       {% endif %}

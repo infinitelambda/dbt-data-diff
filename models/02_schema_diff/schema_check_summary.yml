@@ -30,3 +30,5 @@ models:
         description: Number of columns exist in source only
       - name: exclusive_source_list
         description: List of columns exist in source only
+      - name: batch
+        description: Specify the batch name which is used in the asynchronous run fostering the parallel

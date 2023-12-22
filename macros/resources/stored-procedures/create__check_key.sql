@@ -25,7 +25,7 @@
                 from    {{ configured_table_model }}
                 where   true
                     and is_enabled = true
-                    and coalesce(batch, '') = ?
+                    and coalesce(pipe_name, '') = ?
 
             ),
 

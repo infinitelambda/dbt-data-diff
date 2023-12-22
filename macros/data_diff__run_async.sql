@@ -9,7 +9,7 @@
   {% set prefix_batch_task__check_schema = "data_diff__task__check_schema_batch_" %}
   {% set prefix_batch_task__check_data_diff = "data_diff__task__check_data_diff_batch_" %}
 
-  {% set batches = dbt_utils.get_column_values(table=ref('configured_tables'), column='batch') %}
+  {% set batches = dbt_utils.get_column_values(table=ref('configured_tables'), column='pipe_name') %}
 
   {% set query -%}
     --1. Build the DAG

@@ -42,3 +42,5 @@ models:
         description: true/false, where true means the data type is the same in both places
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
+      - name: pipe_name
+        description: Specify the pipe name which is used in the asynchronous run fostering the parallel

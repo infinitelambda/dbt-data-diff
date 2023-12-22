@@ -26,7 +26,7 @@
                     from    {{ configured_table_model }}
                     where   true
                         and is_enabled = true
-                        and coalesce(batch, '') = ?
+                        and coalesce(pipe_name, '') = ?
 
                 ),
 
@@ -70,7 +70,7 @@
                     where   true
                     and   common_col = 1 -- only available mutual columns
                     qualify row_number() over(
-                        partition by src_db, src_schema, src_table, trg_db, trg_schema, trg_table, column_name
+                        partition by src_db, src_schema, src_table, trg_db, trg_schema, trg_table, column_name, pipe_name
                         order by last_data_diff_timestamp desc
                     ) = 1
 

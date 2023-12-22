@@ -70,10 +70,12 @@ apply_dbt_builtins = true
 git-hooks = { shell = "pre-commit install --install-hooks && pre-commit install --hook-type commit-msg" }
 format = [
   {cmd = "dbt clean"},
+  {cmd = "dbt deps"},
   {cmd = "sqlfluff format . --dialect snowflake"},
 ]
 lint = [
   {cmd = "dbt clean"},
+  {cmd = "dbt deps"},
   {cmd = "sqlfluff lint . --dialect snowflake"},
 ]
 data-diff-verify = [

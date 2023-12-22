@@ -1,5 +1,6 @@
 # dbt
 dbt_packages/
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
