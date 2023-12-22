@@ -4,9 +4,7 @@
     {% set log_model -%} {{ ref("log_for_validation").identifier }} {%- endset %}
     {% set result_model -%} {{ ref("schema_check").identifier }} {%- endset %}
 
-    {% set namespace -%}
-        {{ generate_database_name(var("data_diff__database", target.database)) }}.{{ generate_schema_name(var("data_diff__schema", target.schema)) }}
-    {%- endset %}
+  {% set namespace = data_diff.get_namespace() %}
 
     {% set query -%}
 

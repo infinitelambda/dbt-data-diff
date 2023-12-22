@@ -93,6 +93,7 @@ Once you've added all of these files, in the `poetry shell`, you should be able 
 poe data-diff-migration # create resources
 poe data-diff-bg        # prepare blue/green data
 poe data-diff-run       # trigger the data-diff
+poe data-diff-test      # test the package and the data-diff result
 ```
 
 Alternatively, you could use 1 single command: `poe data-diff` 👍

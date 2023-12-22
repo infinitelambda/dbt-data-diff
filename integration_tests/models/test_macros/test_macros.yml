@@ -1,0 +1,5 @@
+models:
+  - name: test_get_namespace
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: actual = expected

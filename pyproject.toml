@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "dbt-data-diff"
 version = "0.0.0"
-description = "Data-diff solution for dbt"
+description = "Data-diff solution for dbt-ers with Snowflake ❄️ 🚀"
 authors = ["Infinite Lambda <contact@infinitelambda.com>"]
 readme = "README.md"
 license = "Apache-2.0"
@@ -12,6 +12,7 @@ keywords = ["packaging", "dbt", "data-quality", "data-diff", "markdown", "lint"]
 classifiers = [
   "Topic :: dbt Package Development :: Documentation",
   "Topic :: dbt Package Development :: Testing",
+  "Topic :: dbt Package :: Blue-Green",
 ]
 
 [tool.poetry.dependencies]
@@ -84,18 +85,22 @@ data-diff-migration = [
   {cmd = "dbt run -s data_diff --full-refresh --vars '{data_diff__on_migration: true, data_diff__full_refresh: true}' --project-dir integration_tests"},
 ]
 data-diff-bg = [
-  {cmd = "dbt build --exclude data_diff --project-dir integration_tests -t blue"},
-  {cmd = "dbt build --exclude data_diff --project-dir integration_tests -t green"},
+  {cmd = "dbt build -s example --project-dir integration_tests -t blue"},
+  {cmd = "dbt build -s example --project-dir integration_tests -t green"},
 ]
 data-diff-run = [
   {cmd = "dbt run-operation data_diff__run --project-dir integration_tests"},
+]
+data-diff-test = [
+  {cmd = "dbt build --exclude example --project-dir integration_tests -t blue"},
 ]
 data-diff = [
   {cmd = "poe lint"},
   {cmd = "poe data-diff-verify"},
   {cmd = "poe data-diff-migration"},
   {cmd = "poe data-diff-bg"},
-  {cmd = "poe data-diff-run"}
+  {cmd = "poe data-diff-run"},
+  {cmd = "poe data-diff-test"}
 ]
 build-doc = [
   {cmd = "mkdocs build"},

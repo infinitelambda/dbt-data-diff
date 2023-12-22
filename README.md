@@ -1,7 +1,7 @@
 <!-- markdownlint-disable no-inline-html -->
 # dbt-data-diff
 
-Data-diff solution for dbt-ers 🚀
+Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
 ## Installation
 
