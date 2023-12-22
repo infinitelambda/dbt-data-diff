@@ -11,7 +11,7 @@ macros:
 
       NOTE: To be able to run in `on-run-end` hook, please use `data_diff__on_run_hook: true`
 
-  - name: data_diff__run_async
+  - name: data_diff__poll_status_async
     description: |
       Execute the status polling of the executed DAG of Tasks based on the coresponding dbt invocation id
 
