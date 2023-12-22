@@ -62,10 +62,19 @@ dbt run-operation data_diff__run_async  # async mode, parallel, no waiting
 
 ```yaml
 # dbt_project.yml
+
+# normal mode
 on-run-end
   - > # run data-diff hook
     {% if var("data_diff__on_run_hook", false) %}
       {{ data_diff.data_diff__run(in_hook=true) }}
+    {% endif %}
+
+# async mode
+on-run-end
+  - > # run data-diff hook
+    {% if var("data_diff__on_run_hook", false) %}
+      {{ data_diff.data_diff__run_async(in_hook=true) }}
     {% endif %}
 
 ```
