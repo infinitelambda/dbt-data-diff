@@ -1,5 +1,4 @@
 name: 'data_diff'
-version: '0.0.0'
 config-version: 2
 
 model-paths: ["models"]
