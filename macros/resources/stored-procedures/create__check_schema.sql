@@ -134,7 +134,12 @@
 
                             from        src_meta as src
                             full join   trg_meta as trg
-                                on      trg.table_name = src.table_name
+                                on      trg.src_db = src.src_db
+                                and     trg.src_schema = src.src_schema
+                                and     trg.src_table = src.src_table
+                                and     trg.trg_db = src.trg_db
+                                and     trg.trg_schema = src.trg_schema
+                                and     trg.trg_schema = src.trg_schema
                                 and     trg.column_name = src.column_name
 
                         )
