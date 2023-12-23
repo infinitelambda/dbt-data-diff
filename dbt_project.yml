@@ -16,19 +16,22 @@ vars:
   # data_diff__database: COMMON
   # data_diff__schema: DATA_DIFF
 
+  # data_diff__configured_tables__fixed_naming: true
+  #                                     # Set false to let (only) source db & schema naming follow the configured one in dbt
+  #                                     # we always expect the target is fixed to Prod for example
   # data_diff__configured_tables:
-  #   - src_db: src_db
-  #     src_schema: src_schema
-  #     src_table: table1
-  #     trg_db: trg_db
-  #     trg_schema: trg_schema
-  #     trg_table: table1
-  #     pk: key # multiple columns splitted by comma
-  #     include_columns: [] # [] to include all
-  #     exclude_columns: ["timestamp"] # [] to exclude nothing
-  #     pipe_name: '' # optional, empty by default
-  #               # in non-async mode, it must be empty if specified
-  #               # in async mode, it can be any value e.g. "1", "batch_dat", "batch_milan"
+  #   - src_db: src_db                  # optional, empty to get target.database
+  #     src_schema: src_schema          # optional, empty to get target.schema
+  #     src_table: table1               # mandatory
+  #     trg_db: trg_db                  # optional, empty to get target.database
+  #     trg_schema: trg_schema          # optional, empty to get target.schema
+  #     trg_table: table1               # optional, empty to get src_table
+  #     pk: key                         # mandatory, multiple columns splitted by comma e.g. key1,key2
+  #     include_columns: []             # optional, [] to include all
+  #     exclude_columns: ["timestamp"]  # optional, [] to exclude nothing
+  #     pipe_name: ''                   # optional, empty by default
+  #                                     # in non-async mode, it must be empty if specified
+  #                                     # in async mode, it can be any value e.g. "1", "batch_dat", "batch_milan"
 
   # data_diff__key_check_summary__alias: report_of_key_check
   # data_diff__key_check__alias: result_of_key_check

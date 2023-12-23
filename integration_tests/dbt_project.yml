@@ -17,10 +17,8 @@ vars:
   data_diff__schema: common
   # For normal (non-async) mode
   data_diff__configured_tables:
-    - src_db: data_diff
-      src_schema: blue_dat
+    - src_schema: blue_dat
       src_table: my_first_dbt_model
-      trg_db: data_diff
       trg_schema: green_dat
       trg_table: my_first_dbt_model
       pk: id
