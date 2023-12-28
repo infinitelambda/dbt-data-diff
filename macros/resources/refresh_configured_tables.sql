@@ -25,7 +25,7 @@
           ,'{{ item.get("src_table") }}' as src_table
 
       {% if target_fixed_naming -%}
-          '{{ item.get("trg_db", target.database) }}' as trg_db
+          ,'{{ item.get("trg_db", target.database) }}' as trg_db
           ,'{{ item.get("trg_schema", target.schema) }}' as trg_schema
       {%- else -%}
           '{{ generate_database_name(item.get("trg_db")) }}' as trg_db
