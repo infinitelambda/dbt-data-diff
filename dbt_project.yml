@@ -16,9 +16,11 @@ vars:
   # data_diff__database: COMMON
   # data_diff__schema: DATA_DIFF
 
-  # data_diff__configured_tables__fixed_naming: true
+  # data_diff__configured_tables__source_fixed_naming: true
   #                                     # Set false to let (only) source db & schema naming follow the configured one in dbt
   #                                     # we always expect the target is fixed to Prod for example
+  # data_diff__configured_tables__target_fixed_naming: true
+  #                                     # same as above but for the target
   # data_diff__configured_tables:
   #   - src_db: src_db                  # optional, empty to get target.database
   #     src_schema: src_schema          # optional, empty to get target.schema
