@@ -3,6 +3,15 @@
 
 Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
+**_Who is this for?_**
+
+- Primarily for people who want to perform Data-diff validation on **the Blue-Green deployment** 🌟
+- Other good considerations 👍
+  - UAT validation: data-diff with PROD
+  - Code-Refactoring validation: data diff between old vs new
+  - Migration to Snowflake: data diff between old vs new (requires to land the old data to Snowflake)
+  - CI: future consideration only ⚠️
+
 ## Installation
 
 - Add to `packages.yml` file:
