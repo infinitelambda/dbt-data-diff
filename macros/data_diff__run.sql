@@ -1,4 +1,4 @@
-{% macro data_diff__run(in_hook=false) -%}
+{% macro data_diff__run(in_hook=false, is_cleanup=false) -%}
 
   {% set namespace = data_diff.get_namespace() %}
 
@@ -7,6 +7,10 @@
     call {{ namespace }}.check_key('');
     call {{ namespace }}.check_schema('');
     call {{ namespace }}.check_data_diff('');
+
+    {% if is_cleanup -%}
+      {{ data_diff.data_diff__cleanup(in_hook=true) }}
+    {%- endif %}
 
   {%- endset %}
 

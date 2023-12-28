@@ -5,7 +5,7 @@
   {% set query -%}
 
     TODO: clean up log table - keep today data
-    TODO: clean up DAG tasks - keep invocation_id passed in, delete all otherwise
+    TODO: clean up DAG tasks - keep invocation_id passed in & delete others, none for doing nothing
 
   {%- endset %}
 

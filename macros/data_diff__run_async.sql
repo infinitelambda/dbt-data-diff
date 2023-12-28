@@ -1,4 +1,4 @@
-{% macro data_diff__run_async(in_hook=false) -%}
+{% macro data_diff__run_async(in_hook=false, is_cleanup=false) -%}
 
   {% set namespace = data_diff.get_namespace() %}
   {% set dbt_invocation_id = invocation_id | replace("-", "_") %}
@@ -61,6 +61,11 @@
 
     --2. Execute root task
     execute task {{ namespace }}.{{ root_task }};
+
+    --Clean up
+    {% if is_cleanup -%}
+      {{ data_diff.data_diff__cleanup(in_hook=true, invocation_id=dbt_invocation_id) }}
+    {%- endif %}
 
   {%- endset %}
 

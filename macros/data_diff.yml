@@ -2,14 +2,24 @@ macros:
   - name: data_diff__run
     description: |
       Execute (or Produce the script of) the Data Diff's stored procedures.
-
-      NOTE: To be able to run in `on-run-end` hook, please use `data_diff__on_run_hook: true`
+    arguments:
+      - name: in_hook
+        type: boolean [default=false]
+        description: True to generate SQL script only, False to exclude SQL right after the generation
+      - name: is_cleanup
+        type: boolean [default=false]
+        description: True to perform additional SQL script for cleaning up (log only) by calling `data_diff__cleanup`
 
   - name: data_diff__run_async
     description: |
       Execute (or Produce the script of) the Data Diff's stored procedures, wrapped into a DAG of Tasks.
-
-      NOTE: To be able to run in `on-run-end` hook, please use `data_diff__on_run_hook: true`
+    arguments:
+      - name: in_hook [default=false]
+        type: boolean
+        description: True to generate SQL script only, False to exclude SQL right after the generation
+      - name: is_cleanup
+        type: boolean [default=false]
+        description: True to perform additional SQL script for cleaning up (log & task dag) by calling `data_diff__cleanup`
 
   - name: data_diff__poll_status_async
     description: |
@@ -25,10 +35,10 @@ macros:
       - name: invocation_id
         type: string
         description: The coresponding dbt invocation_id
-      - name: poll_times
+      - name: poll_times [default=10]
         type: integer
         description: Number of times it tries to execute the polling script
-      - name: poll_wait_in_s
+      - name: poll_wait_in_s [default=10]
         type: integer
         description: Number of seconds need to wait in each polling
 
