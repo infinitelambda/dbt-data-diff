@@ -46,20 +46,21 @@
 
                 {{ configured_table_model }}_final as (
 
-                select  src_db
-                        ,src_schema
-                        ,src_table
-                        ,trg_db
-                        ,trg_schema
-                        ,trg_table
-                        ,pk
-                        ,include_columns
-                        ,exclude_columns
-                        ,listagg(combined_pk ,'||') as combined_unique_key
-                        ,listagg(src_pk ,'||') as src_unique_key
-                        ,listagg(trg_pk ,'||') as trg_unique_key
-                from    pk_base
-                group by all
+                    select  src_db
+                            ,src_schema
+                            ,src_table
+                            ,trg_db
+                            ,trg_schema
+                            ,trg_table
+                            ,pk
+                            ,include_columns
+                            ,exclude_columns
+                            ,where_condition
+                            ,listagg(combined_pk ,'||') as combined_unique_key
+                            ,listagg(src_pk ,'||') as src_unique_key
+                            ,listagg(trg_pk ,'||') as trg_unique_key
+                    from    pk_base
+                    group by all
 
                 ),
 
@@ -68,7 +69,7 @@
                     select  *
                     from    {{ result_schema_model }}
                     where   true
-                    and   common_col = 1 -- only available mutual columns
+                        and common_col = 1 -- only available mutual columns
                     qualify row_number() over(
                         partition by src_db, src_schema, src_table, trg_db, trg_schema, trg_table, column_name, pipe_name
                         order by last_data_diff_timestamp desc
@@ -109,14 +110,14 @@
                         create or replace table {{ result_model }}_' || src_table ||  '_' || to_char(sysdate(),'yyyymmdd') || '
                         as
                         with different_in_source as (
-                            (select ' || concat(col_list, ',' , combined_unique_key || ' as combined_unique_key') || ' from '|| src_db || '.' || src_schema || '.' || src_table  || ')
+                            (select ' || concat(col_list, ',' , combined_unique_key || ' as combined_unique_key') || ' from '|| src_db || '.' || src_schema || '.' || src_table  || ' where ' || where_condition || ')
                             except
-                            (select ' || concat(col_list, ',' , combined_unique_key || ' as combined_unique_key') || ' from '|| trg_db || '.' || trg_schema || '.' || trg_table  || ')
+                            (select ' || concat(col_list, ',' , combined_unique_key || ' as combined_unique_key') || ' from '|| trg_db || '.' || trg_schema || '.' || trg_table  || ' where ' || where_condition || ')
                         ),
                         different_in_target as (
-                            (select ' || concat(col_list, ',' , combined_unique_key || ' as combined_unique_key') || ' from '|| trg_db || '.' || trg_schema || '.' || trg_table  || ')
+                            (select ' || concat(col_list, ',' , combined_unique_key || ' as combined_unique_key') || ' from '|| trg_db || '.' || trg_schema || '.' || trg_table  || ' where ' || where_condition || ')
                             except
-                            (select ' || concat(col_list, ',' , combined_unique_key || ' as combined_unique_key') || ' from '|| src_db || '.' || src_schema || '.' || src_table  || ')
+                            (select ' || concat(col_list, ',' , combined_unique_key || ' as combined_unique_key') || ' from '|| src_db || '.' || src_schema || '.' || src_table  || ' where ' || where_condition || ')
                         ),
                         compare_content as (
 

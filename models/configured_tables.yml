@@ -21,6 +21,8 @@ models:
         description: An array containing the list of columns to include into the comparison, default is empty, which means every mutual common will be compared
       - name: exclude_columns
         description: Array containing the list of columns to exclude from the comparison
+      - name: where_condition
+        description: Add filter for your compared objects e.g. table is too big. Default to `1=1` if not specified
       - name: is_enabled
         description: Using this field we can enable or disables the validation
       - name: pipe_name

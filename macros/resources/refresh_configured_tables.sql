@@ -9,7 +9,7 @@
 
     truncate table {{ configured_table_model }};
     insert into {{ configured_table_model }}
-    (src_db,src_schema,src_table,trg_db,trg_schema,trg_table,pk,include_columns,exclude_columns,is_enabled,pipe_name)
+    (src_db,src_schema,src_table,trg_db,trg_schema,trg_table,pk,include_columns,exclude_columns,where_condition,is_enabled,pipe_name)
 
     {% for item in configured_tables -%}
 
@@ -36,6 +36,7 @@
           ,'{{ item.get("pk") }}' as pk
           ,{{ item.get("include_columns", []) | upper }} as include_columns
           ,{{ item.get("exclude_columns", []) | upper }} as exclude_columns
+          ,'{{ item.get("where_condition", "1=1") }}' as where_condition
           ,True as is_enabled
           ,'{{ item.get("pipe_name", "") }}' as pipe_name
 
