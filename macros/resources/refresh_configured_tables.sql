@@ -28,7 +28,7 @@
           ,'{{ item.get("trg_db", target.database) }}' as trg_db
           ,'{{ item.get("trg_schema", target.schema) }}' as trg_schema
       {%- else -%}
-          '{{ generate_database_name(item.get("trg_db")) }}' as trg_db
+          ,'{{ generate_database_name(item.get("trg_db")) }}' as trg_db
           ,'{{ generate_schema_name(item.get("trg_schema")) }}' as trg_schema
       {%- endif -%}
           ,'{{ item.get("trg_table", item.get("src_table")) }}' as trg_table
