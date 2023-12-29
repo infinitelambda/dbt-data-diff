@@ -26,6 +26,21 @@ models:
       - name: column_name
         description: Name of the compared column
       - name: match_percentage
-        description: Percentage data matching of the compared columns
+        description: |
+          Percentage data matching of the compared columns within the Diff Result (*).
+
+          (*) = different_in_source(Source - Target) + different_in_target(Target - Source)
+
+          Note: that this % is calculated by count(matched, in a column) / count(diff dataset).
+
+          For example, the Diff result of TableA is having 10 diff rows:
+          - 4 rows different_in_source
+          - 6 rows different_in_target
+
+          then, for each column:
+          - Column1: count(matched) = 10  --> match% = 1    --> there is no diff in this column
+          - Column2: count(matched) = 5   --> match% = 0.5  --> we have data diff in Column2 in 5 (out of 10) diff rows above
+          - Column3: count(matched) = 0   --> match% = 0    --> we have a critical data diff in Column3
+
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
