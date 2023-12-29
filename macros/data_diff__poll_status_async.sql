@@ -1,7 +1,7 @@
-{% macro data_diff__poll_status_async(invocation_id, poll_times=10, poll_wait_in_s=10) -%}
+{% macro data_diff__poll_status_async(p_invocation_id, poll_times=10, poll_wait_in_s=10) -%}
 
   {% set namespace = data_diff.get_namespace() %}
-  {% set dbt_invocation_id = invocation_id | replace("-", "_") %}
+  {% set dbt_invocation_id = p_invocation_id | replace("-", "_") %}
   {% set end_task = "data_diff__task_end_" ~ dbt_invocation_id %}
 
   {% set query -%}

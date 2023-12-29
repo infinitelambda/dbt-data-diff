@@ -1,4 +1,4 @@
-{% macro data_diff__cleanup(in_hook=false, invocation_id=none) -%}
+{% macro data_diff__cleanup(in_hook=false, p_invocation_id=none) -%}
 
   {% set namespace = data_diff.get_namespace() %}
 

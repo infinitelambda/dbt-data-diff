@@ -64,7 +64,7 @@
 
     --Clean up
     {% if is_cleanup -%}
-      {{ data_diff.data_diff__cleanup(in_hook=true, invocation_id=dbt_invocation_id) }}
+      {{ data_diff.data_diff__cleanup(in_hook=true, p_invocation_id=dbt_invocation_id) }}
     {%- endif %}
 
   {%- endset %}
