@@ -12,20 +12,21 @@
   {% set batches = dbt_utils.get_column_values(table=ref('configured_tables'), column='pipe_name') %}
   {% set log_model_fdn -%} {{ ref("log_for_validation") }} {%- endset %}
 
+  {% set utcnow = modules.datetime.datetime.utcnow() %}
   {% set query -%}
     --1. Build the DAG
     --root task
     create or replace task {{ namespace }}.{{ root_task }}
       warehouse = {{ target.warehouse }}
       as
-      insert into {{ log_model_fdn }} (start_time, end_time, sql_statement, diff_type)
-        values (sysdate(), null, null, 'start: task dag of {{ dbt_invocation_id }}');
+      insert into {{ log_model_fdn }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
+        values (sysdate(), null, 'execute task {{ namespace }}.{{ root_task }}', '{{ utcnow }}', 'DAG of Task: {{ dbt_invocation_id }}');
     --end task
     create or replace task {{ namespace }}.{{ end_task }}
       warehouse = {{ target.warehouse }}
       as
-      insert into {{ log_model_fdn }} (start_time, end_time, sql_statement, diff_type)
-        values (sysdate(), null, null, 'end: task dag of {{ dbt_invocation_id }}');
+      insert into {{ log_model_fdn }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
+        values (sysdate(), null, 'execute task {{ namespace }}.{{ end_task }}', '{{ utcnow }}', 'DAG of Task: {{ dbt_invocation_id }}');
 
     {% for batch_id in batches %}
 
