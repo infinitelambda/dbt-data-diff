@@ -29,7 +29,7 @@ macros:
       ```bash
       dbt run-operation \
         data_diff__poll_status_async \
-        --args '{invocation_id:"9642e2dd-9c10-4a10-a979-7d169b5d3731", poll_times:10, poll_wait_in_s:10}
+        --args '{p_invocation_id:"9642e2dd-9c10-4a10-a979-7d169b5d3731", poll_times:10, poll_wait_in_s:10}
       ```
     arguments:
       - name: p_invocation_id
