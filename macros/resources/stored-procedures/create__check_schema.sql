@@ -163,14 +163,14 @@
 
                 sql_statement := record.sql;
 
-                insert into {{ log_model }} (start_time, end_time, sql_statement,diff_type )
-                values (:run_timestamp, null, :sql_statement, 'schema');
+                insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type )
+                values (sysdate(), null, :sql_statement, :run_timestamp, 'schema');
 
                 execute immediate :sql_statement;
 
                 update  {{ log_model }}
                 set     end_time =  sysdate()
-                where   start_time = :run_timestamp
+                where   diff_start_time = :run_timestamp
                     and sql_statement = :sql_statement;
 
                 end for;

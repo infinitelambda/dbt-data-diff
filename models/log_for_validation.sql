@@ -15,6 +15,7 @@ select
   cast(null as {{ dbt.type_timestamp() }}) as start_time
   , cast(null as {{ dbt.type_timestamp() }}) as end_time
   , cast(null as {{ dbt.type_string() }}) as sql_statement
+  , cast(null as {{ dbt.type_timestamp() }}) as diff_start_time
   , cast(null as {{ dbt.type_string() }}) as diff_type
 
 from dummy

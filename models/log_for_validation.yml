@@ -4,10 +4,12 @@ models:
 
     columns:
       - name: start_time
-        description: Start time of the execution, can be used as a join key to the appropiate result table
+        description: Start time of the execution
       - name: end_time
         description: End time of the execution
       - name: sql_statement
         description: The executed sql_statement
+      - name: diff_start_time
+        description: Start time of all the executions in a diff type, can be used as a join key to the appropiate result table
       - name: diff_type
         description: Key, schema or data-diff type of entry

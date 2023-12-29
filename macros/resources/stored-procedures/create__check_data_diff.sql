@@ -193,27 +193,27 @@
           for record in c1 do
             sql_statement := record.sql_data_diff__for_a_table;
 
-            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_type)
-            values (:run_timestamp, null, :sql_statement, 'data-diff');
+            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
+            values (sysdate(), null, :sql_statement, :run_timestamp, 'data-diff');
 
             execute immediate :sql_statement;
 
             update  {{ log_model }}
             set     end_time =  sysdate()
-            where   start_time = :run_timestamp
+            where   diff_start_time = :run_timestamp
               and   sql_statement = :sql_statement;
 
 
             sql_statement := record.sql_data_diff__pivot_summary;
 
-            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_type)
-            values (:run_timestamp, null, :sql_statement, 'data-diff');
+            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
+            values (sysdate(), null, :sql_statement, :run_timestamp, 'data-diff');
 
             execute immediate :sql_statement;
 
             update  {{ log_model }}
             set     end_time =  sysdate()
-            where   start_time = :run_timestamp
+            where   diff_start_time = :run_timestamp
               and   sql_statement = :sql_statement;
 
           end for;
