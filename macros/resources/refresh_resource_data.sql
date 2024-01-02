@@ -1,4 +1,4 @@
-{% macro refresh_configured_tables() %}
+{% macro refresh_resource_data() %}
 
   {% set configured_tables = var("data_diff__configured_tables", []) %}
   {% set source_fixed_naming = var("data_diff__configured_tables__source_fixed_naming", true) %}
@@ -48,7 +48,7 @@
 
   {%- endset %}
 
-  {{ log("[SCRIPT]: refresh_configured_tables", info=True) if execute }}
+  {{ log("[SCRIPT]: refresh_resource_data", info=True) if execute }}
   {{ return(query) }}
 
 {% endmacro %}

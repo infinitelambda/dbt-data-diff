@@ -50,7 +50,7 @@ on-run-end:
       {{ data_diff.create_resources() }}
 
       {% if execute and var("data_diff__on_migration_data", true) %}
-        {{ data_diff.refresh_configured_tables() }}
+        {{ data_diff.refresh_resource_data() }}
       {% endif %}
 
     {% endif %}
