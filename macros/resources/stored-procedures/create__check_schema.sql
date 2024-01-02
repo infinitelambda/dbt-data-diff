@@ -22,24 +22,24 @@
 
                 select  '
                         insert into {{ result_model }} (
-                            src_db,
-                            src_schema,
-                            src_table,
-                            trg_db,
-                            trg_schema,
-                            trg_table,
-                            column_name,
-                            data_type,
-                            datetime_precision,
-                            numeric_precision,
-                            numeric_scale,
-                            common_col,
-                            common_col_text,
-                            is_exclusive_src,
-                            is_exclusive_trg,
-                            datatype_check,
-                            last_data_diff_timestamp,
-                            pipe_name
+                            src_db
+                            ,src_schema
+                            ,src_table
+                            ,trg_db
+                            ,trg_schema
+                            ,trg_table
+                            ,column_name
+                            ,data_type
+                            ,datetime_precision
+                            ,numeric_precision
+                            ,numeric_scale
+                            ,common_col
+                            ,common_col_text
+                            ,is_exclusive_src
+                            ,is_exclusive_trg
+                            ,datatype_check
+                            ,last_data_diff_timestamp
+                            ,pipe_name
                         )
 
                         with tables_to_compare as (

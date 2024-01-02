@@ -131,15 +131,15 @@
 
                         '
                         insert into {{ result_model }} (
-                            src_db,
-                            src_schema,
-                            src_table,
-                            trg_db,
-                            trg_schema,
-                            trg_table,
-                            column_name,
-                            match_percentage,
-                            last_data_diff_timestamp
+                            src_db
+                            ,src_schema
+                            ,src_table
+                            ,trg_db
+                            ,trg_schema
+                            ,trg_table
+                            ,column_name
+                            ,match_percentage
+                            ,last_data_diff_timestamp
                         )
                         with compare_content as (
 
