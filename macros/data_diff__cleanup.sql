@@ -15,7 +15,7 @@
   {% else %}
     {{ log("[RUN]: data_diff__cleanup", info=True) }}
     {% set results = run_query(query) %}
-    {{ log(results, info=True) }}
+    {{ log(results.rows, info=True) }}
   {% endif %}
 
 {%- endmacro %}

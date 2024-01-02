@@ -1,4 +1,4 @@
-{% macro data_diff__run_async(in_hook=false, is_cleanup=false) -%}
+{% macro data_diff__run_async(is_polling_status=false, in_hook=false, is_cleanup=false) -%}
 
   {% set namespace = data_diff.get_namespace() %}
   {% set dbt_invocation_id = invocation_id | replace("-", "_") %}
@@ -64,7 +64,11 @@
     execute task {{ namespace }}.{{ root_task }};
 
     --Clean up
+    {{ log('is_polling_status: ' ~ is_polling_status, info=True) }}
+    {{ log('in_hook: ' ~ in_hook, info=True) }}
+    {{ log('is_cleanup: ' ~ is_cleanup, info=True) }}
     {% if is_cleanup -%}
+      {{ log('is_cleanup: ' ~ is_cleanup, info=True) }}
       {{ data_diff.data_diff__cleanup(in_hook=true, p_invocation_id=dbt_invocation_id) }}
     {%- endif %}
 
@@ -72,11 +76,15 @@
 
   {% if in_hook %}
     {{ log("[SCRIPT]: data_diff__run_async", info=True) if execute }}
-    {{ return(query) }}
+    {{ return(query) }} {# polling status doesn't support in hook #}
   {% else %}
     {{ log("[RUN]: data_diff__run_async", info=True) }}
     {% set results = run_query(query) %}
-    {{ log(results, info=True) }}
+    {{ log(results.rows, info=True) }}
+
+    {% if is_polling_status -%}
+      {{ data_diff.data_diff__poll_status_async(p_invocation_id=dbt_invocation_id) }}
+    {%- endif %}
   {% endif %}
 
   {{ log(
@@ -92,6 +100,8 @@
       info=True
     )
   }}
-  {{ log("💡 Poll status of " ~ (end_task | upper) ~ " to know if the DAG finished", info=True) }}
+  {% if not is_polling_status or in_hook -%}
+    {{ log("💡 Poll status of " ~ (end_task | upper) ~ " to know if the DAG finished", info=True) }}
+  {%- endif %}
 
 {%- endmacro %}

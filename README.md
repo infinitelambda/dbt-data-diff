@@ -82,6 +82,8 @@ Then, use the migration command above to reset the configured data.
 dbt run-operation data_diff__run        # normal mode, run in sequence, wait unitl finished
 # OR
 dbt run-operation data_diff__run_async  # async mode, parallel, no waiting
+dbt run-operation data_diff__run_async --args '{is_polling_status: true}'
+                                        # async mode, parallel, status polling
 ```
 
 > **NOTE**: In async mode, we leverage the DAG of tasks, therefore the dbt's ROLE will need granting the addtional privilege:</br></br>

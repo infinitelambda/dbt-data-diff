@@ -1,4 +1,4 @@
-{% macro data_diff__poll_status_async(p_invocation_id, poll_times=10, poll_wait_in_s=10) -%}
+{% macro data_diff__poll_status_async(p_invocation_id, poll_times=100, poll_wait_in_s=10) -%}
 
   {% set namespace = data_diff.get_namespace() %}
   {% set dbt_invocation_id = p_invocation_id | replace("-", "_") %}
@@ -8,6 +8,8 @@
 
     use schema {{ namespace }};
 
+    call system$wait({{ poll_wait_in_s }}, 'SECONDS');
+
     select    state -- poll until SUCCEEDED
     from      table(information_schema.task_history(
                 task_name => '{{ end_task | upper }}'
@@ -15,17 +17,15 @@
     order by  scheduled_time desc
     limit     1;
 
-    call system$wait({{ poll_wait_in_s }}, 'SECONDS');
-
   {%- endset %}
 
-  {% for item in poll_times %}
+  {% for item in range(0, poll_times) %}
 
     {% set query_state = dbt_utils.get_single_value(query, default="") %}
-    {{ log("Polling #" ~ item ~ ": " ~ query_state, info=True) }}
+    {{ log("[RUN] Polling #" ~ item ~ ": " ~ (query_state or 'WAITING'), info=True) }}
 
-    {% if item == "SUCCEEDED" %}
-      {{ return() }}
+    {% if query_state == "SUCCEEDED" %}
+      {{ return(none) }}
     {% endif %}
 
   {% endfor %}

@@ -14,6 +14,9 @@ macros:
     description: |
       Execute (or Produce the script of) the Data Diff's stored procedures, wrapped into a DAG of Tasks.
     arguments:
+      - name: is_polling_status [default=false]
+        type: boolean
+        description: True to keep polling task status until it's finished or timout. Note, it doesn't support to run in hook
       - name: in_hook [default=false]
         type: boolean
         description: True to generate SQL script only, False to exclude SQL right after the generation
@@ -35,7 +38,7 @@ macros:
       - name: p_invocation_id
         type: string
         description: The coresponding dbt invocation_id
-      - name: poll_times [default=10]
+      - name: poll_times [default=100]
         type: integer
         description: Number of times it tries to execute the polling script
       - name: poll_wait_in_s [default=10]
