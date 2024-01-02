@@ -3,6 +3,9 @@ models:
     description: |
       Aggregation of the **Key** diff
 
+      - 👍 GOOD: No data
+      - ⚠️ BAD: Has data, each row stands for a key diff for a diff run
+
     columns:
       - name: src_db
         description: Database name of the source object to be compared

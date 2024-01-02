@@ -3,6 +3,9 @@ models:
     description: |
       Aggregation of the **Schema** diff
 
+      - 👍 GOOD: Has data, and `number_of_columns = mutual_columns`
+      - ⚠️ BAD: Has data, and `number_of_columns > mutual_columns`
+
     columns:
       - name: src_db
         description: Database name of the source object to be compared
