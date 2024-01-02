@@ -64,9 +64,6 @@
     execute task {{ namespace }}.{{ root_task }};
 
     --Clean up
-    {{ log('is_polling_status: ' ~ is_polling_status, info=True) }}
-    {{ log('in_hook: ' ~ in_hook, info=True) }}
-    {{ log('is_cleanup: ' ~ is_cleanup, info=True) }}
     {% if is_cleanup -%}
       {{ log('is_cleanup: ' ~ is_cleanup, info=True) }}
       {{ data_diff.data_diff__cleanup(in_hook=true, p_invocation_id=dbt_invocation_id) }}
