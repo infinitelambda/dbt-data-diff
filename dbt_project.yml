@@ -15,12 +15,8 @@ vars:
   data_diff__on_run_hook: false # Enable to run data diff's hook
   # data_diff__database: COMMON
   # data_diff__schema: DATA_DIFF
-
-  # data_diff__configured_tables__source_fixed_naming: true
-  #                                     # Set false to let (only) source db & schema naming follow the configured one in dbt
-  #                                     # we always expect the target is fixed to Prod for example
-  # data_diff__configured_tables__target_fixed_naming: true
-  #                                     # same as above but for the target
+  data_diff__configured_tables__source_fixed_naming: true # Set false to let (only) source db & schema naming follow the configured one in dbt
+  data_diff__configured_tables__target_fixed_naming: true # Set false to let (only) target db & schema naming follow the configured one in dbt
   # data_diff__configured_tables:
   #   - src_db: src_db                  # optional, empty to get target.database
   #     src_schema: src_schema          # optional, empty to get target.schema
@@ -35,7 +31,6 @@ vars:
   #     pipe_name: ''                   # optional, 1=1 by default
   #                                     # in non-async mode, it must be empty if specified
   #                                     # in async mode, it can be any value e.g. "1", "batch_dat", "batch_milan"
-
   # data_diff__key_check_summary__alias: report_of_key_check
   # data_diff__key_check__alias: result_of_key_check
   # data_diff__schema_check_summary__alias: report_of_schema_check
