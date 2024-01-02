@@ -43,4 +43,7 @@ models:
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
       - name: pipe_name
-        description: Specify the pipe name which is used in the asynchronous run fostering the parallel
+        description: |
+          Specify the pipe name which is used in the asynchronous run fostering the parallel.
+
+          NOTE: This field is necessarily exiting here in order to be used in data-diff async run.

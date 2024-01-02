@@ -22,8 +22,3 @@ select
 from {{ ref('key_check') }}
 
 group by all
-
-qualify row_number() over (
-  partition by src_db, src_schema, src_table, trg_db, trg_schema, trg_table
-  order by last_data_diff_timestamp desc
-) = 1
