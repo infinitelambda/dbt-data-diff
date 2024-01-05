@@ -96,7 +96,7 @@ poe data-diff-run       # trigger the data-diff
 poe data-diff-test      # test the package and the data-diff result
 ```
 
-Alternatively, you could use 1 single command: `poe data-diff` 👍
+Alternatively, you could use 1 single command: `poe data-diff-run` OR `poe data-diff-ru-async-wait`👍
 
 ## Committing
 
@@ -112,7 +112,7 @@ There are 2 main checks:
 
 Code can be merged into the current development branch `main` by opening a pull request. A `dbt-data-diff` maintainer will review your PR. They may suggest code revision for style or clarity, or request that you add unit or integration test(s). These are good things! We believe that, with a little bit of help, anyone can contribute high-quality code.
 
-Automated tests run via GitHub Actions. If you're a first-time contributor, all tests (including code checks and unit tests) will require a maintainer to approve. Changes in the `dbt-data-diff` repository trigger integration tests against Postgres. dbt Labs also provides CI environments in which to test changes to other adapters, triggered by PRs in those adapters' repositories, as well as periodic maintenance checks of each adapter in concert with the latest `dbt-data-diff` code changes.
+Automated tests run via GitHub Actions. If you're a first-time contributor, all tests (including code checks and unit tests) will require a maintainer to approve. Changes in the `dbt-data-diff` repository trigger integration tests against Snowflake 💰.
 
 Once all tests are passing and your PR has been approved, a `dbt-data-diff` maintainer will merge your changes into the active development branch. And that's it!
 
