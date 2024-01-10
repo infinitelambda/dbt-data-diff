@@ -18,7 +18,19 @@ This package provides the diff results into 3 categories:
 
 - **Key diff**: Compare the Primary Key (`pk`) only.
 - **Schema diff**: Compare the List of columns and their Data types.
-- **Content diff** (aka Data diff): Compare all column values. The columns will be filtered by configuration (`include_columns` and `exclude_columns`). Behind the scenes, this operation does not require the Primary Key (PK) config, it will perform Bulk Operation (`INTERCEPT` or `MINUS`) and make an aggregation to make up the column level's match percentage.
+- **Content diff** (aka Data diff): Compare all column values. The columns will be filtered by each table's configuration (`include_columns` and `exclude_columns`), and the data can be also filtered by the `where` config. Behind the scenes, this operation does not require the Primary Key (PK) config, it will perform Bulk Operation (`INTERCEPT` or `MINUS`) and make an aggregation to make up the column level's match percentage.
+
+Alternative packages for consideration:
+
+| Feature                               | Supported Package                                               | Notes                                     |
+|:--------------------------------------|:----------------------------------------------------------------|:------------------------------------------|
+| Key diff                              | `dbt-data-diff`, [`data-diff`](https://github.com/datafold/data-diff) & [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
+| Schema diff | `dbt-data-diff`, [`data-diff`*](https://github.com/datafold/data-diff) & [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
+| Content diff | `dbt-data-diff`, [`data-diff`*](https://github.com/datafold/data-diff) & [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
+| Yaml Configuration | `dbt-data-diff` | `data-diff` will use the `toml` file, `dbt-audit-helper` will require to create new models for each comparison |
+| Query & Execution log | `dbt-data-diff` | Except for dbt's log, this package to be very transparent on which diff queries executed which are exposed in `log_for_validation` model |
+| Snowflake-native Stored Proc | `dbt-data-diff` | Purely built as Snowflake SQL native stored procedures |
+| Multi-warehouse supported | [`data-diff`](https://github.com/datafold/data-diff) & [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
 
 ## Installation
 
@@ -64,7 +76,7 @@ In the above:
 
 ### Configure the tables that need comparing in `dbt_project.yml`
 
-We're going to use the `data_diff__configured_tables` variable.
+We're going to use the `data_diff__configured_tables` variable (Check out [dbt_project.yml](./dbt_project.yml)/`vars` section for more details!)
 
 For example, we want to compare `table_x` between **prod** db and **dev** one:
 
