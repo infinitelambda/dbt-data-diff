@@ -24,13 +24,13 @@ Alternative packages for consideration:
 
 | Feature                                         | Supported Package                                               | Notes                           |
 |:------------------------------------------------|:----------------------------------------------------------------|:--------------------------------|
-| Key diff                                        | `dbt-data-diff` </br>[`data-diff`](https://github.com/datafold/data-diff) </br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
-| Schema diff                                     | `dbt-data-diff` </br>[`data-diff`*](https://github.com/datafold/data-diff) </br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
-| Content diff                                    | `dbt-data-diff` </br>[`data-diff`*](https://github.com/datafold/data-diff) </br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
+| Key diff                                        | `dbt-data-diff`<br>[`data-diff`](https://github.com/datafold/data-diff)<br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
+| Schema diff                                     | `dbt-data-diff`<br>[`data-diff`*](https://github.com/datafold/data-diff)<br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
+| Content diff                                    | `dbt-data-diff`<br>[`data-diff`*](https://github.com/datafold/data-diff)<br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
 | Yaml Configuration                              | `dbt-data-diff` | `data-diff` will use the `toml` file, `dbt-audit-helper` will require to create new models for each comparison |
 | Query & Execution log                           | `dbt-data-diff` | Except for dbt's log, this package to be very transparent on which diff queries executed which are exposed in `log_for_validation` model |
 | Snowflake-native Stored Proc                    | `dbt-data-diff` | Purely built as Snowflake SQL native stored procedures |
-| Multi-warehouse supported                       | [`data-diff`](https://github.com/datafold/data-diff) </br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
+| Multi-warehouse supported                       | [`data-diff`](https://github.com/datafold/data-diff)<br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
 
 ## Installation
 
@@ -107,7 +107,7 @@ dbt run-operation data_diff__run_async --args '{is_polling_status: true}'
 ```
 
 > **NOTE**: In async mode, we leverage the DAG of tasks, therefore the dbt's ROLE will need granting the addtional privilege:</br></br>
-> `use role accountadmin;` </br>
+> `use role accountadmin;`<br>
 > `grant execute task on account to role {{ target.role }};`</br>
 
 <details> <!-- markdownlint-disable no-inline-html -->
