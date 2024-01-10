@@ -14,13 +14,13 @@ Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
 ## Core Concept 🌟
 
-This package provides the diff results into 3 categories:
+`dbt-data-diff` package provides the diff results into 3 categories:
 
-- **Key diff**: Compare the Primary Key (`pk`) only.
-- **Schema diff**: Compare the List of columns and their Data types.
-- **Content diff** (aka Data diff): Compare all column values. The columns will be filtered by each table's configuration (`include_columns` and `exclude_columns`), and the data can be also filtered by the `where` config. Behind the scenes, this operation does not require the Primary Key (PK) config, it will perform Bulk Operation (`INTERCEPT` or `MINUS`) and make an aggregation to make up the column level's match percentage.
+- **Key diff** 🥉: Compare the Primary Key (`pk`) only.
+- **Schema diff** 🥈: Compare the List of columns and their Data types.
+- **Content diff** 🥇 (aka Data diff): Compare all column values. The columns will be filtered by each table's configuration (`include_columns` and `exclude_columns`), and the data can be also filtered by the `where` config. Behind the scenes, this operation does not require the Primary Key (PK) config, it will perform Bulk Operation (`INTERCEPT` or `MINUS`) and make an aggregation to make up the column level's match percentage.
 
-Alternative packages for consideration:
+💡 Alternative packages for consideration:
 
 | Feature| Supported Package | Notes |
 |:-------|:------------------|:------|
