@@ -22,15 +22,15 @@ This package provides the diff results into 3 categories:
 
 Alternative packages for consideration:
 
-| Feature                                         | Supported Package                                               | Notes                           |
+| <div style="width:30%">Feature</div>          | <div style="width:30%">Supported Package</div>        | Notes                           |
 |:------------------------------------------------|:----------------------------------------------------------------|:--------------------------------|
-| Key diff                                        | `dbt-data-diff`<br>[`data-diff`](https://github.com/datafold/data-diff)<br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
-| Schema diff                                     | `dbt-data-diff`<br>[`data-diff`*](https://github.com/datafold/data-diff)<br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
-| Content diff                                    | `dbt-data-diff`<br>[`data-diff`*](https://github.com/datafold/data-diff)<br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
-| Yaml Configuration                              | `dbt-data-diff` | `data-diff` will use the `toml` file, `dbt-audit-helper` will require to create new models for each comparison |
-| Query & Execution log                           | `dbt-data-diff` | Except for dbt's log, this package to be very transparent on which diff queries executed which are exposed in `log_for_validation` model |
-| Snowflake-native Stored Proc                    | `dbt-data-diff` | Purely built as Snowflake SQL native stored procedures |
-| Multi-warehouse supported                       | [`data-diff`](https://github.com/datafold/data-diff)<br>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
+| Key diff                                        | 📦 `dbt-data-diff`<br>📦 [`data-diff`](https://github.com/datafold/data-diff)<br>📦 [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
+| Schema diff                                     | 📦 `dbt-data-diff`<br>📦 [`data-diff`*](https://github.com/datafold/data-diff)<br>📦 [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
+| Content diff                                    | 📦 `dbt-data-diff`<br>📦 [`data-diff`*](https://github.com/datafold/data-diff)<br>📦 [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
+| Yaml Configuration                              | 📦 `dbt-data-diff` | `data-diff` will use the `toml` file, `dbt-audit-helper` will require to create new models for each comparison |
+| Query & Execution log                           | 📦 `dbt-data-diff` | Except for dbt's log, this package to be very transparent on which diff queries executed which are exposed in `log_for_validation` model |
+| Snowflake-native Stored Proc                    | 📦 `dbt-data-diff` | Purely built as Snowflake SQL native stored procedures |
+| Multi-warehouse supported                       | 📦 [`data-diff`](https://github.com/datafold/data-diff)<br>📦 [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
 
 ## Installation
 
