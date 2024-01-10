@@ -52,29 +52,18 @@ vars:
   data_diff__schema: DATA_DIFF
 ```
 
-- Create/Migrate the `data-diff`'s resources
+- Create/Migrate the `data-diff`'s DDL resources
 
 ```bash
 dbt deps
 dbt run -s data_diff \
   --full-refresh \
-  --vars '{data_diff__on_migration: true, data_diff__on_migration_data: true, data_diff__full_refresh: true}'
+  --vars '{data_diff__on_migration: true}'
 ```
-
-<details> <!-- markdownlint-disable no-inline-html -->
-  <summary>💡 click me</summary>
-
-In the above:
-
-- `--full-refresh` and `data_diff__full_refresh`: To re-create all data-diff models
-- `data_diff__on_migration: true`: To re-create the stored procedures
-- `data_diff__on_migration_data: true`: To reset the configured data
-
-</details>
 
 ## Quick Demo
 
-### Configure the tables that need comparing in `dbt_project.yml`
+### 1. Configure the tables that need comparing in `dbt_project.yml`
 
 We're going to use the `data_diff__configured_tables` variable (Check out [dbt_project.yml](./dbt_project.yml)/`vars` section for more details!)
 
@@ -94,9 +83,30 @@ vars:
       exclude_columns: ["loaded_at"] # [] to exclude loaded_at field
 ```
 
-Then, use the migration command above to reset the configured data.
+### 2. Refresh the configured tables's data
 
-### Trigger the validation via dbt operation
+We can skip this step if you already did it. If not, let's run below command:
+
+```bash
+dbt run -s data_diff \
+  --full-refresh \
+  --vars '{data_diff__on_migration: true, data_diff__on_migration_data: true, data_diff__full_refresh: true}'
+```
+
+<details> <!-- markdownlint-disable no-inline-html -->
+  <summary>📖 click me</summary>
+
+In the above:
+
+- `--full-refresh` and `data_diff__full_refresh`: To re-create all data-diff models
+- `data_diff__on_migration: true`: To re-create the stored procedures
+- `data_diff__on_migration_data: true`: To reset the configured data
+
+</details>
+
+### 3. Trigger the validation via dbt operation
+
+Now, let's start the diff run:
 
 ```bash
 dbt run-operation data_diff__run        # normal mode, run in sequence, wait unitl finished
@@ -111,7 +121,7 @@ dbt run-operation data_diff__run_async --args '{is_polling_status: true}'
 > `grant execute task on account to role {{ target.role }};`</br>
 
 <details> <!-- markdownlint-disable no-inline-html -->
-  <summary>Or via dbt hook by default (it will run an incremental load for all models)</summary>
+  <summary>📖 Or via dbt hook by default (it will run an incremental load for all models)</summary>
 
 ```yaml
 # dbt_project.yml
