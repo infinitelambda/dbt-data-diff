@@ -14,7 +14,7 @@ Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
 ## Core Concept 🌟
 
-`dbt-data-diff` package provides the diff results into 3 categories:
+`dbt-data-diff` package provides the diff results into 3 categories or 3 levels of diff from _Bronze > Silver > Gold_ as following:
 
 - 🥉 **Key diff**: Compare the Primary Key (`pk`) only ([models](./models/01_key_diff/))
 - 🥈 **Schema diff**: Compare the List of columns and their Data types ([models](./models/02_schema_diff/))
