@@ -1,6 +1,17 @@
 <!-- markdownlint-disable no-inline-html no-alt-text -->
 # dbt-data-diff
 
+- [dbt-data-diff](#dbt-data-diff)
+  - [Core Concept 🌟](#core-concept-)
+  - [Installation](#installation)
+  - [Quick Demo](#quick-demo)
+    - [1. Configure the tables that need comparing in `dbt_project.yml`](#1-configure-the-tables-that-need-comparing-in-dbt_projectyml)
+    - [2. Refresh the configured tables's data](#2-refresh-the-configured-tabless-data)
+    - [3. Trigger the validation via dbt operation](#3-trigger-the-validation-via-dbt-operation)
+  - [How to Contribute](#how-to-contribute)
+  - [Features comparison to the alternative packages](#features-comparison-to-the-alternative-packages)
+  - [About Infinite Lambda](#about-infinite-lambda)
+
 Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
 **_Who is this for?_**
