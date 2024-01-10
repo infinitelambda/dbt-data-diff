@@ -38,7 +38,7 @@
           ,{{ item.get("exclude_columns", []) | upper }} as exclude_columns
           ,'{{ item.get("where_condition", "1=1") }}' as where_condition
           ,True as is_enabled
-          ,'{{ item.get("pipe_name", "") }}' as pipe_name
+          ,'{{ item.get("pipe_name", "") }}' as pipe_name --TODO: auto pipe name here?
 
       {% if not loop.last -%}
         union all

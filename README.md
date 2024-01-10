@@ -14,7 +14,7 @@ Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
 ## Core Concept 🌟
 
-`dbt-data-diff` package provides the diff results into 3 categories or 3 levels of diff from _Bronze > Silver > Gold_ as following:
+`dbt-data-diff` package provides the diff results into 3 categories or 3 levels of the diff from _Bronze > Silver > Gold_ as follows:
 
 - 🥉 **Key diff**: Compare the Primary Key (`pk`) only ([models](./models/01_key_diff/))
 - 🥈 **Schema diff**: Compare the List of columns and their Data types ([models](./models/02_schema_diff/))
@@ -30,6 +30,8 @@ Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 | Yaml Configuration | <ul><li>`dbt-data-diff`</li></ul> | `data-diff` will use the `toml` file, `dbt-audit-helper` will require to create new models for each comparison |
 | Query & Execution log | <ul><li>`dbt-data-diff`</li></ul> | Except for dbt's log, this package to be very transparent on which diff queries executed which are exposed in [`log_for_validation`](./models/log_for_validation.yml) model |
 | Snowflake-native Stored Proc | <ul><li>`dbt-data-diff`</li></ul> | Purely built as Snowflake SQL native stored procedures |
+| Parallelism | <ul><li>`dbt-data-diff`</li><li>[`data-diff`](https://github.com/datafold/data-diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt-audit-helper)</li></ul> | `dbt-data-diff` leverages Snowflake Task DAG, the others use python threading |
+| Asynchronous | <ul><li>`dbt-data-diff`</li></ul> | Trigger run and decide to poll the status when needed |
 | Multi-warehouse supported | <ul><li>`dbt-data-diff`(*)</li><li>[`data-diff`](https://github.com/datafold/data-diff)</li><li>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper)</li></ul> | (*): Future Consideration 🏃 |
 
 ## Installation
@@ -63,7 +65,7 @@ dbt run -s data_diff --vars '{data_diff__on_migration: true}'
 
 ### 1. Configure the tables that need comparing in `dbt_project.yml`
 
-We're going to use the `data_diff__configured_tables` variable (Check out [dbt_project.yml](./dbt_project.yml)/`vars` section for more details!)
+We're going to use the `data_diff__configured_tables` variable (Check out the [dbt_project.yml](./dbt_project.yml)/`vars`` section for more details!)
 
 For example, we want to compare `table_x` between **prod** db and **dev** one:
 
@@ -83,7 +85,7 @@ vars:
 
 ### 2. Refresh the configured tables's data
 
-We can skip this step if you already did it. If not, let's run below command:
+We can skip this step if you already did it. If not, let's run the below command:
 
 ```bash
 dbt run -s data_diff \
@@ -91,7 +93,7 @@ dbt run -s data_diff \
   --vars '{data_diff__on_migration: true, data_diff__on_migration_data: true, data_diff__full_refresh: true}'
 ```
 
-<details> <!-- markdownlint-disable no-inline-html -->
+<details>
   <summary>📖 click me</summary>
 
 In the above:
