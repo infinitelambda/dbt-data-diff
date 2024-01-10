@@ -10,11 +10,11 @@ clean-targets:
   - "logs"
 
 vars:
-  data_diff__on_migration: false # Enable to deploy the package's resources e.g. stored proc, take precedence to `data_diff__on_migration_data`
+  # data_diff__database: COMMON   # This will be passed through `generate_database_name` macro
+  # data_diff__schema: DATA_DIFF  # This will be passed through `generate_schema_name` macro
+  data_diff__on_migration: false      # Enable to deploy the package's resources e.g. stored proc, take precedence to `data_diff__on_migration_data`
   data_diff__on_migration_data: false # Enable to refresh the list of tables configured for the validation
-  data_diff__on_run_hook: false # Enable to run data diff's hook
-  # data_diff__database: COMMON
-  # data_diff__schema: DATA_DIFF
+  data_diff__on_run_hook: false       # Enable to run data diff's hook
   data_diff__configured_tables__source_fixed_naming: true # Set false to let (only) source db & schema naming follow the configured one in dbt
   data_diff__configured_tables__target_fixed_naming: true # Set false to let (only) target db & schema naming follow the configured one in dbt
   # data_diff__configured_tables:
