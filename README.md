@@ -24,7 +24,7 @@ Alternative packages for consideration:
 
 | Feature| Supported Package | Notes |
 |:-------|:------------------|:------|
-| Key diff | `📦dbt-data-diff`<br>[`📦data-diff`](https://github.com/datafold/data-diff)<br>[`📦dbt_audit_helper`](https://github.com/dbt-labs/dbt-audit-helper) | ✅ |
+| Key diff | - `dbt-data-diff`<br>- [`data-diff`](https://github.com/datafold/data-diff)<br>- [`dbt_audit_helper`](https://github.com/dbt-labs/dbt-audit-helper) | ✅ |
 | Schema diff | `📦dbt-data-diff`<br>[`📦data-diff`(*)](https://github.com/datafold/data-diff)<br>[`📦dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
 | Content diff | `📦dbt-data-diff`<br>[`📦data-diff`(*)](https://github.com/datafold/data-diff)<br>[`📦dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
 | Yaml Configuration | `📦dbt-data-diff` | `data-diff` will use the `toml` file, `dbt-audit-helper` will require to create new models for each comparison |
