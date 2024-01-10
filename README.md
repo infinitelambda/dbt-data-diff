@@ -22,8 +22,8 @@ This package provides the diff results into 3 categories:
 
 Alternative packages for consideration:
 
-| <div style="width:30%">Feature</div>          | <div style="width:30%">Supported Package</div>        | Notes                           |
-|:------------------------------------------------|:----------------------------------------------------------------|:--------------------------------|
+| <div style="width:30%">Feature</div>            | <div style="width:30%">Supported Package</div>  | <div style="width:40%">Notes</div>              |
+|:------------------------------------------------|:------------------------------------------------|:------------------------------------------------|
 | Key diff                                        | 📦 `dbt-data-diff`<br>📦 [`data-diff`](https://github.com/datafold/data-diff)<br>📦 [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | |
 | Schema diff                                     | 📦 `dbt-data-diff`<br>📦 [`data-diff`*](https://github.com/datafold/data-diff)<br>📦 [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
 | Content diff                                    | 📦 `dbt-data-diff`<br>📦 [`data-diff`*](https://github.com/datafold/data-diff)<br>📦 [`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper) | (*): Only available in the paid-version 💰 |
