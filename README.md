@@ -56,9 +56,7 @@ vars:
 
 ```bash
 dbt deps
-dbt run -s data_diff \
-  --full-refresh \
-  --vars '{data_diff__on_migration: true}'
+dbt run -s data_diff --vars '{data_diff__on_migration: true}'
 ```
 
 ## Quick Demo
