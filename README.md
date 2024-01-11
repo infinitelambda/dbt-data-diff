@@ -28,10 +28,10 @@ Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 `dbt-data-diff` package provides the diff results into 3 categories or 3 levels of the diff as follows:
 
 - 🥉 **Key diff** ([models](./models/01_key_diff/)): Compare the Primary Key (`pk`) only
-- 🥈 **Schema diff** ([models](./models/02_schema_diff/)): Compare the List of columns and their Data types
-- 🥇 **Content diff** (aka Data diff) ([models](./models/03_content_diff/)): Compare all column values. The columns will be filtered by each table's configuration (`include_columns` and `exclude_columns`), and the data can be also filtered by the `where` config. Behind the scenes, this operation does not require the Primary Key (PK) config, it will perform Bulk Operation (`INTERCEPT` or `MINUS`) and make an aggregation to make up the column level's match percentage
+- 🥈 **Schema diff** ([models](./models/02_schema_diff/)): Compare the list of column's Names and Data Types
+- 🥇 **Content diff** (aka Data diff) ([models](./models/03_content_diff/)): Compare all cell values. The columns will be filtered by each table's configuration (`include_columns` and `exclude_columns`), and the data can be also filtered by the `where` config. Behind the scenes, this operation does not require the Primary Key (PK) config, it will perform Bulk Operation (`INTERCEPT` or `MINUS`) and make an aggregation to make up the column level's match percentage
 
-In behind the scenes, this package leverages the ❄️ [Scripting Stored Procedure](https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-snowflake-scripting) which provides the 3 ones correspondingly with 3 diff categories. Moreover, it utilizes the [DAG of Tasks](https://docs.snowflake.com/en/user-guide/tasks-intro?utm_source=legacy&utm_medium=serp&utm_term=task+DAG#label-task-dag) to optimize the speed with the parallelism once enabled by configuration 🚀
+Behind the scenes, this package leverages the ❄️ [Scripting Stored Procedure](https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-snowflake-scripting) which provides the 3 ones correspondingly with 3 categories as above. Moreover, it utilizes the [DAG of Tasks](https://docs.snowflake.com/en/user-guide/tasks-intro?utm_source=legacy&utm_medium=serp&utm_term=task+DAG#label-task-dag) to optimize the speed with the parallelism once enabled by configuration 🚀
 
 ## Installation
 
@@ -119,7 +119,7 @@ dbt run-operation data_diff__run_async --args '{is_polling_status: true}'
 > `use role accountadmin;`<br>
 > `grant execute task on account to role {{ target.role }};`</br>
 
-<details> <!-- markdownlint-disable no-inline-html -->
+<details>
   <summary>📖 Or via dbt hook by default (it will run an incremental load for all models)</summary>
 
 ```yaml
@@ -164,17 +164,17 @@ dbt run -s data_diff --vars '{data_diff__on_run_hook: true}'
 
 ## Features comparison to the alternative packages
 
-| Feature| Supported Package | Notes |
-|:-------|:------------------|:------|
-| Key diff | <ul><li>`dbt-data-diff`</li><li>[`data-diff`](https://github.com/datafold/data-diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt-audit-helper)</li></ul> | ✅ |
-| Schema diff | <ul><li>`dbt-data-diff`</li><li>[`data-diff`(*)](https://github.com/datafold/data-diff)</li><li>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper)</li></ul> | (*): Only available in the paid-version 💰 |
-| Content diff | <ul><li>`dbt-data-diff`</li><li>[`data-diff`(*)](https://github.com/datafold/data-diff)</li><li>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper)</li></ul> | (*): Only available in the paid-version 💰 |
-| Yaml Configuration | <ul><li>`dbt-data-diff`</li></ul> | `data-diff` will use the `toml` file, `dbt-audit-helper` will require to create new models for each comparison |
-| Query & Execution log | <ul><li>`dbt-data-diff`</li></ul> | Except for dbt's log, this package to be very transparent on which diff queries executed which are exposed in [`log_for_validation`](./models/log_for_validation.yml) model |
-| Snowflake-native Stored Proc | <ul><li>`dbt-data-diff`</li></ul> | Purely built as Snowflake SQL native stored procedures |
-| Parallelism | <ul><li>`dbt-data-diff`</li><li>[`data-diff`](https://github.com/datafold/data-diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt-audit-helper)</li></ul> | `dbt-data-diff` leverages Snowflake Task DAG, the others use python threading |
-| Asynchronous | <ul><li>`dbt-data-diff`</li></ul> | Trigger run and decide to poll the run status when needed |
-| Multi-warehouse supported | <ul><li>`dbt-data-diff`(*)</li><li>[`data-diff`](https://github.com/datafold/data-diff)</li><li>[`dbt-audit-helper`](https://github.com/dbt-labs/dbt-audit-helper)</li></ul> | (*): Future Consideration 🏃 |
+| Feature               | Supported Package                                          | Notes                                 |
+|:----------------------|:-----------------------------------------------------------|:--------------------------------------|
+| Key diff              | <ul><li>`dbt_data_diff`</li><li>[`data_diff`](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | ✅                                   |
+| Schema diff           | <ul><li>`dbt_data_diff`</li><li>[`data_diff`(*)](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | (*): Only available in the paid-version 💰 |
+| Content diff          | <ul><li>`dbt_data_diff`</li><li>[`data_diff`(*)](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | (*): Only available in the paid-version 💰 |
+| Yaml Configuration    | <ul><li>`dbt_data_diff`</li></ul>                           | `data_diff` will use the `toml` file, `dbt_audit_helper` will require to create new models for each comparison |
+| Query & Execution log  | <ul><li>`dbt_data_diff`</li></ul>                           | Except for dbt's log, this package to be very transparent on which diff queries executed which are exposed in [`log_for_validation`](./models/log_for_validation.yml) model |
+| Snowflake-native Stored Proc | <ul><li>`dbt_data_diff`</li></ul>                      | Purely built as Snowflake SQL native stored procedures |
+| Parallelism           | <ul><li>`dbt_data_diff`</li><li>[`data_diff`](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | `dbt_data_diff` leverages Snowflake Task DAG, the others use python threading |
+| Asynchronous          | <ul><li>`dbt_data_diff`</li></ul>                           | Trigger run & go away. Decide to continously poll the run status and waiting until finished if needed |
+| Multi-warehouse supported | <ul><li>`dbt_data_diff`(*)</li><li>[`data_diff`](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | (*): Future Consideration 🏃 |
 
 ## About Infinite Lambda
 
