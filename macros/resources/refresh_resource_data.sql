@@ -16,29 +16,37 @@
       select
 
       {% if source_fixed_naming -%}
-          '{{ item.get("src_db", target.database) }}' as src_db
-          ,'{{ item.get("src_schema", target.schema) }}' as src_schema
+        '{{ item.get("src_db", target.database) }}' as src_db
+        ,'{{ item.get("src_schema", target.schema) }}' as src_schema
       {%- else -%}
-          '{{ generate_database_name(item.get("src_db")) }}' as src_db
-          ,'{{ generate_schema_name(item.get("src_schema")) }}' as src_schema
+        '{{ generate_database_name(item.get("src_db")) }}' as src_db
+        ,'{{ generate_schema_name(item.get("src_schema")) }}' as src_schema
       {%- endif -%}
-          ,'{{ item.get("src_table") }}' as src_table
+        ,'{{ item.get("src_table") }}' as src_table
 
       {% if target_fixed_naming -%}
-          ,'{{ item.get("trg_db", target.database) }}' as trg_db
-          ,'{{ item.get("trg_schema", target.schema) }}' as trg_schema
+        ,'{{ item.get("trg_db", target.database) }}' as trg_db
+        ,'{{ item.get("trg_schema", target.schema) }}' as trg_schema
       {%- else -%}
-          ,'{{ generate_database_name(item.get("trg_db")) }}' as trg_db
-          ,'{{ generate_schema_name(item.get("trg_schema")) }}' as trg_schema
+        ,'{{ generate_database_name(item.get("trg_db")) }}' as trg_db
+        ,'{{ generate_schema_name(item.get("trg_schema")) }}' as trg_schema
       {%- endif -%}
-          ,'{{ item.get("trg_table", item.get("src_table")) }}' as trg_table
+        ,'{{ item.get("trg_table", item.get("src_table")) }}' as trg_table
 
-          ,'{{ item.get("pk") }}' as pk
-          ,{{ item.get("include_columns", []) | upper }} as include_columns
-          ,{{ item.get("exclude_columns", []) | upper }} as exclude_columns
-          ,'{{ item.get("where_condition", "1=1") }}' as where_condition
-          ,True as is_enabled
-          ,'{{ item.get("pipe_name", "") }}' as pipe_name --TODO: auto pipe name here?
+        ,'{{ item.get("pk") }}' as pk
+        ,{{ item.get("include_columns", []) | upper }} as include_columns
+        ,{{ item.get("exclude_columns", []) | upper }} as exclude_columns
+        ,'{{ item.get("where_condition", "1=1") }}' as where_condition
+        ,True as is_enabled
+
+      {% if var("data_diff__auto_pipe", false) -%}
+        ,coalesce(
+          nullif('{{ item.get("pipe_name", "") }}', ''),
+          concat(src_db,'.',src_schema,'.',src_table,'-',trg_db,'.',trg_schema,'.',trg_table)
+        ) as pipe_name
+      {%- else -%}
+        ,'{{ item.get("pipe_name", "") }}' as pipe_name
+      {%- endif %}
 
       {% if not loop.last -%}
         union all

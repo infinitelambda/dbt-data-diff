@@ -85,6 +85,9 @@ data-diff-verify = [
 data-diff-migration = [
   {cmd = "dbt run -s data_diff --full-refresh --vars '{data_diff__on_migration: true, data_diff__full_refresh: true}' --project-dir integration_tests"},
 ]
+data-diff-migration-auto-pipe = [
+  {cmd = "dbt run -s data_diff --full-refresh --vars '{data_diff__on_migration: true, data_diff__full_refresh: true, data_diff__auto_pipe: true}' --project-dir integration_tests"},
+]
 data-diff-bg = [
   {cmd = "dbt build -s example --project-dir integration_tests -t blue"},
   {cmd = "dbt build -s example --project-dir integration_tests -t green"},

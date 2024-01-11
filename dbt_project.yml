@@ -31,6 +31,7 @@ vars:
   #     pipe_name: ''                   # optional, 1=1 by default
   #                                     # in non-async mode, it must be empty if specified
   #                                     # in async mode, it can be any value e.g. "1", "batch_dat", "batch_milan"
+  data_diff__auto_pipe: false # Set true & re-run migration to auto-set `pipe_name` config if it's not specified: Each compared entity will be set in a single thread
 
 on-run-end:
   - > # migration hook
