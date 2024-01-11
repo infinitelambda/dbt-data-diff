@@ -1,8 +1,7 @@
 {{
   config(
     database = var('data_diff__database', target.database),
-    schema = var("data_diff__schema", target.schema),
-    alias = var("data_diff__schema_check_summary__alias", this.name)
+    schema = var("data_diff__schema", target.schema)
   )
 }}
 
