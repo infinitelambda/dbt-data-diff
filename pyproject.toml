@@ -135,5 +135,5 @@ build-doc = [
 git-push-github = [
   {cmd = "git remote set-url origin https://github.com/infinitelambda/dbt-data-diff.git"},
   {cmd = "git push"},
-  {cmd = "git remote set-url origin https://gitlab.infinitelambda.com/infinitelambda/bi-chapter/dbt-data-diff.git"}
+  {cmd = "git remote set-url origin git@gitlab.infinitelambda.com:infinitelambda/bi-chapter/dbt-data-diff.git"}
 ]
