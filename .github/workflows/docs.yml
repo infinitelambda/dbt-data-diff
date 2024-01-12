@@ -16,17 +16,22 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
-
       - uses: actions/cache@v2
         with:
           key: ${{ github.ref }}
           path: .cache
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.9.6
+      - uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.7.1
 
       - name: Install dependencies
         run: |
-          curl -sSL https://install.python-poetry.org | python3 -
           poetry config installer.max-workers 1
           poetry config virtualenvs.in-project true
+          poetry install
 
       - name: build dbt docs site
         run: |
