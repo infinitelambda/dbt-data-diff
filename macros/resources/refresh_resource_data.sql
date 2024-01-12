@@ -42,7 +42,7 @@
       {% if var("data_diff__auto_pipe", false) -%}
         ,coalesce(
           nullif('{{ item.get("pipe_name", "") }}', ''),
-          concat(src_db,'.',src_schema,'.',src_table,'-',trg_db,'.',trg_schema,'.',trg_table)
+          concat(src_db,'_',src_schema,'_',src_table,'__',trg_db,'_',trg_schema,'_',trg_table)
         ) as pipe_name
       {%- else -%}
         ,'{{ item.get("pipe_name", "") }}' as pipe_name

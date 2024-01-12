@@ -33,6 +33,8 @@ Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
 Behind the scenes, this package leverages the ❄️ [Scripting Stored Procedure](https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-snowflake-scripting) which provides the 3 ones correspondingly with 3 categories as above. Moreover, it utilizes the [DAG of Tasks](https://docs.snowflake.com/en/user-guide/tasks-intro?utm_source=legacy&utm_medium=serp&utm_term=task+DAG#label-task-dag) to optimize the speed with the parallelism once enabled by configuration 🚀
 
+<img src="./docs/assets/img/Sample_DAG_of_Tasks.png" alt="Sample DAG">
+
 ## Installation
 
 - Add to `packages.yml` file:
