@@ -1,16 +1,20 @@
-<!-- markdownlint-disable no-inline-html no-alt-text -->
+<!-- markdownlint-disable no-inline-html no-alt-text ul-indent code-block-style -->
 # dbt-data-diff
 
-Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
+<img align="right" width="150" height="150" src="./assets/img/il-logo.png">
+
+[![dbt-hub](https://img.shields.io/badge/Visit-dbt--hub%20↗️-FF694B?logo=dbt&logoColor=FF694B)](https://hub.getdbt.com/infinitelambda/dbt-data-diff)
+
+Data-diff solution for dbt-ers with Snowflake ❄️ 🌟
 
 **_Who is this for?_**
 
-- Primarily for people who want to perform Data-diff validation on **[the Blue-Green deployment](https://discourse.getdbt.com/t/performing-a-blue-green-deploy-of-your-dbt-project-on-snowflake/1349)** 🌟
+- Primarily for people who want to perform Data-diff validation on **[the Blue-Green deployment](https://discourse.getdbt.com/t/performing-a-blue-green-deploy-of-your-dbt-project-on-snowflake/1349)** 🚀
 - Other good considerations 👍
-  - UAT validation: data-diff with PROD
-  - Code-Refactoring validation: data diff between old vs new
-  - Migration to Snowflake: data diff between old vs new (requires to land the old data to Snowflake)
-  - CI: future consideration only ⚠️
+    - UAT validation: data-diff with PROD
+    - Code-Refactoring validation: data diff between old vs new
+    - Migration to Snowflake: data diff between old vs new (requires to land the old data to Snowflake)
+    - CI: future consideration only ⚠️
 
 ## Core Concept 🌟
 
@@ -21,6 +25,8 @@ Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 - 🥇 **Content diff** (aka Data diff) ([models](https://github.com/infinitelambda/dbt-data-diff/tree/main/models/03_content_diff/)): Compare all cell values. The columns will be filtered by each table's configuration (`include_columns` and `exclude_columns`), and the data can be also filtered by the `where` config. Behind the scenes, this operation does not require the Primary Key (PK) config, it will perform Bulk Operation (`INTERCEPT` or `MINUS`) and make an aggregation to make up the column level's match percentage
 
 Behind the scenes, this package leverages the ❄️ [Scripting Stored Procedure](https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-snowflake-scripting) which provides the 3 ones correspondingly with 3 categories as above. Moreover, it utilizes the [DAG of Tasks](https://docs.snowflake.com/en/user-guide/tasks-intro?utm_source=legacy&utm_medium=serp&utm_term=task+DAG#label-task-dag) to optimize the speed with the parallelism once enabled by configuration 🚀
+
+Sample DAG:
 
 <img src="./assets/img/Sample_DAG_of_Tasks.png" alt="Sample DAG">
 
@@ -51,7 +57,7 @@ dbt deps
 dbt run -s data_diff --vars '{data_diff__on_migration: true}'
 ```
 
-## Quick Demo
+## Quick Start
 
 ### 1. Configure the tables that need comparing in `dbt_project.yml`
 
@@ -106,9 +112,13 @@ dbt run-operation data_diff__run_async --args '{is_polling_status: true}'
                                         # async mode, parallel, status polling
 ```
 
-> **NOTE**: In async mode, we leverage the DAG of tasks, therefore the dbt's ROLE will need granting the addtional privilege:</br></br>
-> `use role accountadmin;`<br>
-> `grant execute task on account to role {{ target.role }};`</br>
+!!! tip "In the Async Mode"
+    We leverage the DAG of tasks, therefore the dbt's ROLE will need granting the addtional privilege:
+
+    ```sql
+    use role accountadmin;
+    grant execute task on account to role {{ target.role }};
+    ```
 
 <details>
   <summary>📖 Or via dbt hook by default (it will run an incremental load for all models)</summary>
@@ -141,7 +151,27 @@ dbt run -s data_diff --vars '{data_diff__on_run_hook: true}'
 
 [![Watch the video](TODO.gif)](TODO)
 
-## How to Contribute
+## Variables
+
+!!! tip "See `dbt_project.yml` file"
+    Go to `vars` section [here](https://github.com/infinitelambda/dbt-data-diff/blob/main/dbt_project.yml#L12) 🏃
+
+    We managed to provide the inline comments only for now, soon to have the dedicated page for more detail explanation.
+
+Here are the full list of built-in variables:
+
+- `data_diff__database`
+- `data_diff__schema`
+- `data_diff__on_migration`
+- `data_diff__on_migration_data`
+- `data_diff__on_run_hook`
+- `data_diff__full_refresh`
+- `data_diff__configured_tables__source_fixed_naming`
+- `data_diff__configured_tables__target_fixed_naming`
+- `data_diff__configured_tables`
+- `data_diff__auto_pipe`
+
+## How to Contribute ❤️
 
 `dbt-data-diff` is an open-source dbt package. Whether you are a seasoned open-source contributor or a first-time committer, we welcome and encourage you to contribute code, documentation, ideas, or problem statements to this project.
 
@@ -156,8 +186,8 @@ dbt run -s data_diff --vars '{data_diff__on_run_hook: true}'
 ## Features comparison to the alternative packages
 
 | Feature               | Supported Package                                          | Notes                                 |
-|:----------------------|:-----------------------------------------------------------|:--------------------------------------|
-| Key diff              | <ul><li>`dbt_data_diff`</li><li>[`data_diff`](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | ✅                                   |
+|:----------------------|:-----------------------------------------------------------|:-----------------|
+| Key diff              | <ul><li>`dbt_data_diff`</li><li>[`data_diff`](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | ✅ all available |
 | Schema diff           | <ul><li>`dbt_data_diff`</li><li>[`data_diff`(*)](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | (*): Only available in the paid-version 💰 |
 | Content diff          | <ul><li>`dbt_data_diff`</li><li>[`data_diff`(*)](https://github.com/datafold/data_diff)</li><li>[`dbt_audit_helper`](https://github.com/dbt-labs/dbt_audit_helper)</li></ul> | (*): Only available in the paid-version 💰 |
 | Yaml Configuration    | <ul><li>`dbt_data_diff`</li></ul>                           | `data_diff` will use the `toml` file, `dbt_audit_helper` will require to create new models for each comparison |

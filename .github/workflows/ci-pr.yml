@@ -7,19 +7,23 @@ on:
 jobs:
   snowflake:
     runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 1
-      matrix:
-        adapter: ["snowflake"]
-        version: ["1.7.1"]
-    container:
-      image: "ghcr.io/dbt-labs/dbt-${{ matrix.adapter }}:${{ matrix.version }}"
+
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry config installer.max-workers 1
+          poetry config virtualenvs.in-project true
+
+      - name: Code Quality
+        run: |
+          poetry run poe lint
+
       - name: Run integration test
         run: |
-          TODO
+          poetry run poe TODO
         env:
           DBT_SNOWFLAKE_TEST_ACCOUNT: ${{ secrets.DBT_SNOWFLAKE_TEST_ACCOUNT }}
           DBT_SNOWFLAKE_TEST_USER: ${{ secrets.DBT_SNOWFLAKE_TEST_USER }}

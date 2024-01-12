@@ -123,7 +123,12 @@ data-diff-async-wait = [
   {cmd = "poe data-diff-bg"},
   {cmd = "poe data-diff-run-async-wait"}
 ]
+build-doc-quick = [
+  {cmd = "mkdocs build"},
+  {cmd = "mkdocs serve"}
+]
 build-doc = [
+  {cmd = "dbt docs generate --project-dir integration_tests"},
   {cmd = "mkdocs build"},
   {cmd = "mkdocs serve"}
 ]

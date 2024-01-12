@@ -9,6 +9,15 @@ edit_uri: edit/main/docs/
 
 copyright: Copyright &copy; 2024 Infinite Lambda
 
+nav:
+  - 📦 dbt-data-diff: index.md
+  - 📖 dbt docs: dbt-docs/index.html # managed by hooks.copy_dbt_docs
+  - Contribution Guideline: contributing.md
+  - Change Log ↗️: https://github.com/infinitelambda/dbt-data-diff/releases" target="_blank
+
+hooks:
+  - docs/hooks.py
+
 theme:
   name: material
   features:
@@ -59,15 +68,6 @@ plugins:
   - minify:
       minify_html: true
   - offline
-  - mkdocs-simple-hooks:
-      hooks:
-        on_post_build: "docs.hooks:copy_dbt_docs"
-
-nav:
-  - ✨ dbt-data-diff: index.md
-  - 👉 dbt docs: dbt-docs/index.html # managed by hooks.copy_dbt_docs
-  - Contribution Guideline: contributing.md
-  - Change Log ↗️: https://github.com/infinitelambda/dbt-data-diff/releases" target="_blank
 
 theme:
   name: material
@@ -88,24 +88,26 @@ theme:
     - search.share
     - search.suggest
     - toc.follow
+
   palette:
     - media: "(prefers-color-scheme)"
       primary: black
-      scheme: slate
       toggle:
         icon: material/brightness-auto
         name: Switch to light mode
     - media: "(prefers-color-scheme: light)"
+      scheme: default
       primary: black
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       primary: black
-      scheme: default
       toggle:
         icon: material/brightness-4
         name: Switch to system preference
+
   font:
     text: Roboto
     code: Roboto Mono

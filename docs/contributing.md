@@ -48,7 +48,7 @@ There are some tools that will be helpful to you in developing locally. While th
 
 We will buy `poetry` in `dbt-data-diff` development and testing.
 
-So first install poetry via pip or via the [official installer](https://python-poetry.org/docs/#installing-with-the-official-installer), please help to check right version used in [poetry.lock](/poetry.lock) file. Then, start installing the local environment:
+So first install poetry via pip or via the [official installer](https://python-poetry.org/docs/#installing-with-the-official-installer), please help to check right version used in [poetry.lock](https://github.com/infinitelambda/dbt-data-diff/blob/main/poetry.lock) file. Then, start installing the local environment:
 
 ```bash
 poetry install
@@ -58,9 +58,9 @@ poe git-hooks
 
 ### Get dbt profile ready
 
-Please help to check [the sample script](/integration_tests/ci/sf-init.sql) to initialize Snowflake environment in `integreation_tests/ci` directory, and get your database freshly created.
+Please help to check [the sample script](https://github.com/infinitelambda/dbt-data-diff/blob/main/integration_tests/ci/sf-init.sql) to initialize Snowflake environment in `integreation_tests/ci` directory, and get your database freshly created.
 
-Next, you should follow [dbt profile instruction](https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles) and setting up your dedicated profile. Again, you could [try our sample](/integration_tests/ci/profiles.yml) in the same above directory.
+Next, you should follow [dbt profile instruction](https://docs.getdbt.com/docs/core/connect-data-platform/connection-profiles) and setting up your dedicated profile. Again, you could [try our sample](https://github.com/infinitelambda/dbt-data-diff/blob/main/integration_tests/ci/profiles.yml) in the same above directory.
 
 Run `poe data-diff-verify` for verifying the connection ✅
 
