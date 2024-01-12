@@ -8,8 +8,7 @@
 Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
 > [!TIP]
-> Documentation 📖
-> Please help to visit [the documentation site](https://data-diff.iflambda.com/latest/) (or go to the [docs/index.md](./docs/index.md)) for more details
+> 📖 For more details, please help to visit [the documentation site](https://data-diff.iflambda.com/latest/) (or go to the [docs/index.md](./docs/index.md)) for more details
 
 ## Installation
 
