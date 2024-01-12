@@ -30,7 +30,7 @@ jobs:
           poetry config virtualenvs.in-project true
           poetry install
 
-      - name: build dbt docs site
+      - name: Build the docs site
         run: |
           mkdir -p ~/.dbt
           cp integration_tests/ci/ci.profiles.yml ~/.dbt/profiles.yml
@@ -51,6 +51,6 @@ jobs:
 
       - name: Publish site
         run: |
-          mike deploy --push --update-aliases ${{ inputs.version }} latest
+          poetry run mike deploy --push --update-aliases ${{ inputs.version }} latest
         env:
           GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
