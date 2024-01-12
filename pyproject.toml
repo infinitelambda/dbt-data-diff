@@ -132,3 +132,8 @@ build-doc = [
   {cmd = "mkdocs build"},
   {cmd = "mkdocs serve"}
 ]
+git-push-github = [
+  {cmd = "git remote set-url origin https://github.com/infinitelambda/dbt-data-diff.git"},
+  {cmd = "git push"},
+  {cmd = "git remote set-url origin https://gitlab.infinitelambda.com/infinitelambda/bi-chapter/dbt-data-diff.git"}
+]
