@@ -1,0 +1,60 @@
+name: deploy documentation site
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Document version e.g. 1.1, 1.2
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        adapter: ["snowflake"]
+        version: ["1.7.1"]
+    container:
+      image: "ghcr.io/dbt-labs/dbt-${{ matrix.adapter }}:${{ matrix.version }}"
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+
+      - name: Install dependencies
+        run: pip install mkdocs mkdocs-material mkdocs-minify-plugin mike
+
+      - name: Configure Git user
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: build dbt docs site
+        run: |
+          mkdir -p ~/.dbt
+          cp ci/sample.profiles.yml ~/.dbt/profiles.yml
+          dbt deps
+          dbt docs generate
+          TODO: copy site to mkdocs build dir
+        working-directory: integration_tests
+        env:
+          DBT_SNOWFLAKE_TEST_ACCOUNT: ${{ secrets.DBT_SNOWFLAKE_TEST_ACCOUNT }}
+          DBT_SNOWFLAKE_TEST_USER: ${{ secrets.DBT_SNOWFLAKE_TEST_USER }}
+          DBT_ENV_SECRET_SNOWFLAKE_TEST_PASSWORD: ${{ secrets.DBT_ENV_SECRET_SNOWFLAKE_TEST_PASSWORD }}
+          DBT_SNOWFLAKE_TEST_ROLE: ${{ secrets.DBT_SNOWFLAKE_TEST_ROLE }}
+          DBT_SNOWFLAKE_TEST_DATABASE: ${{ secrets.DBT_SNOWFLAKE_TEST_DATABASE }}
+          DBT_SNOWFLAKE_TEST_WAREHOUSE: ${{ secrets.DBT_SNOWFLAKE_TEST_WAREHOUSE }}
+          DBT_SCHEMA: DOCS
+
+      - name: Publish site
+        run: |
+          mike deploy --push --update-aliases ${{ inputs.version }} latest
+        env:
+          GOOGLE_ANALYTICS_KEY: ${{ secrets.GOOGLE_ANALYTICS_KEY }}
