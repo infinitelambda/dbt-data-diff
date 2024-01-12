@@ -10,20 +10,33 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: recursive
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+      - uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: 1.7.1
 
       - name: Install dependencies
         run: |
-          pip install poetry
           poetry config installer.max-workers 1
           poetry config virtualenvs.in-project true
+          poetry install
 
       - name: Code Quality
         run: |
           poetry run poe lint
 
-      - name: Run integration test
+      - name: Test single thread
         run: |
-          poetry run poe TODO
+          poetry run poe data-diff
+          poetry run poe data-diff-test
+          poetry run poe data-diff-async-wait
+          poetry run poe data-diff-test
         env:
           DBT_SNOWFLAKE_TEST_ACCOUNT: ${{ secrets.DBT_SNOWFLAKE_TEST_ACCOUNT }}
           DBT_SNOWFLAKE_TEST_USER: ${{ secrets.DBT_SNOWFLAKE_TEST_USER }}
@@ -31,4 +44,4 @@ jobs:
           DBT_SNOWFLAKE_TEST_ROLE: ${{ secrets.DBT_SNOWFLAKE_TEST_ROLE }}
           DBT_SNOWFLAKE_TEST_DATABASE: ${{ secrets.DBT_SNOWFLAKE_TEST_DATABASE }}
           DBT_SNOWFLAKE_TEST_WAREHOUSE: ${{ secrets.DBT_SNOWFLAKE_TEST_WAREHOUSE }}
-          DBT_SCHEMA: PRCI_${{ matrix.version }}_${{ github.sha }}
+          DBT_SCHEMA: PRCI_${{ github.sha }}
