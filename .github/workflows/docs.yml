@@ -33,7 +33,7 @@ jobs:
       - name: build dbt docs site
         run: |
           mkdir -p ~/.dbt
-          cp ci/ci.profiles.yml ~/.dbt/profiles.yml
+          cp integration_tests/ci/ci.profiles.yml ~/.dbt/profiles.yml
           poetry run poe build-doc
         env:
           DBT_SNOWFLAKE_TEST_ACCOUNT: ${{ secrets.DBT_SNOWFLAKE_TEST_ACCOUNT }}
