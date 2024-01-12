@@ -1,0 +1,27 @@
+config:
+    send_anonymous_usage_stats: False
+    use_colors: True
+
+data_diff:
+  target: blue
+  outputs:
+    blue:
+      type: snowflake
+      account: "{{ env_var('DBT_SNOWFLAKE_TEST_ACCOUNT') }}"
+      user: "{{ env_var('DBT_SNOWFLAKE_TEST_USER') }}"
+      password: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_TEST_PASSWORD') }}"
+      role: "{{ env_var('DBT_SNOWFLAKE_TEST_ROLE') }}"
+      database: "{{ env_var('DBT_SNOWFLAKE_TEST_DATABASE') }}"
+      warehouse: "{{ env_var('DBT_SNOWFLAKE_TEST_WAREHOUSE') }}"
+      schema: "{{ env_var('DBT_SCHEMA', 'dbt_data_diff_it') }}"
+      threads: 10
+    green:
+      type: snowflake
+      account: "{{ env_var('DBT_SNOWFLAKE_TEST_ACCOUNT') }}"
+      user: "{{ env_var('DBT_SNOWFLAKE_TEST_USER') }}"
+      password: "{{ env_var('DBT_ENV_SECRET_SNOWFLAKE_TEST_PASSWORD') }}"
+      role: "{{ env_var('DBT_SNOWFLAKE_TEST_ROLE') }}"
+      database: "{{ env_var('DBT_SNOWFLAKE_TEST_DATABASE') }}"
+      warehouse: "{{ env_var('DBT_SNOWFLAKE_TEST_WAREHOUSE') }}"
+      schema: "{{ env_var('DBT_SCHEMA', 'dbt_data_diff_it') }}"
+      threads: 10

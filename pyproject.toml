@@ -128,6 +128,7 @@ build-doc-quick = [
   {cmd = "mkdocs serve"}
 ]
 build-doc = [
+  {cmd = "dbt deps --project-dir integration_tests"},
   {cmd = "dbt docs generate --project-dir integration_tests"},
   {cmd = "mkdocs build"},
   {cmd = "mkdocs serve"}
