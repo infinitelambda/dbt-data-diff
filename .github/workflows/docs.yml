@@ -20,9 +20,6 @@ jobs:
         with:
           key: ${{ github.ref }}
           path: .cache
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.9.6
       - uses: abatilo/actions-poetry@v2
         with:
           poetry-version: 1.7.1
