@@ -123,15 +123,14 @@ data-diff-async-wait = [
   {cmd = "poe data-diff-bg"},
   {cmd = "poe data-diff-run-async-wait"}
 ]
-build-doc-quick = [
+build-doc-quick-serve = [
   {cmd = "mkdocs build"},
   {cmd = "mkdocs serve"}
 ]
 build-doc = [
   {cmd = "dbt deps --project-dir integration_tests"},
   {cmd = "dbt docs generate --project-dir integration_tests"},
-  {cmd = "mkdocs build"},
-  {cmd = "mkdocs serve"}
+  {cmd = "mkdocs build"}
 ]
 git-push-github = [
   {cmd = "git remote set-url origin https://github.com/infinitelambda/dbt-data-diff.git"},
