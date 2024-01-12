@@ -31,10 +31,13 @@ jobs:
         run: |
           poetry run poe lint
 
-      - name: Test single thread
+      - name: Test data diff
         run: |
+          # Single thread
           poetry run poe data-diff
           poetry run poe data-diff-test
+
+          # Multi thread
           poetry run poe data-diff-async-wait
           poetry run poe data-diff-test
         env:
