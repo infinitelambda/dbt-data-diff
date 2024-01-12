@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install poetry
+          curl -sSL https://install.python-poetry.org | python3 -
           poetry config installer.max-workers 1
           poetry config virtualenvs.in-project true
 
