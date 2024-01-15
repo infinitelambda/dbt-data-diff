@@ -118,7 +118,7 @@ data-diff-async-wait = [
 ]
 build-doc = [
   {cmd = "dbt deps --project-dir integration_tests"},
-  {cmd = "dbt docs generate --project-dir integration_tests"},
+  {cmd = "dbt docs generate --select package:data_diff --project-dir integration_tests"},
   {cmd = "mkdocs build"}
 ]
 build-doc-and-serve = [
