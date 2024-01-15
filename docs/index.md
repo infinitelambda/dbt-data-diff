@@ -61,9 +61,9 @@ dbt run -s data_diff --vars '{data_diff__on_migration: true}'
 
 ### 1. Configure the tables that need comparing in `dbt_project.yml`
 
-We're going to use the `data_diff__configured_tables` variable (Check out the [dbt_project.yml](https://github.com/infinitelambda/dbt-data-diff/tree/main/dbt_project.yml)/`vars`` section for more details!)
+We're going to use the `data_diff__configured_tables` variable (Check out the [dbt_project.yml](https://github.com/infinitelambda/dbt-data-diff/tree/main/dbt_project.yml)/`vars` section for more details!)
 
-For example, we want to compare `table_x` between **prod** db and **dev** one:
+For example, we want to compare `table_x` between **PROD** db and **DEV** one:
 
 ```yaml
 vars:
@@ -89,16 +89,11 @@ dbt run -s data_diff \
   --vars '{data_diff__on_migration: true, data_diff__on_migration_data: true, data_diff__full_refresh: true}'
 ```
 
-<details>
-  <summary>📖 click me</summary>
+!!! note "In the above:"
 
-In the above:
-
-- `--full-refresh` and `data_diff__full_refresh`: To re-create all data-diff models
-- `data_diff__on_migration: true`: To re-create the stored procedures
-- `data_diff__on_migration_data: true`: To reset the configured data
-
-</details>
+    - `--full-refresh` and `data_diff__full_refresh`: To re-create all data-diff models
+    - `data_diff__on_migration: true`: To re-create the stored procedures
+    - `data_diff__on_migration_data: true`: To reset the configured data
 
 ### 3. Trigger the validation via dbt operation
 
@@ -124,7 +119,7 @@ dbt run-operation data_diff__run_async --args '{is_polling_status: true}'
   <summary>📖 Or via dbt hook by default (it will run an incremental load for all models)</summary>
 
 ```yaml
-# dbt_project.yml
+# Add into dbt_project.yml file
 
 # normal mode
 on-run-end

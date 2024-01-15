@@ -1,4 +1,4 @@
-{% macro data_diff__poll_status_async(p_invocation_id, poll_times=100, poll_wait_in_s=60) -%}
+{% macro data_diff__poll_status_async(p_invocation_id, poll_times=100, poll_wait_in_s=10) -%}
 
   {% set namespace = data_diff.get_namespace() %}
   {% set dbt_invocation_id = p_invocation_id | replace("-", "_") %}
@@ -22,7 +22,7 @@
   {% for item in range(0, poll_times) %}
 
     {% set query_state = dbt_utils.get_single_value(query, default="") %}
-    {{ log("[RUN] Polling #" ~ item ~ ": " ~ (query_state or 'WAITING'), info=True) }}
+    {{ log("[RUN] Polling #" ~ item ~ ": " ~ (query_state or 'SCHEDULED'), info=True) }}
 
     {% if query_state == "SUCCEEDED" %}
       {{ return(none) }}

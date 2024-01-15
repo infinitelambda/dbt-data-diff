@@ -31,4 +31,4 @@ vars:
       pk: id
       include_columns: []
       exclude_columns: ["loaded_at"]
-    # data_diff__auto_pipe: true
+  # data_diff__auto_pipe: true
