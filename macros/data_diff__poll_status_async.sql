@@ -1,4 +1,4 @@
-{% macro data_diff__poll_status_async(p_invocation_id, poll_times=100, poll_wait_in_s=10) -%}
+{% macro data_diff__poll_status_async(p_invocation_id, poll_times=100, poll_wait_in_s=60) -%}
 
   {% set namespace = data_diff.get_namespace() %}
   {% set dbt_invocation_id = p_invocation_id | replace("-", "_") %}

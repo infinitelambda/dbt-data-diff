@@ -1,6 +1,17 @@
 models:
   - name: configured_tables
-    description: Configuration table that contains the list of objects need to be compared
+    description: |
+      Configuration table that contains the list of objects need to be compared.
+
+      Data is managed/reset by [the migration step](https://data-diff.iflambda.com/latest/#2-refresh-the-configured-tabless-data), or behind the scenes, it is the `refresh_resource_data` macro.
+
+      Additionally, `is_enabled` flag allows us to manually disable the compared entity without re-run the migration.
+      For example:
+      ```sql
+      update  configured_tables
+      set     is_enabled = FALSE
+      where   src_table = 'ABC';
+      ```
 
     columns:
       - name: src_db

@@ -83,7 +83,7 @@ data-diff-verify = [
   {cmd = "dbt debug --project-dir integration_tests"},
 ]
 data-diff-migration = [
-  {cmd = "dbt run -s data_diff --full-refresh --vars '{data_diff__on_migration: true, data_diff__full_refresh: true, data_diff__auto_pipe: true}' --project-dir integration_tests"},
+  {cmd = "dbt run -s data_diff --full-refresh --vars '{data_diff__on_migration: true, data_diff__on_migration_data: true, data_diff__full_refresh: true, data_diff__auto_pipe: true}' --project-dir integration_tests"},
 ]
 data-diff-bg = [
   {cmd = "dbt build -s example --project-dir integration_tests -t blue"},
@@ -102,33 +102,30 @@ data-diff-test = [
   {cmd = "dbt build --exclude example --project-dir integration_tests -t blue"},
 ]
 data-diff = [
-  {cmd = "poe lint"},
-  {cmd = "poe data-diff-verify"},
   {cmd = "poe data-diff-migration"},
   {cmd = "poe data-diff-bg"},
   {cmd = "poe data-diff-run"},
   {cmd = "poe data-diff-test"}
 ]
 data-diff-async = [
-  {cmd = "poe data-diff-verify"},
   {cmd = "poe data-diff-migration"},
   {cmd = "poe data-diff-bg"},
-  {cmd = "poe data-diff-run-async"}
+  {cmd = "poe data-diff-run-async"},
 ]
 data-diff-async-wait = [
-  {cmd = "poe data-diff-verify"},
   {cmd = "poe data-diff-migration"},
   {cmd = "poe data-diff-bg"},
-  {cmd = "poe data-diff-run-async-wait"}
-]
-build-doc-quick-serve = [
-  {cmd = "mkdocs build"},
-  {cmd = "mkdocs serve"}
+  {cmd = "poe data-diff-run-async-wait"},
+  {cmd = "poe data-diff-test"}
 ]
 build-doc = [
   {cmd = "dbt deps --project-dir integration_tests"},
   {cmd = "dbt docs generate --project-dir integration_tests"},
   {cmd = "mkdocs build"}
+]
+build-doc-and-serve = [
+  {cmd = "poe build-doc"},
+  {cmd = "mkdocs serve"}
 ]
 git-push-github = [
   {cmd = "git remote set-url origin https://github.com/infinitelambda/dbt-data-diff.git"},

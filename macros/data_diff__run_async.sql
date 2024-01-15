@@ -9,7 +9,12 @@
   {% set prefix_batch_task__check_schema = "data_diff__task__check_schema_batch_" ~ dbt_invocation_id ~ "_" %}
   {% set prefix_batch_task__check_data_diff = "data_diff__task__check_data_diff_batch_" ~ dbt_invocation_id ~ "_" %}
 
-  {% set batches = dbt_utils.get_column_values(table=ref('configured_tables'), column='pipe_name') %}
+  {% set batches = dbt_utils.get_column_values(table=ref('configured_tables'), column='pipe_name') or [] %}
+  {% if batches | length == 0 %}
+    {{ log("No configured entity found!", info=True) if execute }}
+    {{ return("") }}
+  {% endif %}
+
   {% set log_model_fdn -%} {{ ref("log_for_validation") }} {%- endset %}
 
   {% set utcnow = modules.datetime.datetime.utcnow() %}
