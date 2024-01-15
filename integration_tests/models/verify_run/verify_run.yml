@@ -1,0 +1,13 @@
+models:
+  - name: verify_configured_tables_data
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: actual = expected
+  - name: verify_created_sprocs
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: actual = expected
+  - name: verify_log_entry
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: actual = expected

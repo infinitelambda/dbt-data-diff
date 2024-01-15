@@ -99,13 +99,12 @@ data-diff-run-async-wait = [
   {cmd = "dbt run-operation data_diff__run_async --project-dir integration_tests --args '{is_polling_status: true}'"},
 ]
 data-diff-test = [
-  {cmd = "dbt build --exclude example --project-dir integration_tests -t blue"},
+  {cmd = "dbt build --exclude example --project-dir integration_tests"},
 ]
 data-diff = [
   {cmd = "poe data-diff-migration"},
   {cmd = "poe data-diff-bg"},
-  {cmd = "poe data-diff-run"},
-  {cmd = "poe data-diff-test"}
+  {cmd = "poe data-diff-run"}
 ]
 data-diff-async = [
   {cmd = "poe data-diff-migration"},
@@ -115,8 +114,7 @@ data-diff-async = [
 data-diff-async-wait = [
   {cmd = "poe data-diff-migration"},
   {cmd = "poe data-diff-bg"},
-  {cmd = "poe data-diff-run-async-wait"},
-  {cmd = "poe data-diff-test"}
+  {cmd = "poe data-diff-run-async-wait"}
 ]
 build-doc = [
   {cmd = "dbt deps --project-dir integration_tests"},

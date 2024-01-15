@@ -1,0 +1,20 @@
+models:
+  - name: verify_log_for_validation
+    columns:
+      - name: start_time
+        tests:
+          - not_null
+      - name: end_time
+        description: End time of the execution
+        tests:
+          - not_null:
+              where: diff_type not ilike 'DAG of Task%'
+      - name: sql_statement
+        tests:
+          - not_null
+      - name: diff_start_time
+        tests:
+          - not_null
+      - name: diff_type
+        tests:
+          - not_null

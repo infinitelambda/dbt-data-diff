@@ -1,0 +1,41 @@
+models:
+  - name: verify_configured_tables
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - src_db
+            - src_schema
+            - src_table
+            - trg_db
+            - trg_schema
+            - trg_table
+    columns:
+      - name: src_db
+        tests:
+          - not_null
+      - name: src_schema
+        tests:
+          - not_null
+      - name: src_table
+        tests:
+          - not_null
+      - name: trg_db
+        tests:
+          - not_null
+      - name: trg_schema
+        tests:
+          - not_null
+      - name: trg_table
+        tests:
+          - not_null
+      - name: pk
+        tests:
+          - not_null
+      - name: where_condition
+        tests:
+          - not_null
+      - name: is_enabled
+        tests:
+          - not_null
+          - accepted_values:
+              values: [TRUE, FALSE]

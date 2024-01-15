@@ -27,6 +27,8 @@ models:
         description: Total number of columns existing in both target and source
       - name: number_of_exclusive_target
         description: Number of columns exist in target only
+      - name: number_of_false_datatype_check
+        description: Number of columns which are not matched in the data type
       - name: exclusive_target_list
         description: List of columns exist in target only
       - name: number_of_exclusive_source
