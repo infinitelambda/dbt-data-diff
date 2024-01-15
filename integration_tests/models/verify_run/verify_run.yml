@@ -7,6 +7,10 @@ models:
     tests:
       - dbt_utils.expression_is_true:
           expression: actual = expected
+  - name: verify_created_tasks
+    tests:
+      - dbt_utils.expression_is_true:
+          expression: actual = expected
   - name: verify_log_entry
     tests:
       - dbt_utils.expression_is_true:
