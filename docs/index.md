@@ -144,7 +144,15 @@ dbt run -s data_diff --vars '{data_diff__on_run_hook: true}'
 
 </details>
 
-[![Watch the video](TODO.gif)](TODO)
+## Demo
+
+**Part 1**: Configure and prepare Blue/Green
+
+[![Watch the video - P1](https://cdn.loom.com/sessions/thumbnails/2445f322720a4466ab9494c90e66946b-1705309091927-with-play.gif)](https://www.loom.com/share/2445f322720a4466ab9494c90e66946b?sid=9b5f354c-3611-412a-ac18-554e4b879913)
+
+**Part 2**: Run data diff & examine the result
+
+[![Watch the video - P2](https://cdn.loom.com/sessions/thumbnails/c4dc4179a4ee4a0d9583db405b46e969-1705308496485-with-play.gif)](https://www.loom.com/share/c4dc4179a4ee4a0d9583db405b46e969?sid=fc6e2dd8-c456-4888-8eaf-64883423270d)
 
 ## Variables
 

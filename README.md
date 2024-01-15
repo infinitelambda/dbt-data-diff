@@ -37,9 +37,9 @@ dbt deps
 dbt run -s data_diff --vars '{data_diff__on_migration: true}'
 ```
 
-## Quick Start
+## Quick Demo
 
-[![Watch the video](TODO.gif)](TODO)
+Let's jump to the [Quick Start](https://data-diff.iflambda.com/latest/#quick-start) section and the next [demo one](https://data-diff.iflambda.com/latest/#demo) 🏃
 
 ## How to Contribute
 
