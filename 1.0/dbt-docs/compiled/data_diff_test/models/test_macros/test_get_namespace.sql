@@ -1,1 +1,0 @@
-select '' as test_case, 'data_diff.DOCS_common' as actual, 'data_diff.DOCS_common' as expected
