@@ -61,7 +61,7 @@ Let's jump to the [Quick Start](https://data-diff.iflambda.com/latest/#quick-sta
   <img src="https://contrib.rocks/image?repo=infinitelambda/dbt-data-diff" alt="Contributors" />
 </a>
 
-⭐ Special Credits to [👱 Attila Berecz](https://github.com/Attila-Berecz) who is the OG Contributor of the Core Concept and all the Snowflake Stored Procedures
+⭐ Special Credits to [👱 Attila Berecz](https://www.linkedin.com/in/attila-berecz-a0bb5ba2/) who is the OG Contributor of the Core Concept and all the Snowflake Stored Procedures
 
 ## About Infinite Lambda
 
