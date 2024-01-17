@@ -25,9 +25,7 @@ Data-diff solution for dbt-ers with Snowflake ❄️ 🌟
 - 🥇 **Content diff** (aka Data diff) ([models](https://github.com/infinitelambda/dbt-data-diff/tree/main/models/03_content_diff/)): Compare all cell values. The columns will be filtered by each table's configuration (`include_columns` and `exclude_columns`), and the data can be also filtered by the `where` config. Behind the scenes, this operation does not require the Primary Key (PK) config, it will perform Bulk Operation (`INTERCEPT` or `MINUS`) and make an aggregation to make up the column level's match percentage
 
 Sample diffing:
-<p align="center">
-  <img src="./assets/img/data-diff.jpeg" alt="Sample diffing" width="500">
-</p>
+<img src="./assets/img/data-diff.jpeg" alt="Sample diffing">
 
 Behind the scenes, this package leverages the ❄️ [Scripting Stored Procedure](https://docs.snowflake.com/en/developer-guide/stored-procedure/stored-procedures-snowflake-scripting) which provides the 3 ones correspondingly with 3 categories as above. Moreover, it utilizes the [DAG of Tasks](https://docs.snowflake.com/en/user-guide/tasks-intro?utm_source=legacy&utm_medium=serp&utm_term=task+DAG#label-task-dag) to optimize the speed with the parallelism once enabled by configuration 🚀
 
