@@ -20,6 +20,14 @@ packages:
     version: [">=1.0.0", "<1.1.0"]
 ```
 
+Or use the latest version from git:
+
+```yml
+packages:
+  - git: "https://github.com/dbt-labs/dbt-utils.git"
+    revision: 1.0.0 # 1.0.0b1
+```
+
 - (Optional) Configure database & schema in `dbt_project.yml` file:
 
 ```yml
