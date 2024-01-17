@@ -61,6 +61,8 @@ Let's jump to the [Quick Start](https://data-diff.iflambda.com/latest/#quick-sta
   <img src="https://contrib.rocks/image?repo=infinitelambda/dbt-data-diff" alt="Contributors" />
 </a>
 
+⭐ Special Credits to [👱 Attila Berecz](https://github.com/Attila-Berecz) who is the OG Contributor of all the Snowflake Stored Procedures
+
 ## About Infinite Lambda
 
 Infinite Lambda is a cloud and data consultancy. We build strategies, help organizations implement them, and pass on the expertise to look after the infrastructure.

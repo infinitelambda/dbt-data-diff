@@ -197,6 +197,8 @@ Here are the full list of built-in variables:
   <img src="https://contrib.rocks/image?repo=infinitelambda/dbt-data-diff" alt="Contributors" />
 </a>
 
+⭐ Special Credits to [👱 Attila Berecz](https://github.com/Attila-Berecz) who is the OG Contributor of all the Snowflake Stored Procedures
+
 ## Features comparison to the alternative packages
 
 | Feature               | Supported Package                                          | Notes                                 |
