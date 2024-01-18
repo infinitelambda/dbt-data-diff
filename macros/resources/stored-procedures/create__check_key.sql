@@ -1,4 +1,8 @@
-{% macro create__check_key() %}
+{% macro create__check_key() -%}
+  {{ return(adapter.dispatch('create__check_key')()) }}
+{%- endmacro %}
+
+{% macro default__create__check_key() %}
 
     {% set configured_table_model -%} {{ ref("configured_tables").identifier }} {%- endset %}
     {% set log_model -%} {{ ref("log_for_validation").identifier }} {%- endset %}

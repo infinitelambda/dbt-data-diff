@@ -1,4 +1,8 @@
-{% macro create__check_schema() %}
+{% macro create__check_schema() -%}
+  {{ return(adapter.dispatch('create__check_schema')()) }}
+{%- endmacro %}
+
+{% macro default__create__check_schema() %}
 
     {% set configured_table_model -%} {{ ref("configured_tables").identifier }} {%- endset %}
     {% set log_model -%} {{ ref("log_for_validation").identifier }} {%- endset %}
