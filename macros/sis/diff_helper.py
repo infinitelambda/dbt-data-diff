@@ -15,6 +15,17 @@ session = get_active_session()
 # Summary
 st.subheader("🥉 Key diff:")
 sql = """
+    with
+
+    last_key_check_summary as (
+        select  *
+        from    key_check_summary
+        qualify row_number() over (
+            partition by src_db,src_schema,src_table,trg_db,trg_schema,trg_table
+            order by last_data_diff_timestamp desc
+        ) = 1
+    )
+
     select      case when r.src_db is null then '🟢' else '🔴' end as result
                 ,concat(r.number_of_exclusive_src, ' (',upper(r.pk),')') as source_not_found
                 ,concat(r.number_of_exclusive_trg, ' (',upper(r.pk),')') as target_not_found
@@ -25,7 +36,7 @@ sql = """
                 ) as entity
 
     from        configured_tables as c
-    left join   key_check_summary as r
+    left join   last_key_check_summary as r
         on      r.src_db = c.src_db
         and     r.src_schema = c.src_schema
         and     r.src_table = c.src_table
@@ -41,6 +52,17 @@ st.dataframe(data, use_container_width=True)
 
 st.subheader("🥈 Schema diff:")
 sql = """
+    with
+
+    last_schema_check_summary as (
+        select  *
+        from    schema_check_summary
+        qualify row_number() over (
+            partition by src_db,src_schema,src_table,trg_db,trg_schema,trg_table
+            order by last_data_diff_timestamp desc
+        ) = 1
+    )
+
     select      case when r.src_db is null then '🟢' else '🔴' end as result
                 ,concat(r.number_of_exclusive_source, ' (',upper(r.exclusive_source_list),')') as source_not_found
                 ,concat(r.number_of_exclusive_source, ' (',upper(r.exclusive_target_list),')') as target_not_found
@@ -52,7 +74,7 @@ sql = """
                 ) as entity
 
     from        configured_tables as c
-    left join   schema_check_summary as r
+    left join   last_schema_check_summary as r
         on      r.src_db = c.src_db
         and     r.src_schema = c.src_schema
         and     r.src_table = c.src_table
@@ -68,6 +90,17 @@ st.dataframe(data, use_container_width=True)
 
 st.subheader("🥇 Data diff:")
 sql = """
+    with
+
+    last_data_diff_check as (
+        select  *
+        from    data_diff_check
+        qualify row_number() over (
+            partition by src_db,src_schema,src_table,trg_db,trg_schema,trg_table,column_name
+            order by last_data_diff_timestamp desc
+        ) = 1
+    )
+
     select      case when r.src_db is null then '🟢' else '🔴' end as result
                 ,r.column_name
                 ,concat(100 - r.match_percentage * 100, ' %') as diff_feeded_rate
@@ -78,7 +111,7 @@ sql = """
                 ) as entity
 
     from        configured_tables as c
-    left join   data_diff_check as r
+    left join   last_data_diff_check as r
         on      r.src_db = c.src_db
         and     r.src_schema = c.src_schema
         and     r.src_table = c.src_table
@@ -98,6 +131,17 @@ st.dataframe(data, use_container_width=True)
 # Drill down
 if st.button("Sampling Failures ▶️"):
     sql = """
+        with
+
+        last_data_diff_check as (
+            select  *
+            from    data_diff_check
+            qualify row_number() over (
+                partition by src_db,src_schema,src_table,trg_db,trg_schema,trg_table,column_name
+                order by last_data_diff_timestamp desc
+            ) = 1
+        )
+
         select  concat(
                     src_db,'.',src_schema,'.',src_table,
                     ' ▶️ ',
@@ -130,7 +174,7 @@ if st.button("Sampling Failures ▶️"):
                 limit   10;
                 ' as drilldown_script
 
-        from    data_diff_check
+        from    last_data_diff_check
         order by match_percentage
     """
     data = session.sql(sql).collect()
