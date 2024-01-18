@@ -1,10 +1,10 @@
 models:
   - name: data_diff_check
     description: |
-      Result of the **Data Content** diff, aggregated by columns.
+      Result of the **Data Content** diff failure only, aggregated by columns.
 
-      - 👍 GOOD: No data, Or Has data and the `match_percentage` can be well-explained e.g. new columns, behavior changes
-      - ⚠️ BAD: Has data and `match_percentage` cannot be explained
+      - 🟢 GOOD: No data, Or Has data and the `match_percentage` can be well-explained e.g. new columns, behavior changes
+      - 🔴 BAD: Has data and `match_percentage` cannot be explained
 
       It will also link to the addtional result tables,
       formatted as `data_diff_check_detail_{source_table}_{YYYYMMDD}`,

@@ -30,3 +30,7 @@ select
 from {{ ref('schema_check') }}
 
 group by all
+
+having
+  number_of_columns != mutual_columns
+  or number_of_false_datatype_check != 0

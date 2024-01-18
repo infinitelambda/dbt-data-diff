@@ -4,3 +4,4 @@ dbt_packages/
 sf-init.sql
 /macros
 /integration_tests
+/site

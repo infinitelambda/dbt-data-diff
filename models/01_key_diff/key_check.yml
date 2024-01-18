@@ -3,7 +3,8 @@ models:
     description: |
       Result of the **Key** diff
 
-      Note: Table is empty that means there is no key diff
+      - 🟢 GOOD: No data
+      - 🔴 BAD: Has data, each row stands for a key diff for a diff run
 
     columns:
       - name: src_db

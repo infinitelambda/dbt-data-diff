@@ -83,6 +83,9 @@ data-diff-verify = [
   {cmd = "dbt debug --project-dir integration_tests"},
 ]
 data-diff-migration = [
+  {cmd = "dbt run -s data_diff --full-refresh --vars '{fresh: true, data_diff__on_migration: true, data_diff__on_migration_data: true, data_diff__full_refresh: true}' --project-dir integration_tests"},
+]
+data-diff-migration-4async = [
   {cmd = "dbt run -s data_diff --full-refresh --vars '{data_diff__on_migration: true, data_diff__on_migration_data: true, data_diff__full_refresh: true, data_diff__auto_pipe: true}' --project-dir integration_tests"},
 ]
 data-diff-bg = [
@@ -107,12 +110,12 @@ data-diff = [
   {cmd = "poe data-diff-run"}
 ]
 data-diff-async = [
-  {cmd = "poe data-diff-migration"},
+  {cmd = "poe data-diff-migration-4async"},
   {cmd = "poe data-diff-bg"},
   {cmd = "poe data-diff-run-async"},
 ]
 data-diff-async-wait = [
-  {cmd = "poe data-diff-migration"},
+  {cmd = "poe data-diff-migration-4async"},
   {cmd = "poe data-diff-bg"},
   {cmd = "poe data-diff-run-async-wait"}
 ]

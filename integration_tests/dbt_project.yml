@@ -9,6 +9,12 @@ clean-targets:
   - "dbt_packages"
   - "logs"
 
+on-run-start:
+  - > # re-create common schema
+    {% if var("fresh", false) %}
+      create or replace schema {{ data_diff.get_namespace() }};
+    {% endif %}
+
 vars:
   data_diff__database: data_diff
   data_diff__schema: common
