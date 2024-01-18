@@ -155,6 +155,23 @@ dbt run -s data_diff --vars '{data_diff__on_run_hook: true}'
 
 </details>
 
+### 4. [Bonus] Deploy the Streamlit in Snowflake 🤩
+
+Our helper is the Streamlit in Snowflake application which was built on the last diff result only in order to help us to hopefully have a better examining with the actual result with typing SQL.
+
+Let's deploy the Streamlit app by running the dbt command as follows:
+
+```bash
+dbt run-operation sis_deploy__diff_helper
+```
+
+<details>
+  <summary>Sample app UI</summary>
+
+<img src="./assets/img/sis_ui.png" alt="Sample SiS">
+
+</details>
+
 ## Demo
 
 **Part 1**: Configure and prepare Blue/Green
