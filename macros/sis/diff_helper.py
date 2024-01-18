@@ -96,7 +96,7 @@ st.dataframe(data, use_container_width=True)
 
 
 # Drill down
-if st.button("Sampling failures ▶️"):
+if st.button("Sampling Failures ▶️"):
     sql = """
         select  concat(
                     src_db,'.',src_schema,'.',src_table,
@@ -127,7 +127,7 @@ if st.button("Sampling failures ▶️"):
 
                 where   hash(src.' || column_name || ') != hash(trg.' || column_name || ')
 
-                limit   10
+                limit   10;
                 ' as drilldown_script
 
         from    data_diff_check
@@ -136,7 +136,10 @@ if st.button("Sampling failures ▶️"):
     data = session.sql(sql).collect()
     for item in data:
         item_dict = item.as_dict()
-        with st.expander(f"🟡 **{item_dict.get('COLUMN_NAME')}** / {item_dict.get('ENTITY')}"):
+        with st.expander(f"🟡 **{item_dict.get('COLUMN_NAME')}** / {item_dict.get('ENTITY')}", expanded=False):
             st.markdown(f"_(only 10 rows maximum)_")
-            sql_data = session.sql(item_dict.get("DRILLDOWN_SCRIPT")).collect()
+            sql = item_dict.get("DRILLDOWN_SCRIPT")
+            sql_data = session.sql(sql).collect()
             st.dataframe(sql_data, use_container_width=True)
+            st.markdown("Used query:")
+            st.code(sql.replace("                ","  "), language='sql')
