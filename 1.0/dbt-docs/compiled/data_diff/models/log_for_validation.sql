@@ -8,6 +8,7 @@ select
   , cast(null as TEXT) as sql_statement
   , cast(null as timestamp) as diff_start_time
   , cast(null as TEXT) as diff_type
+  , cast(null as TEXT) as diff_run_id
 
 from dummy
 

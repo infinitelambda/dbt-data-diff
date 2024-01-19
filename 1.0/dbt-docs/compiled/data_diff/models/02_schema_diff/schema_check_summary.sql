@@ -8,6 +8,7 @@ select
   , trg_schema
   , trg_table
   , last_data_diff_timestamp
+  , diff_run_id
   , count(*) as number_of_columns
   , sum(case when common_col then 1 else 0 end) as mutual_columns
   , sum(case when datatype_check then 0 else 1 end) as number_of_false_datatype_check

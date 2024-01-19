@@ -12,6 +12,7 @@ select
   , cast(null as TEXT) as column_name
   , cast(null as float) as match_percentage
   , cast(null as timestamp) as last_data_diff_timestamp
+  , cast(null as TEXT) as diff_run_id
 
 from dummy
 

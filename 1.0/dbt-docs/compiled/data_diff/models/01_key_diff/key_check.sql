@@ -15,6 +15,7 @@ select
   , cast(null as boolean) as is_exclusive_trg
   , cast(null as boolean) as is_diff_unique_key
   , cast(null as timestamp) as last_data_diff_timestamp
+  , cast(null as TEXT) as diff_run_id
 
 from dummy
 

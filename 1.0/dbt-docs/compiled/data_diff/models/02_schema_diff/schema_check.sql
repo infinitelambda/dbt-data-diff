@@ -21,6 +21,7 @@ select
   , cast(null as boolean) as datatype_check
   , cast(null as timestamp) as last_data_diff_timestamp
   , cast(null as TEXT) as pipe_name
+  , cast(null as TEXT) as diff_run_id
 
 from dummy
 
