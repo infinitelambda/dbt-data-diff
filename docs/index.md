@@ -155,9 +155,9 @@ dbt run -s data_diff --vars '{data_diff__on_run_hook: true}'
 
 </details>
 
-### 4. [Bonus] Deploy the Streamlit in Snowflake 🤩
+### 4. [Bonus] Deploy the helper 🤩
 
-Our helper is the Streamlit in Snowflake application which was built on the last diff result only in order to help us to hopefully have a better examining with the actual result with typing SQL.
+Our helper is the [Streamlit in Snowflake](https://www.snowflake.com/en/data-cloud/overview/streamlit-in-snowflake/) (SiS) application which was built on the last diff result in order to help us to have a better examining with the actual result without typing SQL.
 
 Let's deploy the Streamlit app by running the dbt command as follows:
 
@@ -166,7 +166,41 @@ dbt run-operation sis_deploy__diff_helper
 ```
 
 <details>
-  <summary>Sample app UI</summary>
+  <summary>Sample logs</summary>
+
+```log
+02:44:50  Running with dbt=1.7.4
+02:44:52  Registered adapter: snowflake=1.7.1
+02:44:53  Found 16 models, 2 operations, 21 tests, 0 sources, 0 exposures, 0 metrics, 558 macros, 0 groups, 0 semantic models
+02:44:53  [RUN]: sis_deploy__diff_helper
+02:44:53  query:
+
+    create schema if not exists data_diff.blue_dat_common;
+    create or replace stage data_diff.blue_dat_common.stage_diff_helper
+      directory = ( enable = true )
+      comment = 'Named stage for diff helper SiS appilication';
+
+    PUT file://dbt_packages/data_diff/macros/sis/diff_helper.py @data_diff.blue_dat_common.stage_diff_helper overwrite=true auto_compress=false;
+
+    create or replace streamlit data_diff.blue_dat_common.data_diff_helper
+      root_location = '@data_diff.blue_dat_common.stage_diff_helper'
+      main_file = '/diff_helper.py'
+      query_warehouse = wh_data_diff
+      comment = 'Streamlit app for the dbt-data-diff package';
+
+02:45:02  <agate.MappedSequence: (<agate.Row: ('Streamlit DATA_DIFF_HELPER successfully created.')>)>
+```
+
+</details>
+
+Once it's done, you could access to the app via: **Steamlit menu** / **DATA_DIFF_HELPER** or via this quick link:
+
+```log
+{BASE_SNOWFLAKE_URL}/#/streamlit-apps/{DATABASE}.{SCHEMA}.DATA_DIFF_HELPER
+```
+
+<details>
+  <summary>👉 Check out the sample app UI</summary>
 
 <img src="./assets/img/sis_ui.png" alt="Sample SiS">
 
