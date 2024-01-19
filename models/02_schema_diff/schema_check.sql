@@ -29,6 +29,7 @@ select
   , cast(null as {{ dbt.type_boolean() }}) as datatype_check
   , cast(null as {{ dbt.type_timestamp() }}) as last_data_diff_timestamp
   , cast(null as {{ dbt.type_string() }}) as pipe_name
+  , cast(null as {{ dbt.type_string() }}) as diff_run_id
 
 from dummy
 

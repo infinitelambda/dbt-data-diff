@@ -7,13 +7,13 @@
     {% set configured_table_model -%} {{ ref("configured_tables").identifier }} {%- endset %}
     {% set log_model -%} {{ ref("log_for_validation").identifier }} {%- endset %}
     {% set result_schema_model -%} {{ ref("schema_check").identifier }} {%- endset %}
-    {% set result_model -%} {{ ref("data_diff_check").identifier }} {%- endset %}
+    {% set result_model -%} {{ ref("data_diff_check_summary").identifier }} {%- endset %}
 
   {% set namespace = data_diff.get_namespace() %}
 
     {% set query -%}
 
-    create or replace procedure {{ namespace }}.check_data_diff(p_batch varchar)
+    create or replace procedure {{ namespace }}.check_data_diff(p_batch varchar, p_diff_run_id varchar)
     returns varchar
       language sql
       as
@@ -131,6 +131,7 @@
                         )
                         select  *
                                 , ''' || ? || ''' as last_data_diff_timestamp
+                                , ''' || ? || ''' as diff_run_id
                         from    compare_content' as sql_data_diff__for_a_table,
 
                         '
@@ -144,6 +145,7 @@
                             ,column_name
                             ,match_percentage
                             ,last_data_diff_timestamp
+                            ,diff_run_id
                         )
                         with compare_content as (
 
@@ -178,7 +180,8 @@
                                 ,trg_table
                                 ,column_name
                                 ,match_percentage
-                                ,''' || ? ||'''as last_data_diff_timestamp
+                                ,''' || ? ||''' as last_data_diff_timestamp
+                                ,''' || ? ||''' as diff_run_id
                         from    final
                         unpivot (
                             match_percentage
@@ -192,35 +195,35 @@
     begin
         run_timestamp := sysdate();
 
-        open c1 using(:p_batch, :run_timestamp, :run_timestamp);
+        open c1 using(:p_batch, :run_timestamp, :p_diff_run_id, :run_timestamp, :p_diff_run_id);
 
-          for record in c1 do
+        for record in c1 do
             sql_statement := record.sql_data_diff__for_a_table;
 
-            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
-            values (sysdate(), null, :sql_statement, :run_timestamp, 'data-diff');
+            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type, diff_run_id)
+            values (sysdate(), null, :sql_statement, :run_timestamp, 'data-diff', :p_diff_run_id);
 
             execute immediate :sql_statement;
 
             update  {{ log_model }}
             set     end_time =  sysdate()
-            where   diff_start_time = :run_timestamp
+            where   diff_run_id = :p_diff_run_id
               and   sql_statement = :sql_statement;
 
 
             sql_statement := record.sql_data_diff__pivot_summary;
 
-            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
-            values (sysdate(), null, :sql_statement, :run_timestamp, 'data-diff');
+            insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type, diff_run_id)
+            values (sysdate(), null, :sql_statement, :run_timestamp, 'data-diff', :p_diff_run_id);
 
             execute immediate :sql_statement;
 
             update  {{ log_model }}
             set     end_time =  sysdate()
-            where   diff_start_time = :run_timestamp
+            where   diff_run_id = :p_diff_run_id
               and   sql_statement = :sql_statement;
 
-          end for;
+        end for;
 
         close c1;
 

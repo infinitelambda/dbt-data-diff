@@ -50,3 +50,5 @@ models:
           Specify the pipe name which is used in the asynchronous run fostering the parallel.
 
           NOTE: This field is necessarily exiting here in order to be used in data-diff async run.
+      - name: diff_run_id
+        description: Data diff's Run ID

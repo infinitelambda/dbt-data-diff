@@ -23,6 +23,7 @@ select
   , cast(null as {{ dbt.type_boolean() }}) as is_exclusive_trg
   , cast(null as {{ dbt.type_boolean() }}) as is_diff_unique_key
   , cast(null as {{ dbt.type_timestamp() }}) as last_data_diff_timestamp
+  , cast(null as {{ dbt.type_string() }}) as diff_run_id
 
 from dummy
 

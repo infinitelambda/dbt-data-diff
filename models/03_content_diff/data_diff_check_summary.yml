@@ -1,5 +1,5 @@
 models:
-  - name: data_diff_check
+  - name: data_diff_check_summary
     description: |
       Result of the **Data Content** diff failure only, aggregated by columns.
 
@@ -47,3 +47,5 @@ models:
 
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
+      - name: diff_run_id
+        description: Data diff's Run ID

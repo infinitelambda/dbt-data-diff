@@ -15,23 +15,24 @@
     {{ return("") }}
   {% endif %}
 
-  {% set log_model_fdn -%} {{ ref("log_for_validation") }} {%- endset %}
+  {% set log_model_fqn -%} {{ ref("log_for_validation") }} {%- endset %}
 
   {% set utcnow = modules.datetime.datetime.utcnow() %}
+  {% set diff_run_id = "DATA-DIFF-RUN-" ~ invocation_id ~ "-" ~ utcnow.strftime("%Y%m%d-%H%M%S") %}
   {% set query -%}
     --1. Build the DAG
     --root task
     create or replace task {{ namespace }}.{{ root_task }}
       warehouse = {{ target.warehouse }}
       as
-      insert into {{ log_model_fdn }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
-        values (sysdate(), null, 'execute task {{ namespace }}.{{ root_task }}', '{{ utcnow }}', 'DAG of Task: {{ dbt_invocation_id }}');
+      insert into {{ log_model_fqn }} (start_time, end_time, sql_statement, diff_start_time, diff_type, diff_run_id)
+        values (sysdate(), null, 'execute task {{ namespace }}.{{ root_task }}', '{{ utcnow }}', 'DAG of Task: {{ dbt_invocation_id }}', '{{ diff_run_id }}');
     --end task
     create or replace task {{ namespace }}.{{ end_task }}
       warehouse = {{ target.warehouse }}
       as
-      insert into {{ log_model_fdn }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
-        values (sysdate(), null, 'execute task {{ namespace }}.{{ end_task }}', '{{ utcnow }}', 'DAG of Task: {{ dbt_invocation_id }}');
+      insert into {{ log_model_fqn }} (start_time, end_time, sql_statement, diff_start_time, diff_type, diff_run_id)
+        values (sysdate(), null, 'execute task {{ namespace }}.{{ end_task }}', '{{ utcnow }}', 'DAG of Task: {{ dbt_invocation_id }}', '{{ diff_run_id }}');
 
     {% for batch_id in batches %}
 
@@ -40,7 +41,7 @@
         warehouse = {{ target.warehouse }}
         after {{ namespace }}.{{ root_task }}
         as
-        call {{ namespace }}.check_key('{{ batch_id }}');
+        call {{ namespace }}.check_key('{{ batch_id }}', '{{ diff_run_id }}');
       alter task {{ namespace }}.{{ prefix_batch_task__check_key }}{{ batch_id }} resume;
 
       --schema task(s): run after key check
@@ -48,7 +49,7 @@
         warehouse = {{ target.warehouse }}
         after {{ namespace }}.{{ prefix_batch_task__check_key }}{{ batch_id }}
         as
-        call {{ namespace }}.check_schema('{{ batch_id }}');
+        call {{ namespace }}.check_schema('{{ batch_id }}', '{{ diff_run_id }}');
       alter task {{ namespace }}.{{ prefix_batch_task__check_schema }}{{ batch_id }} resume;
 
       --data diff task(s): run after schema task & depends on its result
@@ -56,7 +57,7 @@
         warehouse = {{ target.warehouse }}
         after {{ namespace }}.{{ prefix_batch_task__check_schema }}{{ batch_id }}
         as
-        call {{ namespace }}.check_data_diff('{{ batch_id }}');
+        call {{ namespace }}.check_data_diff('{{ batch_id }}', '{{ diff_run_id }}');
       alter task {{ namespace }}.{{ prefix_batch_task__check_data_diff }}{{ batch_id }} resume;
 
       --end task

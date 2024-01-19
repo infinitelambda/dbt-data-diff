@@ -25,3 +25,5 @@ models:
         description: Number of columns which are missing either from the source or the target
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
+      - name: diff_run_id
+        description: Data diff's Run ID

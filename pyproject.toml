@@ -109,11 +109,6 @@ data-diff = [
   {cmd = "poe data-diff-bg"},
   {cmd = "poe data-diff-run"}
 ]
-data-diff-async = [
-  {cmd = "poe data-diff-migration-4async"},
-  {cmd = "poe data-diff-bg"},
-  {cmd = "poe data-diff-run-async"},
-]
 data-diff-async-wait = [
   {cmd = "poe data-diff-migration-4async"},
   {cmd = "poe data-diff-bg"},

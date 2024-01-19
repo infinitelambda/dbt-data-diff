@@ -17,6 +17,8 @@ models:
         description: Target object to be compared
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
+      - name: diff_run_id
+        description: Data diff's Run ID
       - name: number_of_columns
         description: Total number of columns
       - name: mutual_columns

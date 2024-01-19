@@ -31,3 +31,5 @@ models:
         description: true/false, where true means the key is missing from the source or target object
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
+      - name: diff_run_id
+        description: Data diff's Run ID

@@ -12,7 +12,7 @@
 
     {% set query -%}
 
-    create or replace procedure {{ namespace }}.check_key(p_batch varchar)
+    create or replace procedure {{ namespace }}.check_key(p_batch varchar, p_diff_run_id varchar)
     returns varchar
     language sql
     as
@@ -66,7 +66,22 @@
             )
 
             select  '
-                    insert into {{ result_model }} (src_db, src_schema, src_table, trg_db, trg_schema, trg_table, pk, key_value, is_exclusive_src, is_exclusive_trg, is_diff_unique_key, last_data_diff_timestamp)
+                    insert into {{ result_model }}
+                    (
+                        src_db
+                        ,src_schema
+                        ,src_table
+                        ,trg_db
+                        ,trg_schema
+                        ,trg_table
+                        ,pk
+                        ,key_value
+                        ,is_exclusive_src
+                        ,is_exclusive_trg
+                        ,is_diff_unique_key
+                        ,last_data_diff_timestamp
+                        ,diff_run_id
+                    )
                     with
                     src_data as (
                         select  *
@@ -93,12 +108,25 @@
                                     , (src_pk is null) as is_exclusive_trg
                                     , case when src_pk is distinct from trg_pk then 1 else 0 end as is_diff_unique_key
                                     , ''' || ? || ''' as last_data_diff_timestamp
+                                    , ''' || ? || ''' as diff_run_id
                         from        src_data as src
                         full join   trg_data as trg
                             on      src_pk = trg_pk
                         where       is_diff_unique_key = 1
                     )
-                    select  src_db, src_schema, src_table, trg_db, trg_schema, trg_table, pk, key_value, is_exclusive_src, is_exclusive_trg, is_diff_unique_key, last_data_diff_timestamp
+                    select  src_db
+                            ,src_schema
+                            ,src_table
+                            ,trg_db
+                            ,trg_schema
+                            ,trg_table
+                            ,pk
+                            ,key_value
+                            ,is_exclusive_src
+                            ,is_exclusive_trg
+                            ,is_diff_unique_key
+                            ,last_data_diff_timestamp
+                            ,diff_run_id
                     from    insert_part
                     ' as sql
 
@@ -109,20 +137,20 @@
 
         run_timestamp := sysdate();
 
-        open c1 using(:p_batch, :run_timestamp);
+        open c1 using(:p_batch, :run_timestamp, :p_diff_run_id);
 
             for record in c1 do
 
               sql_statement := record.sql;
 
-              insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type)
-              values (sysdate(), null, :sql_statement, :run_timestamp, 'key');
+              insert into {{ log_model }} (start_time, end_time, sql_statement, diff_start_time, diff_type, diff_run_id)
+              values (sysdate(), null, :sql_statement, :run_timestamp, 'key', :p_diff_run_id);
 
               execute immediate :sql_statement;
 
               update  {{ log_model }}
               set     end_time =  sysdate()
-              where   diff_start_time = :run_timestamp
+              where   diff_run_id = :p_diff_run_id
                   and sql_statement = :sql_statement;
 
             end for;

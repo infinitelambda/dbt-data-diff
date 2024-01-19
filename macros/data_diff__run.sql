@@ -4,9 +4,9 @@
 
   {% set query -%}
 
-    call {{ namespace }}.check_key('');
-    call {{ namespace }}.check_schema('');
-    call {{ namespace }}.check_data_diff('');
+    call {{ namespace }}.check_key('', '{{ invocation_id }}');
+    call {{ namespace }}.check_schema('', '{{ invocation_id }}');
+    call {{ namespace }}.check_data_diff('', '{{ invocation_id }}');
 
     {% if is_cleanup -%}
       {{ data_diff.data_diff__cleanup(in_hook=true) }}

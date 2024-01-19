@@ -20,6 +20,7 @@ select
   , cast(null as {{ dbt.type_string() }}) as column_name
   , cast(null as {{ dbt.type_float() }}) as match_percentage
   , cast(null as {{ dbt.type_timestamp() }}) as last_data_diff_timestamp
+  , cast(null as {{ dbt.type_string() }}) as diff_run_id
 
 from dummy
 

@@ -13,3 +13,5 @@ models:
         description: Start time of all the executions in a diff type, can be used as a join key to the appropiate result table
       - name: diff_type
         description: Key, schema or data-diff type of entry
+      - name: diff_run_id
+        description: Data diff's Run ID

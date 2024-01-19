@@ -20,7 +20,7 @@ with show_data as (
   from    table(result_scan(last_query_id()))
 
 )
-{{ log("dag_log_entries: " ~ (dag_log_entries | length), info=True) }}
+
 {% if dag_log_entries | length == 0 %}
 
   select  'Normal run (non-async)' as test_case, count(*) as actual, 0 as expected
