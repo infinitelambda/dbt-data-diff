@@ -1,4 +1,14 @@
 {% macro data_diff__run_async(is_polling_status=false, in_hook=false, is_cleanup=false) -%}
+  {{ return(
+    adapter.dispatch('data_diff__run_async')(
+      is_polling_status=is_polling_status,
+      in_hook=in_hook,
+      is_cleanup=is_cleanup
+    )
+  ) }}
+{%- endmacro %}
+
+{% macro default__data_diff__run_async(is_polling_status=false, in_hook=false, is_cleanup=false) -%}
 
   {% set namespace = data_diff.get_namespace() %}
   {% set dbt_invocation_id = invocation_id | replace("-", "_") %}

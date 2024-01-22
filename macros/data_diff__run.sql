@@ -1,4 +1,8 @@
 {% macro data_diff__run(in_hook=false, is_cleanup=false) -%}
+  {{ return(adapter.dispatch('data_diff__run')(in_hook=in_hook, is_cleanup=is_cleanup)) }}
+{%- endmacro %}
+
+{% macro default__data_diff__run(in_hook=false, is_cleanup=false) -%}
 
   {% set namespace = data_diff.get_namespace() %}
 
