@@ -129,58 +129,76 @@ else:
 
 
     # Drill down
-    if st.button("Sampling Failures ▶️"):
-        sql = f"""
-            with
+    def show_entity_diff_drilldown(session, entity_row, expanded: bool = False):
+        entity_dict = entity_row.as_dict()
+        with st.expander(f"{entity_dict.get('ENTITY')}", expanded=expanded):
+            st.markdown(f"_(only 10 rows maximum)_")
+            sql = entity_dict.get("DRILLDOWN_SCRIPT")
+            sql_data = session.sql(sql).collect()
+            st.dataframe(sql_data, use_container_width=True)
+            st.markdown("Used query:")
+            st.code(sql.replace("                  ","  "), language='sql')
 
-            last_data_diff_check_summary as (
-                select  *
-                from    data_diff_check_summary
-                where   diff_run_id = '{last_run_id}'
-            )
+    sql = f"""
+        with
 
-            select  concat(
-                        src_db,'.',src_schema,'.',src_table,
-                        ' ▶️ ',
-                        trg_db,'.',trg_schema,'.',trg_table
-                    ) as entity
-                    ,column_name
-                    ,'with
-
-                    src as (
-                        select  *
-                        from    data_diff_check_summary_' || src_table || '_' || to_varchar(last_data_diff_timestamp, 'YYYYMMDD') || '
-                        where   type_of_diff = ''different_in_source''
-                    ),
-
-                    trg as (
-                        select  *
-                        from    data_diff_check_summary_' || src_table || '_' || to_varchar(last_data_diff_timestamp, 'YYYYMMDD') || '
-                        where   type_of_diff = ''different_in_target''
-                    )
-
-                    select  src.' || column_name || ' as ' || column_name || '__source
-                            ,trg.' || column_name || ' as ' || column_name || '__target
-                            , src.combined_unique_key
-
-                    from    src
-                    join    trg using (combined_unique_key)
-
-                    where   hash(src.' || column_name || ') != hash(trg.' || column_name || ')
-
-                    limit   10;
-                    ' as drilldown_script
-
+        last_data_diff_check_summary as (
+            select  *
             from    data_diff_check_summary
-            order by match_percentage
-        """
-        data = session.sql(sql).collect()
-        for item in data:
-            item_dict = item.as_dict()
-            with st.expander(f"🟡 **{item_dict.get('COLUMN_NAME')}** / {item_dict.get('ENTITY')}", expanded=False):
-                st.markdown(f"_(only 10 rows maximum)_")
-                sql = item_dict.get("DRILLDOWN_SCRIPT")
-                sql_data = session.sql(sql).collect()
-                st.dataframe(sql_data, use_container_width=True)
-                st.markdown("Used query:")
-                st.code(sql.replace("                ","  "), language='sql')
+            where   diff_run_id = '{last_run_id}'
+        )
+
+        select  concat(
+                    '🟡 **', column_name, '** / ',
+                    src_db,'.',src_schema,'.',src_table,
+                    ' ▶️ ',
+                    trg_db,'.',trg_schema,'.',trg_table
+                ) as entity
+                ,column_name
+                ,'with
+
+                src as (
+                    select  *
+                    from    data_diff_check_summary_' || src_table || '_' || to_varchar(last_data_diff_timestamp, 'YYYYMMDD') || '
+                    where   type_of_diff = ''different_in_source''
+                ),
+
+                trg as (
+                    select  *
+                    from    data_diff_check_summary_' || src_table || '_' || to_varchar(last_data_diff_timestamp, 'YYYYMMDD') || '
+                    where   type_of_diff = ''different_in_target''
+                )
+
+                select  src.' || column_name || ' as ' || column_name || '__source
+                        ,trg.' || column_name || ' as ' || column_name || '__target
+                        , src.combined_unique_key
+
+                from    src
+                join    trg using (combined_unique_key)
+
+                where   hash(src.' || column_name || ') != hash(trg.' || column_name || ')
+
+                limit   10;
+                ' as drilldown_script
+
+        from    data_diff_check_summary
+        where   {{where}}
+        order by match_percentage
+    """
+    entity_options = [
+        x.as_dict().get("ENTITY")
+        for x in session.sql(f"{sql.format(where='1=1')}").collect()
+    ]
+    entity_option = st.selectbox(
+        label="Let's drill-down by selecting a diff entity to view the sample failure:",
+        options=entity_options
+    )
+    if entity_option:
+        entity_drilldown_query = session.sql(sql.format(where=f"entity = '{entity_option}'")).collect()
+        show_entity_diff_drilldown(session=session, entity_row=entity_drilldown_query[0], expanded=True)
+
+    if entity_options:
+        if st.button("Or see (Top 10) Failure(s) ▶️"):
+            data = session.sql(f"{sql.format(where='1=1')} limit 10").collect()
+            for item in data:
+                show_entity_diff_drilldown(session=session, entity_row=item)
