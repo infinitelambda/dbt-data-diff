@@ -6,7 +6,7 @@ st.set_page_config(layout="wide")
 # Header
 st.title("Data Diff Helpers")
 st.write("""
-Aggregation of the diff result produced by the package [dbt-data-diff](https://gitlab.infinitelambda.com/infinitelambda/bi-chapter/dbt-data-diff)
+Aggregation of the diff result produced by the package [dbt-data-diff](https://data-diff.iflambda.com/latest/)
 """)
 
 # Get the current credentials
@@ -198,7 +198,7 @@ else:
         show_entity_diff_drilldown(session=session, entity_row=entity_drilldown_query[0], expanded=True)
 
     if entity_options:
-        if st.button("Or see (Top 10) Failure(s) ▶️"):
+        if st.button("Or see all (Top 10) Failure(s) ▶️"):
             data = session.sql(f"{sql.format(where='1=1')} limit 10").collect()
             for item in data:
                 show_entity_diff_drilldown(session=session, entity_row=item)
