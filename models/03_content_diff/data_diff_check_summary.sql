@@ -18,6 +18,9 @@ select
   , cast(null as {{ dbt.type_string() }}) as trg_schema
   , cast(null as {{ dbt.type_string() }}) as trg_table
   , cast(null as {{ dbt.type_string() }}) as column_name
+  , cast(null as {{ dbt.type_int() }}) as diff_count
+  , cast(null as {{ dbt.type_int() }}) as table_count
+  , cast(null as {{ dbt.type_float() }}) as diff_feeded_rate
   , cast(null as {{ dbt.type_float() }}) as match_percentage
   , cast(null as {{ dbt.type_timestamp() }}) as last_data_diff_timestamp
   , cast(null as {{ dbt.type_string() }}) as diff_run_id

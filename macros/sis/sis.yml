@@ -1,0 +1,9 @@
+macros:
+  - name: sis_deploy__diff_helper
+    description: |
+      Deploy the streamlit in snowflake application - Data Diff Helper
+
+      How to deploy:
+      ```bash
+      dbt run-operation sis_deploy__diff_helper
+      ```

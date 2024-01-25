@@ -103,7 +103,9 @@ else:
 
         select      case when r.src_db is null then '🟢' else '🔴' end as result
                     ,r.column_name
-                    ,concat(100 - r.match_percentage * 100, ' %') as diff_feeded_rate
+                    ,concat(100 - r.match_percentage * 100, ' %') as match_percentage
+                    ,concat(100 - r.diff_feeded_rate * 100, ' %') as diff_feeded_rate
+                    ,concat(r.diff_count, '/', r.table_count) as diff_count_vs_total
                     ,concat(
                         c.src_db,'.',c.src_schema,'.',c.src_table,
                         ' ▶️ ',
@@ -169,8 +171,8 @@ else:
                     where   type_of_diff = ''different_in_target''
                 )
 
-                select  src.' || column_name || ' as ' || column_name || '__source
-                        ,trg.' || column_name || ' as ' || column_name || '__target
+                select  src.' || column_name || ' as _source
+                        ,trg.' || column_name || ' as _target
                         , src.combined_unique_key
 
                 from    src

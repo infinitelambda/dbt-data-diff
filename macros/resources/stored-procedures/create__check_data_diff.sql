@@ -143,6 +143,9 @@
                             ,trg_schema
                             ,trg_table
                             ,column_name
+                            ,diff_count
+                            ,table_count
+                            ,diff_feeded_rate
                             ,match_percentage
                             ,last_data_diff_timestamp
                             ,diff_run_id
@@ -160,7 +163,7 @@
                             join    '|| trg_db || '.' || trg_schema || '.'|| trg_table  || ' as trg
                                 on  '|| trg_unique_key || ' = cc.combined_unique_key
                         ),
-                        final as (
+                        calc as (
                             select  '''|| src_db || ''' as src_db
                                     ,'''|| src_schema || ''' as src_schema
                                     ,'''|| src_table  || ''' as src_table
@@ -172,6 +175,7 @@
                                     ', '|| result_calc || '
                             from    column_compare
                         )
+
                         select  src_db
                                 ,src_schema
                                 ,src_table
@@ -179,15 +183,18 @@
                                 ,trg_schema
                                 ,trg_table
                                 ,column_name
-                                ,match_percentage
+                                ,cnt as diff_count
+                                ,(select count(*) from '|| src_db || '.' || src_schema || '.' || src_table || ') as total_count
+                                ,(1 - match_rate) as diff_feeded_rate
+                                ,(1 - diff_count / total_count) as match_percentage
                                 ,''' || ? ||''' as last_data_diff_timestamp
                                 ,''' || ? ||''' as diff_run_id
-                        from    final
+                        from    calc
                         unpivot (
-                            match_percentage
+                            match_rate
                             for column_name in (' || col_list || ')
                         )
-                        where   match_percentage < 1' as sql_data_diff__pivot_summary
+                        where   match_rate < 1' as sql_data_diff__pivot_summary
 
                 from    base
                 order by src_table;

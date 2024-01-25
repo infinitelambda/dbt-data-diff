@@ -28,23 +28,36 @@ models:
         description: Target object to be compared
       - name: column_name
         description: Name of the compared column
-      - name: match_percentage
+      - name: diff_count
+        description: Diff row count of the given column
+      - name: table_count
+        description: Total row count of the source table
+      - name: diff_feeded_rate
         description: |
-          Percentage data matching of the compared columns within the Diff Result (*).
+          Percentage of matching values of the given column compared to all the differences (*).
 
-          (*) = different_in_source(Source - Target) + different_in_target(Target - Source)
-
-          Note: that this % is calculated by count(matched, in a column) / count(diff dataset).
+          (*) = different_in_source + different_in_target
 
           For example, the Diff result of TableA is having 10 diff rows:
-          - 4 rows different_in_source
-          - 6 rows different_in_target
+          - 5 rows different_in_source
+          - 5 rows different_in_target
 
           then, for each column:
-          - Column1: count(matched) = 10  --> match% = 1    --> there is no diff in this column
-          - Column2: count(matched) = 5   --> match% = 0.5  --> we have data diff in Column2 in 5 (out of 10) diff rows above
-          - Column3: count(matched) = 0   --> match% = 0    --> we have a critical data diff in Column3
+          - Column1: count(matched) = 10  --> column feeded rate = 1    --> there is no diff in this column
+          - Column2: count(matched) = 5   --> column feeded rate = 0.5  --> we have data diff in Column2 in 5 (out of 10) diff rows above
+          - Column3: count(matched) = 0   --> column feeded rate = 0    --> we have a critical data diff in Column3
+      - name: match_percentage
+        description: |
+          Percentage of matching values of the given column compared to total table row count.
 
+          For example, the Diff result of TableA is having 10 diff rows:
+          - 5 rows different_in_source
+          - 5 rows different_in_target
+          - Target table has 100 rows in total
+
+          then, for each column:
+          - Column1: count(matched) = 99   --> match % = 0.99 = 99%
+          - Column2: count(matched) = 10   --> match % = 0.1  = 10%
       - name: last_data_diff_timestamp
         description: Last data-diff run timestamp
       - name: diff_run_id
