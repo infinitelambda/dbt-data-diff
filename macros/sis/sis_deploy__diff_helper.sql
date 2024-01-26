@@ -1,7 +1,6 @@
-{% macro sis_deploy__diff_helper(package_dir='dbt_packages/data_diff') -%}
+{% macro sis_deploy__diff_helper(packages_install_path='dbt_packages') -%}
 
   {% set ns = data_diff.get_namespace() %}
-
   {% set query %}
 
     create schema if not exists {{ ns }};
@@ -9,7 +8,9 @@
       directory = ( enable = true )
       comment = 'Named stage for diff helper SiS appilication';
 
-    PUT file://{{ package_dir }}/macros/sis/diff_helper.py @{{ ns }}.stage_diff_helper overwrite=true auto_compress=false;
+    PUT file://{{ packages_install_path }}/data_diff/macros/sis/diff_helper.py @{{ ns }}.stage_diff_helper
+      overwrite=true
+      auto_compress=false;
 
     create or replace streamlit {{ ns }}.data_diff_helper
       root_location = '@{{ ns }}.stage_diff_helper'

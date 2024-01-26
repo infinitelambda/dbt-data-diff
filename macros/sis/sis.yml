@@ -6,4 +6,18 @@ macros:
       How to deploy:
       ```bash
       dbt run-operation sis_deploy__diff_helper
+      # or
+      dbt run-operation sis_deploy__diff_helper --args '{packages_install_path: your_specific_path}'
       ```
+    args:
+      - name: packages_install_path
+        description: |
+          Default to `dbt_packages`.
+
+          If you configured `packages-install-path` with a specific value e.g. `my_installed_packages`,
+           then the deployment command will need to use this argument, for example:
+
+          ```bash
+          dbt run-operation sis_deploy__diff_helper \
+            --args '{packages_install_path: my_installed_packages}'
+          ```
