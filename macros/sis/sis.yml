@@ -9,8 +9,9 @@ macros:
       # or
       dbt run-operation sis_deploy__diff_helper --args '{packages_install_path: your_specific_path}'
       ```
-    args:
+    arguments:
       - name: packages_install_path
+        type: string
         description: |
           Default to `dbt_packages`.
 
