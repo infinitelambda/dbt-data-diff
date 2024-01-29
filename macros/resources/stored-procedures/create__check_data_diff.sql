@@ -184,9 +184,9 @@
                                 ,trg_table
                                 ,column_name
                                 ,cnt as diff_count
-                                ,(select count(*) from '|| src_db || '.' || src_schema || '.' || src_table || ') as total_count
+                                ,(select count(*) from '|| src_db || '.' || src_schema || '.' || src_table || ' where ' || where_condition || ')) as total_count
                                 ,(1 - match_rate) as diff_feeded_rate
-                                ,(1 - diff_count / total_count) as match_percentage
+                                ,(1 - diff_count / 2 * 1.0 / total_count) as match_percentage
                                 ,''' || ? ||''' as last_data_diff_timestamp
                                 ,''' || ? ||''' as diff_run_id
                         from    calc
