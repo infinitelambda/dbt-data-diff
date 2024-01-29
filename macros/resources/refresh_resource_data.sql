@@ -36,7 +36,7 @@
         ,'{{ item.get("pk") }}' as pk
         ,{{ item.get("include_columns", []) | upper }} as include_columns
         ,{{ item.get("exclude_columns", []) | upper }} as exclude_columns
-        ,'{{ item.get("where_condition", "1=1") }}' as where_condition
+        ,'{{ data_diff.escape_single_quote_value(item.get("where", "1=1")) }}' as where_condition
         ,True as is_enabled
 
       {% if var("data_diff__auto_pipe", false) -%}

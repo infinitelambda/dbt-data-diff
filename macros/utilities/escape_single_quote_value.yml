@@ -1,0 +1,6 @@
+macros:
+  - name: escape_single_quote_value
+    description: |
+      Escape the SQL value which contains the single quote.
+
+      For example: `name = 'data'` will be escaped to `name = ''data''`
