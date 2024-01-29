@@ -11,16 +11,16 @@
 
 with source_data as (
 
-    select 1 as id, 'id 1' as id_description
+    select 1 as id, 'id 1' as id_description, {% if target.name.lower() == 'blue' %} '100' {%else %} 100 {% endif %} as amount
     union all
-    select null as id, 'null' as id_description
+    select null as id, 'null' as id_description, {% if target.name.lower() == 'blue' %} '100' {%else %} 100 {% endif %} as amount
     union all
-    select 2 as id, 'id 2' as id_description
+    select 2 as id, 'id 2' as id_description, {% if target.name.lower() == 'blue' %} '100' {%else %} 100 {% endif %} as amount
     union all
-    select 3 as id, {% if target.name.lower() == 'blue' %}'id 3 blue'{% else %}'id 3 green'{% endif %}as id_description
+    select 3 as id, {% if target.name.lower() == 'blue' %}'id 3 blue'{% else %}'id 3 green'{% endif %}as id_description, {% if target.name.lower() == 'blue' %} '100' {%else %} 100 {% endif %} as amount
     {% if target.name.lower() == 'blue' %}
     union all
-    select 4 as id, 'id 4' as id_description
+    select 4 as id, 'id 4' as id_description, {% if target.name.lower() == 'blue' %} '100' {%else %} 100 {% endif %} as amount
     {% endif %}
 
 )

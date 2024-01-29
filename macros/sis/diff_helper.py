@@ -69,9 +69,17 @@ else:
         )
 
         select      case when r.src_db is null then '🟢' else '🔴' end as result
-                    ,concat(r.number_of_exclusive_source, ' (',upper(r.exclusive_source_list),')') as source_not_found
-                    ,concat(r.number_of_exclusive_source, ' (',upper(r.exclusive_target_list),')') as target_not_found
-                    ,coalesce(1 - r.mutual_columns * 1.0 / r.number_of_columns, 0) as failed_rate
+                    ,case
+                        when r.number_of_exclusive_source > 0 then concat(r.number_of_exclusive_source, ' (',upper(r.exclusive_source_list),')')
+                    end as source_not_found
+                    ,case
+                        when r.number_of_exclusive_source > 0 then concat(r.number_of_exclusive_source, ' (',upper(r.exclusive_target_list),')')
+                    end as target_not_found
+                    ,coalesce(1 - r.mutual_columns * 1.0 / r.number_of_columns, 0) as not_found_rate
+                    ,case
+                        when r.number_of_false_datatype_check > 0 then concat(r.number_of_false_datatype_check, ' (',upper(r.false_datatype_check_list),')')
+                    end as data_type_mismatched
+                    ,coalesce(r.number_of_false_datatype_check  * 1.0 / r.number_of_columns, 0) as mismatched_rate
                     ,concat(
                         c.src_db,'.',c.src_schema,'.',c.src_table,
                         ' ▶️ ',

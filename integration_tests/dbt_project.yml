@@ -16,23 +16,23 @@ on-run-start:
     {% endif %}
 
 vars:
-  data_diff__database: data_diff
-  data_diff__schema: common
+  # data_diff__database: data_diff
+  data_diff__schema: datadiff
   # For normal (non-async) mode
   data_diff__configured_tables:
     - # src_db: data_diff
-      src_schema: blue_dat
+      src_schema: dbt_blue
       src_table: my_first_dbt_model
       # trg_db: data_diff
-      trg_schema: green_dat
+      trg_schema: dbt_green
       trg_table: my_first_dbt_model
       pk: id # id1,id2
       include_columns: []
       exclude_columns: ["loaded_at"]
       # pipe_name: awesome_thread
-    - src_schema: blue_dat
+    - src_schema: dbt_blue
       src_table: my_second_dbt_model
-      trg_schema: green_dat
+      trg_schema: dbt_green
       trg_table: my_second_dbt_model
       pk: id
       include_columns: []
