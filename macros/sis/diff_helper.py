@@ -23,6 +23,7 @@ if not last_run_id:
 else:
     # Summary
     st.subheader("🥉 Key diff:")
+    st.caption("Compare the Primary Key (`pk`) only")
     sql = f"""
         with
 
@@ -57,6 +58,7 @@ else:
     st.dataframe(data, use_container_width=True)
 
     st.subheader("🥈 Schema diff:")
+    st.caption("Compare the data structure (column's Names and Data Types)")
     sql = f"""
         with
 
@@ -92,6 +94,7 @@ else:
     st.dataframe(data, use_container_width=True)
 
     st.subheader("🥇 Data diff:")
+    st.caption("Compare all cell values given matched columns and mached keys")
     sql = f"""
         with
 
@@ -103,7 +106,7 @@ else:
 
         select      case when r.src_db is null then '🟢' else '🔴' end as result
                     ,r.column_name
-                    ,concat(100 - r.match_percentage * 100, ' %') as match_percentage
+                    ,concat(r.match_percentage * 100, ' %') as match_percentage
                     ,concat(r.diff_feeded_rate * 100, ' %') as diff_feeded_rate
                     ,concat(r.diff_count, '/', r.table_count) as diff_count_vs_total
                     ,concat(
