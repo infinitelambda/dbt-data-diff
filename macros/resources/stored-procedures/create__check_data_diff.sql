@@ -77,32 +77,32 @@
                     qualify row_number() over(
                         partition by src_db, src_schema, src_table, trg_db, trg_schema, trg_table, column_name, pipe_name
                         order by last_data_diff_timestamp desc
-                    ) = 1
+                    ) = 1 --get last schema diff result
 
                 ),
 
                 base as (
 
                     select  t.*
-                            ,listagg(column_name, ',') as col_list
+                            ,listagg(v.column_name, ',') as col_list
                             ,'cast(md5_binary(concat_ws(''||'','
-                                || listagg('ifnull(nullif(upper(trim(cast(' || column_name || ' as varchar))), ''''), ''^^'')', ',' )
+                                || listagg('ifnull(nullif(upper(trim(cast(' || v.column_name || ' as varchar))), ''''), ''^^'')', ',' )
                                 || ' )) as binary(16)) as hashdiff' as hash_calc
-                            ,listagg('ifnull(nullif(upper(trim(cast(src.'|| column_name ||' as varchar))),''''),''^^'')= ifnull(nullif(upper(trim(cast(trg.'|| column_name ||' as varchar))),''''),''^^'') as '|| column_name || '_is_equal', ',' ) as is_equal
-                            ,listagg('sum(case when '|| column_name ||'_is_equal then 1 else 0 end) as '|| column_name || '_diff', ',' )  as diff_calc
-                            ,listagg(column_name ||'_diff / cnt as '|| column_name, ',')  as result_calc
+                            ,listagg('ifnull(nullif(upper(trim(cast(src.'|| v.column_name ||' as varchar))),''''),''^^'')= ifnull(nullif(upper(trim(cast(trg.'|| v.column_name ||' as varchar))),''''),''^^'') as '|| v.column_name || '_is_equal', ',' ) as is_equal
+                            ,listagg('sum(case when '|| v.column_name ||'_is_equal then 1 else 0 end) as '|| v.column_name || '_diff', ',' )  as diff_calc
+                            ,listagg(v.column_name ||'_diff / cnt as '|| v.column_name, ',')  as result_calc
 
-                    from    {{ configured_table_model }}_final  t
-                    join    schema_validation  v
+                    from    {{ configured_table_model }}_final as t
+                    join    schema_validation as v
                         on  t.src_schema = v.src_schema
                         and t.src_table = v.src_table
                     where   true
                         --excluded columns i.e always changing column, added or removed column
-                        and (not array_contains(upper(column_name)::variant, t.exclude_columns))
+                        and (not array_contains(upper(v.column_name)::variant, t.exclude_columns))
                         and (
                                 case
-                                    when array_size(include_columns) > 0
-                                        then array_contains(column_name::variant, t.include_columns)
+                                    when array_size(t.include_columns) > 0
+                                        then array_contains(v.column_name::variant, t.include_columns)
                                     else true
                                 end
                             )

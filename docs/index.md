@@ -3,8 +3,10 @@
 
 <img align="right" width="150" height="150" src="./assets/img/il-logo.png">
 
-[![dbt-hub](https://img.shields.io/badge/Visit-dbt--hub%20↗️-FF694B?logo=dbt&logoColor=FF694B)](https://hub.getdbt.com/infinitelambda/dbt-data-diff)[![support-snowflake](https://img.shields.io/badge/support-Snowflake-7faecd?logo=snowflake&logoColor=7faecd)](https://docs.snowflake.com/)
-[![support-dbt](https://img.shields.io/badge/support-dbt%20v1.6+-FF694B?logo=dbt&logoColor=FF694B)](https://docs.getdbt.com/)
+[![dbt-hub](https://img.shields.io/badge/Visit-dbt--hub%20↗️-FF694B?logo=dbt&logoColor=FF694B)](https://hub.getdbt.com/infinitelambda/dbt-data-diff)
+[![support-snowflake](https://img.shields.io/badge/support-Snowflake-7faecd?logo=snowflake&logoColor=7faecd)](https://docs.snowflake.com?ref=infinitelambda)
+[![support-dbt](https://img.shields.io/badge/support-dbt%20v1.6+-FF694B?logo=dbt&logoColor=FF694B)](https://docs.getdbt.com?ref=infinitelambda)
+[![built-in-sis](https://img.shields.io/badge/built--in-SiS-BD4042?logo=streamlit&logoColor=FF694B)](https://www.snowflake.com/en/data-cloud/overview/streamlit-in-snowflake?ref=infinitelambda)
 
 Data-diff solution for dbt-ers with Snowflake ❄️ 🌟
 

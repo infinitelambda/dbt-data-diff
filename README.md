@@ -4,13 +4,16 @@
 <img align="right" width="150" height="150" src="./docs/assets/img/il-logo.png">
 
 [![dbt-hub](https://img.shields.io/badge/Visit-dbt--hub%20↗️-FF694B?logo=dbt&logoColor=FF694B)](https://hub.getdbt.com/infinitelambda/dbt-data-diff)
-[![support-snowflake](https://img.shields.io/badge/support-Snowflake-7faecd?logo=snowflake&logoColor=7faecd)](https://docs.snowflake.com/)
-[![support-dbt](https://img.shields.io/badge/support-dbt%20v1.6+-FF694B?logo=dbt&logoColor=FF694B)](https://docs.getdbt.com/)
+[![support-snowflake](https://img.shields.io/badge/support-Snowflake-7faecd?logo=snowflake&logoColor=7faecd)](https://docs.snowflake.com?ref=infinitelambda)
+[![support-dbt](https://img.shields.io/badge/support-dbt%20v1.6+-FF694B?logo=dbt&logoColor=FF694B)](https://docs.getdbt.com?ref=infinitelambda)
+[![built-in-sis](https://img.shields.io/badge/built--in-SiS-BD4042?logo=streamlit&logoColor=FF694B)](https://www.snowflake.com/en/data-cloud/overview/streamlit-in-snowflake?ref=infinitelambda)
 
 Data-diff solution for dbt-ers with Snowflake ❄️ 🚀
 
 > [!TIP]
 > 📖 For more details, please help to visit [the documentation site](https://data-diff.iflambda.com/latest/) (or go to the [docs/index.md](./docs/index.md)) for more details
+
+<img src="./docs/assets/img/data-diff.jpeg" alt="Sample diffing">
 
 ## Installation
 
@@ -50,6 +53,10 @@ dbt run -s data_diff --vars '{data_diff__on_migration: true}'
 ## Quick Demo
 
 Let's jump to the [Quick Start](https://data-diff.iflambda.com/latest/#quick-start) section and the next [demo one](https://data-diff.iflambda.com/latest/#demo) 🏃
+
+📊 Here is the sample Streamlit in Snowflake application based on the result produced by the package:
+
+<img src="./docs/assets/img/sis_ui.png" alt="Sample SiS">
 
 ## How to Contribute
 
