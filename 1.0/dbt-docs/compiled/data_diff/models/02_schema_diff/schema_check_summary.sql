@@ -11,7 +11,11 @@ select
   , diff_run_id
   , count(*) as number_of_columns
   , sum(case when common_col then 1 else 0 end) as mutual_columns
+
   , sum(case when datatype_check then 0 else 1 end) as number_of_false_datatype_check
+  , listagg(
+    case when not datatype_check then column_name end, ', '
+  ) within group (order by column_name) as false_datatype_check_list
 
   , sum(case when is_exclusive_src then 1 else 0 end) as number_of_exclusive_target
   , listagg(
@@ -23,7 +27,7 @@ select
     case when is_exclusive_trg then column_name end, ', '
   ) within group (order by column_name) as exclusive_source_list
 
-from data_diff.DOCS_common.schema_check
+from data_diff.DOCS_datadiff.schema_check
 
 group by all
 
