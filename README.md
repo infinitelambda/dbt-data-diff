@@ -29,7 +29,7 @@ Or use the latest version from git:
 
 ```yml
 packages:
-  - git: "https://github.com/dbt-labs/dbt-utils.git"
+  - git: "https://github.com/infinitelambda/dbt-data-diff.git"
     revision: 1.0.0 # 1.0.0b1
 ```
 
