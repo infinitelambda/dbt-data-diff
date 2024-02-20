@@ -42,7 +42,7 @@ Sample DAG:
 
 ```yml
 packages:
-  - package: infinitelambda/dbt-data-diff
+  - package: infinitelambda/data_diff
     version: [">=1.0.0", "<1.1.0"]
 ```
 
