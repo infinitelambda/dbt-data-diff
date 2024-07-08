@@ -91,13 +91,13 @@ dev = ["freezegun (>=1.0,<2.0)", "pytest (>=6.0)", "pytest-cov"]
 
 [[package]]
 name = "certifi"
-version = "2023.11.17"
+version = "2024.7.4"
 description = "Python package for providing Mozilla's CA Bundle."
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "certifi-2023.11.17-py3-none-any.whl", hash = "sha256:e036ab49d5b79556f99cfc2d9320b34cfbe5be05c5871b51de9329f0603b0474"},
-    {file = "certifi-2023.11.17.tar.gz", hash = "sha256:9b469f3a900bf28dc19b8cfbf8019bf47f7fdd1a65a1d4ffb98fc14166beb4d1"},
+    {file = "certifi-2024.7.4-py3-none-any.whl", hash = "sha256:c198e21b1289c2ab85ee4e67bb4b4ef3ead0892059901a8d5b622f24a1101e90"},
+    {file = "certifi-2024.7.4.tar.gz", hash = "sha256:5a1e7645bc0ec61a09e26c36f6106dd4cf40c6db3a1fb6352b0244e7fb057c7b"},
 ]
 
 [[package]]
@@ -363,13 +363,13 @@ files = [
 
 [[package]]
 name = "dbt-core"
-version = "1.7.15"
+version = "1.7.17"
 description = "With dbt, data analysts and engineers can build analytics the way engineers build applications."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "dbt_core-1.7.15-py3-none-any.whl", hash = "sha256:7a62a4de4a6b6d59ee65ad2225d191b45bb985eaa820d6f75a6811099544aad0"},
-    {file = "dbt_core-1.7.15.tar.gz", hash = "sha256:3c52823fbed5c31562ac468fa71cdabfdb8089ee70f59656d4d1f54f61599ffd"},
+    {file = "dbt_core-1.7.17-py3-none-any.whl", hash = "sha256:91cd0ceca29d77377988bca94db02c9d6f3debdd604edbde702008380b87fc4e"},
+    {file = "dbt_core-1.7.17.tar.gz", hash = "sha256:efd341e83252c35d9dbe0d2d0bfd874125c093c125250bebc7ca741a9145db80"},
 ]
 
 [package.dependencies]
